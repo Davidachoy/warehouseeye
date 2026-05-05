@@ -1,0 +1,253 @@
+"""FastAPI app exposing the WarehouseEye processing pipeline."""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import logging
+import os
+import threading
+import uuid
+from pathlib import Path
+from typing import Any
+
+import httpx
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse, StreamingResponse
+
+from api.query_resolver import resolve_query
+from api.schemas import (
+    AnalyzeRequest,
+    AnalyzeResponse,
+    BenchmarkResponse,
+    HealthResponse,
+    QueryRequest,
+    QueryResponse,
+)
+from warehouseeye import __version__
+from warehouseeye.pipeline.db import get_video, init_db, upsert_video_start
+
+try:
+    from api.pipeline_runner import run_pipeline_job as _default_run_pipeline_job
+except Exception:  # pragma: no cover - allows tests without heavy runtime deps
+    _default_run_pipeline_job = None
+
+try:
+    import structlog
+except ImportError:  # pragma: no cover - optional dependency fallback
+    structlog = None
+
+run_pipeline_job = _default_run_pipeline_job
+
+
+def _configure_logging() -> None:
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
+    if structlog is not None:
+        structlog.configure(
+            processors=[
+                structlog.contextvars.merge_contextvars,
+                structlog.processors.add_log_level,
+                structlog.processors.TimeStamper(fmt="iso"),
+                structlog.processors.JSONRenderer(),
+            ],
+            wrapper_class=structlog.make_filtering_bound_logger(logging.INFO),
+            logger_factory=structlog.PrintLoggerFactory(),
+            cache_logger_on_first_use=True,
+        )
+
+
+_configure_logging()
+logger = structlog.get_logger(__name__) if structlog is not None else logging.getLogger(__name__)
+app = FastAPI(title="WarehouseEye API", version=__version__)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8501"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.on_event("startup")
+async def startup_event() -> None:
+    """Initialize app state for task tracking and idempotency DB."""
+    data_root = Path(os.getenv("WAREHOUSEEYE_DATA_ROOT", "data"))
+    data_root.mkdir(parents=True, exist_ok=True)
+    status_db_path = data_root / "warehouseeye.sqlite3"
+    init_db(status_db_path).close()
+
+    app.state.data_root = data_root
+    app.state.status_db_path = status_db_path
+    app.state.tasks: dict[str, dict[str, Any]] = {}
+    app.state.task_queues: dict[str, asyncio.Queue[dict[str, Any]]] = {}
+    app.state.last_benchmark: dict[str, Any] = {
+        "frames_analyzed": 0,
+        "tokens_per_second_avg": 0.0,
+        "latency_per_crop_ms": 0.0,
+        "wall_time_sec": 0.0,
+        "total_cost_usd": 0.0,
+        "vs_gpt4v_estimated_savings_pct": 35.0,
+    }
+
+
+@app.middleware("http")
+async def request_id_middleware(request: Request, call_next):  # type: ignore[no-untyped-def]
+    """Attach and log a correlated request_id for each HTTP request."""
+    request_id = request.headers.get("X-Request-ID", str(uuid.uuid4()))
+    if structlog is not None:
+        structlog.contextvars.clear_contextvars()
+        structlog.contextvars.bind_contextvars(request_id=request_id)
+        logger.info("request_started", method=request.method, path=request.url.path)
+    else:
+        logger.info("request_started request_id=%s method=%s path=%s", request_id, request.method, request.url.path)
+    response = await call_next(request)
+    response.headers["X-Request-ID"] = request_id
+    if structlog is not None:
+        logger.info("request_finished", method=request.method, path=request.url.path, status=response.status_code)
+    else:
+        logger.info(
+            "request_finished request_id=%s method=%s path=%s status=%s",
+            request_id,
+            request.method,
+            request.url.path,
+            response.status_code,
+        )
+    return response
+
+
+def _push_progress(loop: asyncio.AbstractEventLoop, queue: asyncio.Queue[dict[str, Any]], payload: dict[str, Any]) -> None:
+    loop.call_soon_threadsafe(queue.put_nowait, payload)
+
+
+def _launch_pipeline_task(
+    task_id: str,
+    video_id: str,
+    video_url: str,
+    loop: asyncio.AbstractEventLoop,
+) -> None:
+    queue = app.state.task_queues[task_id]
+
+    def emit(payload: dict[str, Any]) -> None:
+        _push_progress(loop, queue, payload)
+
+    def worker() -> None:
+        try:
+            if run_pipeline_job is None:
+                raise RuntimeError("Pipeline runner is unavailable in this environment.")
+            result = run_pipeline_job(
+                video_id=video_id,
+                video_url=video_url,
+                task_id=task_id,
+                data_root=app.state.data_root,
+                status_db_path=app.state.status_db_path,
+                emit=emit,
+            )
+            app.state.tasks[task_id]["status"] = "completed"
+            app.state.tasks[task_id]["result"] = result
+            app.state.last_benchmark = result.get("benchmark", app.state.last_benchmark)
+        except Exception as exc:  # pragma: no cover - runtime guard
+            app.state.tasks[task_id]["status"] = "failed"
+            app.state.tasks[task_id]["error"] = str(exc)
+            emit({"stage": "failed", "percent": 100, "message": str(exc)})
+
+    thread = threading.Thread(target=worker, daemon=True)
+    thread.start()
+
+
+@app.post("/analyze", response_model=AnalyzeResponse)
+async def analyze(request: AnalyzeRequest) -> AnalyzeResponse:
+    """Launch the WarehouseEye pipeline asynchronously and return immediately."""
+    conn = init_db(app.state.status_db_path)
+    existing = get_video(conn, request.video_id)
+    if existing and existing.get("status") in {"running", "completed"}:
+        conn.close()
+        return AnalyzeResponse(status=str(existing["status"]), task_id=str(existing.get("task_id") or "unknown"))
+
+    task_id = str(uuid.uuid4())
+    upsert_video_start(conn, video_id=request.video_id, url=request.video_url, task_id=task_id)
+    conn.close()
+    app.state.tasks[task_id] = {"video_id": request.video_id, "status": "running"}
+    app.state.task_queues[task_id] = asyncio.Queue()
+    loop = asyncio.get_running_loop()
+    _launch_pipeline_task(task_id=task_id, video_id=request.video_id, video_url=request.video_url, loop=loop)
+    return AnalyzeResponse(status="started", task_id=task_id)
+
+
+@app.get("/stream/{task_id}")
+async def stream(task_id: str) -> StreamingResponse:
+    """Stream task progress updates as Server-Sent Events."""
+    queue = app.state.task_queues.get(task_id)
+    if queue is None:
+        raise HTTPException(status_code=404, detail="Unknown task_id")
+
+    async def event_generator():  # type: ignore[no-untyped-def]
+        while True:
+            event = await queue.get()
+            yield f"event: progress\ndata: {json.dumps(event)}\n\n"
+            if event.get("stage") in {"done", "failed"}:
+                break
+
+    headers = {"Cache-Control": "no-cache", "Connection": "keep-alive"}
+    return StreamingResponse(event_generator(), media_type="text/event-stream", headers=headers)
+
+
+@app.get("/timeline/{video_id}")
+async def get_timeline(video_id: str) -> JSONResponse:
+    """Return the full timeline JSON for a processed video."""
+    timeline_path = app.state.data_root / video_id / "timeline.json"
+    if not timeline_path.exists():
+        raise HTTPException(status_code=404, detail="Timeline not found")
+    payload = json.loads(timeline_path.read_text(encoding="utf-8"))
+    return JSONResponse(payload)
+
+
+@app.get("/timeline/{video_id}/track/{track_id}")
+async def get_timeline_track(video_id: str, track_id: int) -> JSONResponse:
+    """Return timeline entries filtered to one track ID."""
+    timeline_path = app.state.data_root / video_id / "timeline.json"
+    if not timeline_path.exists():
+        raise HTTPException(status_code=404, detail="Timeline not found")
+    payload = json.loads(timeline_path.read_text(encoding="utf-8"))
+    track_timeline = [entry for entry in payload.get("timeline", []) if int(entry.get("track_id", -1)) == track_id]
+    payload["timeline"] = track_timeline
+    return JSONResponse(payload)
+
+
+@app.post("/query", response_model=QueryResponse)
+async def query(request: QueryRequest) -> QueryResponse:
+    """Resolve a natural-language query over one video's timeline data."""
+    db_path = app.state.data_root / request.video_id / "warehouseeye.sqlite3"
+    if not db_path.exists():
+        raise HTTPException(status_code=404, detail="Video not processed")
+    payload = resolve_query(db_path=db_path, question=request.question)
+    return QueryResponse(**payload)
+
+
+@app.get("/benchmark", response_model=BenchmarkResponse)
+async def benchmark() -> BenchmarkResponse:
+    """Return benchmarking metrics from the latest successful run."""
+    return BenchmarkResponse(**app.state.last_benchmark)
+
+
+async def _is_vllm_reachable() -> bool:
+    base_url = os.getenv("AMD_URL", "").rstrip("/")
+    if not base_url:
+        return False
+    try:
+        async with httpx.AsyncClient(timeout=3.0) as client:
+            response = await client.get(f"{base_url}/health")
+            return response.status_code < 400
+    except Exception:
+        return False
+
+
+@app.get("/health", response_model=HealthResponse)
+async def health() -> HealthResponse:
+    """Return service health and dependency reachability."""
+    return HealthResponse(
+        status="ok",
+        vllm_reachable=await _is_vllm_reachable(),
+        db_path=str(app.state.status_db_path),
+        version=__version__,
+    )

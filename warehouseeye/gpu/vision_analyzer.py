@@ -337,6 +337,8 @@ class VisionAnalyzer:
                 "parse_failures": self.parse_failures,
                 "request_count": self.vllm_client.request_count,
                 "average_latency_ms": self.vllm_client.average_latency_ms,
+                "total_tokens": self.vllm_client.total_tokens,
+                "max_tokens": self.max_tokens,
             }
         finally:
             conn.close()

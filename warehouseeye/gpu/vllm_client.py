@@ -46,6 +46,9 @@ class VLLMClient:
         self.success_count = 0
         self.failure_count = 0
         self.latencies_ms: list[float] = []
+        self.prompt_tokens = 0
+        self.completion_tokens = 0
+        self.total_tokens = 0
 
         self._client: httpx.AsyncClient | None = None
 
@@ -126,6 +129,25 @@ class VLLMClient:
             "temperature": self.temperature,
         }
 
+        body = await self._chat_completion_request(payload=payload, request_hint=Path(image_path).name)
+        return self._extract_text_content(body)
+
+    async def chat_completion_async(
+        self,
+        messages: list[dict[str, Any]],
+        max_tokens: int = 300,
+    ) -> str:
+        """Submit generic chat-completions payload and return text content."""
+        payload = {
+            "model": self.model_name,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": self.temperature,
+        }
+        body = await self._chat_completion_request(payload=payload, request_hint="chat")
+        return self._extract_text_content(body)
+
+    async def _chat_completion_request(self, payload: dict[str, Any], request_hint: str) -> dict[str, Any]:
         client = await self._ensure_client()
         self.request_count += 1
         last_error: Exception | None = None
@@ -141,7 +163,7 @@ class VLLMClient:
                     extra={
                         "attempt": attempt,
                         "elapsed_ms": round(elapsed_ms, 2),
-                        "image": Path(image_path).name,
+                        "request_hint": request_hint,
                         "status_code": response.status_code,
                     },
                 )
@@ -156,10 +178,19 @@ class VLLMClient:
                     response.raise_for_status()
 
                 body = response.json()
-                text = self._extract_text_content(body)
+                usage = body.get("usage", {})
+                if isinstance(usage, dict):
+                    self.prompt_tokens += int(usage.get("prompt_tokens", 0) or 0)
+                    self.completion_tokens += int(usage.get("completion_tokens", 0) or 0)
+                    reported_total = int(usage.get("total_tokens", 0) or 0)
+                    if reported_total > 0:
+                        self.total_tokens += reported_total
+                    else:
+                        self.total_tokens += int(usage.get("prompt_tokens", 0) or 0) + int(
+                            usage.get("completion_tokens", 0) or 0
+                        )
                 self.success_count += 1
-                return text
-
+                return body
             except (
                 httpx.TimeoutException,
                 httpx.ConnectError,
@@ -168,8 +199,7 @@ class VLLMClient:
                 ValueError,
             ) as exc:
                 last_error = exc
-                is_last_attempt = attempt >= self.max_attempts
-                if is_last_attempt:
+                if attempt >= self.max_attempts:
                     break
                 backoff = self.initial_backoff_sec * (2 ** (attempt - 1))
                 await asyncio.sleep(backoff)
@@ -178,7 +208,7 @@ class VLLMClient:
                 break
 
         self.failure_count += 1
-        raise RuntimeError(f"Failed to describe image after retries: {image_path}") from last_error
+        raise RuntimeError("Failed chat completion after retries.") from last_error
 
     def describe_image(self, image_path: str | Path, prompt: str, max_tokens: int = 300) -> str:
         """Synchronous wrapper for image description."""

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sqlite3
+import time
 from pathlib import Path
 from typing import Any
 
@@ -41,8 +42,22 @@ def init_db(db_path: str | Path) -> sqlite3.Connection:
         )
         """
     )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS videos (
+            video_id TEXT PRIMARY KEY,
+            url TEXT NOT NULL,
+            status TEXT NOT NULL,
+            task_id TEXT,
+            created_at REAL NOT NULL,
+            completed_at REAL,
+            error TEXT
+        )
+        """
+    )
     cur.execute("CREATE INDEX IF NOT EXISTS idx_tracks_track_id ON tracks(track_id)")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_tracks_timestamp ON tracks(timestamp_sec)")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_videos_status ON videos(status)")
     conn.commit()
     return conn
 
@@ -126,4 +141,75 @@ def update_track_activity(conn: sqlite3.Connection, row_id: int, activity_json: 
     """Update semantic activity JSON for one track row."""
     conn.execute("UPDATE tracks SET activity_json = ? WHERE id = ?", (activity_json, row_id))
     conn.commit()
+
+
+def upsert_video_start(
+    conn: sqlite3.Connection,
+    video_id: str,
+    url: str,
+    task_id: str,
+) -> None:
+    """Insert or reset a video run to running state."""
+    conn.execute(
+        """
+        INSERT INTO videos (video_id, url, status, task_id, created_at, completed_at, error)
+        VALUES (?, ?, 'running', ?, ?, NULL, NULL)
+        ON CONFLICT(video_id) DO UPDATE SET
+            url=excluded.url,
+            status='running',
+            task_id=excluded.task_id,
+            completed_at=NULL,
+            error=NULL
+        """,
+        (video_id, url, task_id, time.time()),
+    )
+    conn.commit()
+
+
+def get_video(conn: sqlite3.Connection, video_id: str) -> dict[str, Any] | None:
+    """Return one video row by id, if present."""
+    row = conn.execute(
+        """
+        SELECT video_id, url, status, task_id, created_at, completed_at, error
+        FROM videos
+        WHERE video_id = ?
+        """,
+        (video_id,),
+    ).fetchone()
+    if row is None:
+        return None
+    return {
+        "video_id": row[0],
+        "url": row[1],
+        "status": row[2],
+        "task_id": row[3],
+        "created_at": row[4],
+        "completed_at": row[5],
+        "error": row[6],
+    }
+
+
+def set_video_status(
+    conn: sqlite3.Connection,
+    video_id: str,
+    status: str,
+    completed_at: float | None = None,
+    error: str | None = None,
+) -> None:
+    """Set terminal or intermediate status fields for a video row."""
+    conn.execute(
+        """
+        UPDATE videos
+        SET status = ?, completed_at = ?, error = ?
+        WHERE video_id = ?
+        """,
+        (status, completed_at, error, video_id),
+    )
+    conn.commit()
+
+
+def is_video_completed(conn: sqlite3.Connection, video_id: str) -> bool:
+    """Return True when video status is completed."""
+    row = conn.execute("SELECT status FROM videos WHERE video_id = ?", (video_id,)).fetchone()
+    return bool(row and row[0] == "completed")
 
