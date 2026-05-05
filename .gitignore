@@ -49,6 +49,13 @@ data/audio/
 data/*.sqlite3
 data/*.db
 
+# Local source videos dropped under data/ (never commit)
+data/*.mp4
+data/*.mov
+data/*.mkv
+data/*.webm
+data/*.avi
+
 # Jupyter
 .ipynb_checkpoints/
 
