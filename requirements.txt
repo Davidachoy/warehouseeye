@@ -10,4 +10,5 @@ numpy
 pillow
 scikit-learn
 python-dotenv
+httpx>=0.27,<1
 pytest

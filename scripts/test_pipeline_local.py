@@ -29,6 +29,54 @@ def main() -> None:
     parser.add_argument("--base-dir", default="data", help="Output directory for artifacts.")
     parser.add_argument("--model-id", default="PekingU/rtdetr_v2_r50vd", help="RT-DETRv2 model id.")
     parser.add_argument(
+        "--scene-threshold",
+        type=float,
+        default=0.25,
+        help="PySceneDetect content threshold (default 0.25).",
+    )
+    parser.add_argument(
+        "--sample-every-sec",
+        type=float,
+        default=5.0,
+        help="Seconds between sampled frames within each scene (default 5.0).",
+    )
+    parser.add_argument(
+        "--detector-threshold",
+        type=float,
+        default=0.5,
+        help="Minimum person detection confidence (default 0.5).",
+    )
+    parser.add_argument(
+        "--min-bbox-area",
+        type=float,
+        default=0.0,
+        help="Optional minimum bbox area in pixels to keep detections (default 0).",
+    )
+    parser.add_argument(
+        "--tracker-frame-rate",
+        type=float,
+        default=30.0,
+        help="Frame-rate parameter passed to ByteTrack (default 30.0).",
+    )
+    parser.add_argument(
+        "--tracker-activation-threshold",
+        type=float,
+        default=0.25,
+        help="ByteTrack activation threshold (default 0.25).",
+    )
+    parser.add_argument(
+        "--tracker-lost-track-buffer",
+        type=int,
+        default=30,
+        help="ByteTrack lost track buffer in frames (default 30).",
+    )
+    parser.add_argument(
+        "--tracker-matching-threshold",
+        type=float,
+        default=0.8,
+        help="ByteTrack minimum matching threshold (default 0.8).",
+    )
+    parser.add_argument(
         "--min-tracks",
         type=int,
         default=1,
@@ -42,7 +90,18 @@ def main() -> None:
         parser.error("Provide VIDEO_PATH as the first argument or use --video-path.")
 
     logging.basicConfig(level=logging.INFO)
-    db_path = Orchestrator(base_dir=args.base_dir, model_id=args.model_id).run(video_path)
+    db_path = Orchestrator(
+        base_dir=args.base_dir,
+        model_id=args.model_id,
+        scene_threshold=args.scene_threshold,
+        sample_every_sec=args.sample_every_sec,
+        detector_threshold=args.detector_threshold,
+        min_bbox_area=args.min_bbox_area,
+        tracker_frame_rate=args.tracker_frame_rate,
+        tracker_activation_threshold=args.tracker_activation_threshold,
+        tracker_lost_track_buffer=args.tracker_lost_track_buffer,
+        tracker_matching_threshold=args.tracker_matching_threshold,
+    ).run(video_path)
     conn = init_db(db_path)
     identities = get_all_identities(conn)
     for row in identities:

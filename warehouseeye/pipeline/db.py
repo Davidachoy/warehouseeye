@@ -121,3 +121,9 @@ def get_all_identities(conn: sqlite3.Connection) -> list[tuple[Any, ...]]:
     cur = conn.execute("SELECT * FROM identities ORDER BY track_id")
     return cur.fetchall()
 
+
+def update_track_activity(conn: sqlite3.Connection, row_id: int, activity_json: str) -> None:
+    """Update semantic activity JSON for one track row."""
+    conn.execute("UPDATE tracks SET activity_json = ? WHERE id = ?", (activity_json, row_id))
+    conn.commit()
+

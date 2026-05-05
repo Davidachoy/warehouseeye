@@ -13,11 +13,17 @@ from warehouseeye.tracking.types import BoundingBox
 class PersonTracker:
     """Track detections frame by frame using ByteTrack."""
 
-    def __init__(self, frame_rate: float = 30.0) -> None:
+    def __init__(
+        self,
+        frame_rate: float = 30.0,
+        track_activation_threshold: float = 0.25,
+        lost_track_buffer: int = 30,
+        minimum_matching_threshold: float = 0.8,
+    ) -> None:
         self.tracker = sv.ByteTrack(
-            track_activation_threshold=0.25,
-            lost_track_buffer=30,
-            minimum_matching_threshold=0.8,
+            track_activation_threshold=track_activation_threshold,
+            lost_track_buffer=lost_track_buffer,
+            minimum_matching_threshold=minimum_matching_threshold,
             frame_rate=frame_rate,
         )
 
