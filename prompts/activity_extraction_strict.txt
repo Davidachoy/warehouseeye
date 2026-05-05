@@ -1,0 +1,31 @@
+Output ONLY a single valid JSON object.
+No markdown fences. No prose. No comments. No trailing text.
+
+Required exact keys:
+activity, relative_location, visible_tools, object_interaction, posture, anomaly, severity
+
+Required schema:
+{
+  "activity": "string",
+  "relative_location": "string",
+  "visible_tools": ["string"],
+  "object_interaction": "string",
+  "posture": "string",
+  "anomaly": false,
+  "severity": null
+}
+
+Constraints:
+- "visible_tools" must be an array of strings.
+- "anomaly" must be boolean.
+- "severity" must be null or one of: "low", "medium", "high".
+- If person visibility is poor or ambiguous, set:
+  "activity": "not clearly visible",
+  "relative_location": "unknown",
+  "visible_tools": [],
+  "object_interaction": "unknown",
+  "posture": "unknown",
+  "anomaly": false,
+  "severity": null.
+- If you detect safety violation (missing PPE, restricted area, unsafe action), set:
+  "anomaly": true and choose "severity".

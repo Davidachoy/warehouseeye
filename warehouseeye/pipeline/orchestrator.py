@@ -24,9 +24,29 @@ logger = logging.getLogger(__name__)
 class Orchestrator:
     """Coordinate ingestion, detection, tracking, color tagging, and SQLite writes."""
 
-    def __init__(self, base_dir: str | Path = "data", model_id: str = "PekingU/rtdetr_v2_r50vd") -> None:
+    def __init__(
+        self,
+        base_dir: str | Path = "data",
+        model_id: str = "PekingU/rtdetr_v2_r50vd",
+        scene_threshold: float = 0.25,
+        sample_every_sec: float = 5.0,
+        detector_threshold: float = 0.5,
+        min_bbox_area: float = 0.0,
+        tracker_frame_rate: float = 30.0,
+        tracker_activation_threshold: float = 0.25,
+        tracker_lost_track_buffer: int = 30,
+        tracker_matching_threshold: float = 0.8,
+    ) -> None:
         self.base_dir = Path(base_dir)
         self.model_id = model_id
+        self.scene_threshold = scene_threshold
+        self.sample_every_sec = sample_every_sec
+        self.detector_threshold = detector_threshold
+        self.min_bbox_area = min_bbox_area
+        self.tracker_frame_rate = tracker_frame_rate
+        self.tracker_activation_threshold = tracker_activation_threshold
+        self.tracker_lost_track_buffer = tracker_lost_track_buffer
+        self.tracker_matching_threshold = tracker_matching_threshold
         self.downloader = VideoDownloader()
         self.frame_extractor = FrameExtractor()
         self.audio_extractor = AudioExtractor()
@@ -60,16 +80,32 @@ class Orchestrator:
         audio_dir.mkdir(parents=True, exist_ok=True)
 
         video_path = self.downloader.download(video_url, videos_dir / "input_video.mp4")
-        frame_records = self.frame_extractor.extract(video_path, frames_dir)
+        frame_records = self.frame_extractor.extract(
+            video_path,
+            frames_dir,
+            scene_threshold=self.scene_threshold,
+            sample_every_sec=self.sample_every_sec,
+        )
         self.audio_extractor.extract(video_path, audio_dir / "audio.wav")
         conn = init_db(db_path)
 
-        detector = PersonDetector(model_id=self.model_id)
-        tracker = PersonTracker(frame_rate=30.0)
+        detector = PersonDetector(model_id=self.model_id, threshold=self.detector_threshold)
+        tracker = PersonTracker(
+            frame_rate=self.tracker_frame_rate,
+            track_activation_threshold=self.tracker_activation_threshold,
+            lost_track_buffer=self.tracker_lost_track_buffer,
+            minimum_matching_threshold=self.tracker_matching_threshold,
+        )
         identity_state: dict[int, dict[str, Any]] = {}
 
         for frame_idx, (frame_path, timestamp_sec) in enumerate(frame_records):
             detections = detector.detect(frame_path)
+            if self.min_bbox_area > 0:
+                detections = [
+                    box
+                    for box in detections
+                    if (box.x2 - box.x1) * (box.y2 - box.y1) >= self.min_bbox_area
+                ]
             frame_image = Image.open(frame_path).convert("RGB")
 
             for out_frame_idx, track_id, bbox, confidence in tracker.update(detections, frame_idx=frame_idx):
