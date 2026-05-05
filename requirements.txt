@@ -1,0 +1,13 @@
+transformers>=4.45.0
+torch
+torchvision
+supervision>=0.23.0,<0.28
+yt-dlp
+opencv-python
+scenedetect[opencv]
+ffmpeg-python
+numpy
+pillow
+scikit-learn
+python-dotenv
+pytest
