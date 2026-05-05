@@ -11,4 +11,5 @@ pillow
 scikit-learn
 python-dotenv
 httpx>=0.27,<1
+soundfile>=0.12
 pytest
