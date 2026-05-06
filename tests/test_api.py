@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-import asyncio
 import json
 import sys
-from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 
-import httpx
+from starlette.testclient import TestClient
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 import api.main as api_main
@@ -76,16 +74,6 @@ def _seed_video_db(db_path: Path) -> None:
     conn.close()
 
 
-@asynccontextmanager
-async def _test_client(data_root: Path):
-    api_main.os.environ["WAREHOUSEEYE_DATA_ROOT"] = str(data_root)
-    await api_main.app.router.startup()
-    transport = httpx.ASGITransport(app=api_main.app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
-        yield client
-    await api_main.app.router.shutdown()
-
-
 def test_analyze_stream_and_timeline(monkeypatch, tmp_path) -> None:
     data_root = tmp_path / "api_data"
 
@@ -117,34 +105,35 @@ def test_analyze_stream_and_timeline(monkeypatch, tmp_path) -> None:
 
     monkeypatch.setattr(api_main, "run_pipeline_job", fake_run_pipeline_job)
 
-    async def scenario() -> None:
-        async with _test_client(data_root) as client:
-            response = await client.post(
-                "/analyze",
-                json={"video_url": "https://example.com/video.mp4", "video_id": "warehouse_1"},
-            )
-            assert response.status_code == 200
-            body = response.json()
-            assert body["status"] == "started"
-            task_id = body["task_id"]
+    api_main.os.environ["WAREHOUSEEYE_DATA_ROOT"] = str(data_root)
+    with TestClient(api_main.app) as client:
+        response = client.post(
+            "/analyze",
+            json={"video_url": "https://example.com/video.mp4", "video_id": "warehouse_1"},
+        )
+        assert response.status_code == 200
+        body = response.json()
+        assert body["status"] == "started"
+        task_id = body["task_id"]
 
-            progress_events: list[dict[str, Any]] = []
-            async with client.stream("GET", f"/stream/{task_id}") as stream_response:
-                assert stream_response.status_code == 200
-                async for line in stream_response.aiter_lines():
-                    if line.startswith("data: "):
-                        progress_events.append(json.loads(line[len("data: ") :]))
-                    if progress_events and progress_events[-1].get("stage") == "done":
-                        break
+        progress_events: list[dict[str, Any]] = []
+        with client.stream("GET", f"/stream/{task_id}") as stream:
+            assert stream.status_code == 200
+            for raw in stream.iter_lines():
+                if not raw:
+                    continue
+                line = raw.decode("utf-8") if isinstance(raw, bytes) else raw
+                if line.startswith("data: "):
+                    progress_events.append(json.loads(line[len("data: ") :]))
+                if progress_events and progress_events[-1].get("stage") == "done":
+                    break
 
-            assert progress_events
-            assert progress_events[-1]["stage"] == "done"
+        assert progress_events
+        assert progress_events[-1]["stage"] == "done"
 
-            timeline_response = await client.get("/timeline/warehouse_1")
-            assert timeline_response.status_code == 200
-            assert timeline_response.json()["video_id"] == "warehouse_1"
-
-    asyncio.run(scenario())
+        timeline_response = client.get("/timeline/warehouse_1")
+        assert timeline_response.status_code == 200
+        assert timeline_response.json()["video_id"] == "warehouse_1"
 
 
 def test_query_endpoint_variants(tmp_path) -> None:
@@ -154,22 +143,20 @@ def test_query_endpoint_variants(tmp_path) -> None:
     video_dir.mkdir(parents=True, exist_ok=True)
     _seed_video_db(video_dir / "warehouseeye.sqlite3")
 
-    async def scenario() -> None:
-        async with _test_client(data_root) as client:
-            test_cases = [
-                "How many people are there?",
-                "What did the person in the orange vest do?",
-                "Who spent the most time in the box area?",
-                "Are there any anomalies?",
-                "Give me the full timeline",
-            ]
-            for question in test_cases:
-                response = await client.post("/query", json={"video_id": video_id, "question": question})
-                assert response.status_code == 200
-                payload = response.json()
-                assert "ambiguous" in payload
-                assert "alternatives" in payload
-                assert "narrative" in payload
-                assert "timeline" in payload
-
-    asyncio.run(scenario())
+    api_main.os.environ["WAREHOUSEEYE_DATA_ROOT"] = str(data_root)
+    with TestClient(api_main.app) as client:
+        test_cases = [
+            "How many people are there?",
+            "What did the person in the orange vest do?",
+            "Who spent the most time in the box area?",
+            "Are there any anomalies?",
+            "Give me the full timeline",
+        ]
+        for question in test_cases:
+            response = client.post("/query", json={"video_id": video_id, "question": question})
+            assert response.status_code == 200
+            payload = response.json()
+            assert "ambiguous" in payload
+            assert "alternatives" in payload
+            assert "narrative" in payload
+            assert "timeline" in payload

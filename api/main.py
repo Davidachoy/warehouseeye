@@ -8,6 +8,8 @@ import logging
 import os
 import threading
 import uuid
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 
@@ -59,19 +61,11 @@ def _configure_logging() -> None:
 
 _configure_logging()
 logger = structlog.get_logger(__name__) if structlog is not None else logging.getLogger(__name__)
-app = FastAPI(title="WarehouseEye API", version=__version__)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:8501"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
-@app.on_event("startup")
-async def startup_event() -> None:
-    """Initialize app state for task tracking and idempotency DB."""
+@asynccontextmanager
+async def app_lifespan(app: FastAPI) -> AsyncIterator[None]:
+    """Initialize app state for task tracking and idempotency DB; release on shutdown."""
     data_root = Path(os.getenv("WAREHOUSEEYE_DATA_ROOT", "data"))
     data_root.mkdir(parents=True, exist_ok=True)
     status_db_path = data_root / "warehouseeye.sqlite3"
@@ -79,9 +73,9 @@ async def startup_event() -> None:
 
     app.state.data_root = data_root
     app.state.status_db_path = status_db_path
-    app.state.tasks: dict[str, dict[str, Any]] = {}
-    app.state.task_queues: dict[str, asyncio.Queue[dict[str, Any]]] = {}
-    app.state.last_benchmark: dict[str, Any] = {
+    app.state.tasks = {}
+    app.state.task_queues = {}
+    app.state.last_benchmark = {
         "frames_analyzed": 0,
         "tokens_per_second_avg": 0.0,
         "latency_per_crop_ms": 0.0,
@@ -89,6 +83,17 @@ async def startup_event() -> None:
         "total_cost_usd": 0.0,
         "vs_gpt4v_estimated_savings_pct": 35.0,
     }
+    yield
+
+
+app = FastAPI(title="WarehouseEye API", version=__version__, lifespan=app_lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8501"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.middleware("http")
