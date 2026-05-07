@@ -1,0 +1,113 @@
+{
+  "timeline": [
+    {
+      "track_id": 1,
+      "timestamp_sec": 0.0,
+      "frame_idx": 0,
+      "bbox": [
+        149.54443359375,
+        194.3970489501953,
+        171.8837890625,
+        244.2631378173828
+      ],
+      "confidence": 0.7895812392234802,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video2/crops/track_0001/frame_00000.jpg",
+      "activity": {
+        "activity": "handling a box",
+        "relative_location": "near stacked boxes",
+        "visible_tools": [],
+        "object_interaction": "holding a box with both hands",
+        "posture": "standing, slightly bent forward",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 5.0,
+      "frame_idx": 1,
+      "bbox": [
+        149.81158447265625,
+        194.49111938476562,
+        175.00550842285156,
+        244.61361694335938
+      ],
+      "confidence": 0.828821063041687,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video2/crops/track_0001/frame_00001.jpg",
+      "activity": {
+        "activity": "handling documents or small object",
+        "relative_location": "near a large box or pallet",
+        "visible_tools": [],
+        "object_interaction": "holding and examining object with both hands",
+        "posture": "standing, slightly bent forward",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 10.0,
+      "frame_idx": 2,
+      "bbox": [
+        148.08175659179688,
+        195.53269958496094,
+        173.45506286621094,
+        242.77828979492188
+      ],
+      "confidence": 0.8270378708839417,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video2/crops/track_0001/frame_00002.jpg",
+      "activity": {
+        "activity": "handling items on a surface",
+        "relative_location": "near a workbench or table",
+        "visible_tools": [],
+        "object_interaction": "manipulating small objects with hands",
+        "posture": "standing, leaning forward",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 10.259,
+      "frame_idx": 3,
+      "bbox": [
+        147.89486694335938,
+        195.57089233398438,
+        171.1967315673828,
+        242.6144256591797
+      ],
+      "confidence": 0.8103017807006836,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video2/crops/track_0001/frame_00003.jpg",
+      "activity": {
+        "activity": "handling items on a surface",
+        "relative_location": "near a workbench or table",
+        "visible_tools": [],
+        "object_interaction": "manipulating small objects with hands",
+        "posture": "standing, leaning forward",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    }
+  ],
+  "identities": [
+    {
+      "track_id": 1,
+      "color_tag": "unknown",
+      "first_seen_sec": 0.0,
+      "last_seen_sec": 10.259,
+      "total_frames": 4,
+      "narrative_summary": "Track 1: unknown detected."
+    }
+  ],
+  "video_id": "video2",
+  "video_url": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/video2.mp4",
+  "task_id": "prerender-video2-1778121626"
+}

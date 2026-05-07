@@ -1,0 +1,34 @@
+[
+  {
+    "track_id": 1,
+    "color_tag": "yellow_top",
+    "first_seen_sec": 0.0,
+    "last_seen_sec": 45.967,
+    "total_frames": 15,
+    "narrative_summary": "Track 1: yellow_top detected."
+  },
+  {
+    "track_id": 2,
+    "color_tag": "black_hoodie",
+    "first_seen_sec": 50.967,
+    "last_seen_sec": 108.267,
+    "total_frames": 20,
+    "narrative_summary": "Track 2: black_hoodie detected."
+  },
+  {
+    "track_id": 4,
+    "color_tag": "white_top",
+    "first_seen_sec": 35.967,
+    "last_seen_sec": 35.967,
+    "total_frames": 1,
+    "narrative_summary": "Track 4: white_top detected."
+  },
+  {
+    "track_id": 5,
+    "color_tag": "white_top",
+    "first_seen_sec": 45.967,
+    "last_seen_sec": 108.267,
+    "total_frames": 30,
+    "narrative_summary": "Track 5: white_top detected."
+  }
+]
