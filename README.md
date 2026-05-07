@@ -117,28 +117,70 @@ PYTHONPATH=. python scripts/test_pipeline_local.py --video-path "/absolute/path/
 ENABLE_REID=1 PYTHONPATH=. python scripts/test_pipeline_local.py --video-path "/absolute/path/to/video.mp4"
 ```
 
-Quality-tuned defaults are now optimized for crowded indoor scenes:
-- `sample_every_sec=1.0`
-- `detector_threshold=0.55`
-- `min_bbox_area=8000`
-- `tracker_lost_track_buffer=8`
-- Re-ID similarity threshold = `0.90`
+Recommended defaults for indoor warehouse / kitchen scenes (validated to recover 1 ID for a 1-person clip and 2 IDs for a 2-person clip):
 
-Optional runtime overrides (no code edits required):
 ```bash
-export WAREHOUSEEYE_SAMPLE_EVERY_SEC=1.0
-export WAREHOUSEEYE_DETECTOR_THRESHOLD=0.55
-export WAREHOUSEEYE_MIN_BBOX_AREA=8000
-export WAREHOUSEEYE_REID_SIMILARITY_THRESHOLD=0.90
+# Pipeline / detector
+export WAREHOUSEEYE_SAMPLE_EVERY_SEC=0.5
+export WAREHOUSEEYE_DETECTOR_THRESHOLD=0.40
+export WAREHOUSEEYE_DETECTOR_INPUT_SIZE=1024
+export WAREHOUSEEYE_MIN_BBOX_AREA=2500
+export WAREHOUSEEYE_TRACKER_LOST_TRACK_BUFFER=30
+
+# Re-ID matching
+export WAREHOUSEEYE_REID_SIMILARITY_THRESHOLD=0.50
+export WAREHOUSEEYE_REID_CROP_EXPAND_RATIO=-0.12
+export WAREHOUSEEYE_REID_AGGREGATION=mean_topk
+export WAREHOUSEEYE_REID_TOPK=3
+export WAREHOUSEEYE_REID_TTA_HFLIP=1
+export WAREHOUSEEYE_REID_MAX_ANCHORS=8
+export WAREHOUSEEYE_REID_ANCHOR_MIN_DISTANCE=0.15
+export WAREHOUSEEYE_REID_ANCHOR_MIN_SHARPNESS=0
+export WAREHOUSEEYE_REID_MAX_LOST_AGE_SEC=600
+export WAREHOUSEEYE_REID_ACTIVE_ANCHOR_REFRESH_EVERY=2
 ```
+
+#### Re-ID quality knobs (introduced in this iteration)
+
+| Env var | Default | What it does |
+|---|---|---|
+| `WAREHOUSEEYE_REID_AGGREGATION` | `max` | How to combine per-anchor similarities for a candidate track. `max` is brittle (one bad anchor poisons the score); `mean_topk` averages the best k anchors and is far more stable. |
+| `WAREHOUSEEYE_REID_TOPK` | `3` | When `aggregation=mean_topk`, the number of top-anchor similarities to average. Falls back to mean of all when the candidate has fewer anchors. |
+| `WAREHOUSEEYE_REID_TTA_HFLIP` | `0` | When `1`, also embed the horizontal-flip of the crop and average the two L2-normalized vectors. Doubles per-crop embedding latency; lifts same-person cosine ~5–15%. |
+| `WAREHOUSEEYE_REID_MAX_ANCHORS` | `5` | Maximum pose-diverse anchors retained per track in the gallery. Higher = better recall on pose change, more memory. |
+| `WAREHOUSEEYE_REID_ANCHOR_MIN_DISTANCE` | `0.15` | Novelty gate. New anchors are rejected when their cosine similarity to any existing anchor is `>= 1 - this`. |
+| `WAREHOUSEEYE_REID_ANCHOR_MIN_SHARPNESS` | `0.0` | When `> 0`, gate anchor-promotion on Laplacian-variance focus measure. Rejects motion-blurred crops so they do not poison the gallery. Disabled by default. |
+| `WAREHOUSEEYE_REID_MAX_LOST_AGE_SEC` | `300.0` | Window in which a `lost` track is eligible for Re-ID recovery. Bump for longer videos. |
+| `WAREHOUSEEYE_REID_ACTIVE_ANCHOR_REFRESH_EVERY` | `0` | When `> 0`, every N frames recompute the embedding for an already-known active track and try to register it as an additional anchor (gated by novelty). This is what lets a track build a rich pose gallery during its initial active life so the *first* re-appearance after a gap can match. Disabled by default; set to `2`–`3` for short videos. |
+
+Tuning workflow:
+
+```bash
+# 1) Run the pipeline with REID enabled to populate reid_attempts.
+ENABLE_REID=1 PYTHONPATH=. python scripts/test_pipeline_local.py --video-path data/<video>.mp4 --base-dir data/<video> --enable-reid
+
+# 2) See where same-person sims cluster vs near-miss rejections.
+PYTHONPATH=. python scripts/dump_reid_distribution.py --db data/<video>/warehouseeye.sqlite3
+
+# 3) Iterate fast on threshold/aggregation/TTA without re-running detection.
+PYTHONPATH=. python scripts/reembed_from_crops.py --db data/<video>/warehouseeye.sqlite3 \
+    --backend osnet --aggregation mean_topk --topk 3 --tta-hflip --threshold 0.50 --max-anchors 8
+
+# 4) Get a data-driven threshold suggestion via IoU pseudo-labels.
+PYTHONPATH=. python scripts/calibrate_reid_threshold.py --db data/<video>/warehouseeye.sqlite3
+```
+
+Every Re-ID decision (matched, below_threshold, no_candidates, anchor_rejected_blur) is logged to the `reid_attempts` table in the per-video SQLite, with `best_similarity`, `second_best_similarity`, candidate counts and anchor counts — the calibration scripts and the dashboards read from it.
 
 ### 3) Produce before/after Re-ID metrics
 ```bash
-PYTHONPATH=. python scripts/test_reid_pipeline.py --video-path "data/warehouse_demo_1.mp4"
+PYTHONPATH=. python scripts/test_reid_pipeline.py --video-path "data/warehouse_demo_1.mp4" \
+    --dump-similarity-matrix data/reid_eval/similarity.csv
 ```
 
 Outputs:
 - `data/reid_comparison.json`
+- Optional `--dump-similarity-matrix <path>`: CSV of every `reid_attempts` row for offline plotting.
 - Terminal summary with:
   - ID switches (without Re-ID vs with Re-ID)
   - Unique tracks (without Re-ID vs with Re-ID)

@@ -6,6 +6,7 @@ import logging
 import sqlite3
 from collections.abc import Iterator, Sequence
 
+import cv2
 import numpy as np
 from PIL import Image
 import supervision as sv
@@ -33,6 +34,9 @@ class PersonTracker:
         min_reid_crop_aspect_ratio: float = 0.8,
         max_reid_crop_aspect_ratio: float = 4.5,
         reid_crop_expand_ratio: float = 0.15,
+        anchor_min_sharpness: float = 0.0,
+        video_id: str | None = None,
+        active_anchor_refresh_every: int = 0,
     ) -> None:
         self.tracker = sv.ByteTrack(
             track_activation_threshold=track_activation_threshold,
@@ -52,11 +56,26 @@ class PersonTracker:
         # background, useful for warehouse/kitchen scenes where the background
         # changes drastically between frames and dominates the embedding).
         self.reid_crop_expand_ratio = float(reid_crop_expand_ratio)
+        self.anchor_min_sharpness = max(0.0, float(anchor_min_sharpness))
+        self.video_id = video_id
+        # When > 0, recompute the embedding for an already-known active track
+        # every N frames and try to register it as an additional anchor. The
+        # novelty gate inside add_anchor filters near-duplicates so the gallery
+        # still stays bounded by max_anchors_per_track.
+        self.active_anchor_refresh_every = max(0, int(active_anchor_refresh_every))
         self._known_ids: set[int] = set()
         self._active_ids: set[int] = set()
+        self._active_frames_per_id: dict[int, int] = {}
         # Persistent remap so a tracker_id that already resolved to an older
         # identity stays renamed across all future frames, without re-querying ReID.
         self._reid_remap: dict[int, int] = {}
+
+    def _crop_sharpness(self, crop: np.ndarray) -> float:
+        """Return Laplacian-variance focus measure for an RGB crop (uint8)."""
+        if crop.size == 0:
+            return 0.0
+        gray = cv2.cvtColor(crop, cv2.COLOR_RGB2GRAY)
+        return float(cv2.Laplacian(gray, cv2.CV_64F).var())
 
     def _is_reid_crop_valid(self, bbox: tuple[float, float, float, float]) -> bool:
         x1, y1, x2, y2 = bbox
@@ -216,6 +235,9 @@ class PersonTracker:
                 embedding,
                 db_conn=db_conn,
                 current_timestamp=timestamp_sec,
+                frame_idx=frame_idx,
+                query_tracker_id=int(tracker_id),
+                video_id=self.video_id,
             )
             if matched_id is not None:
                 for idx in indices:
@@ -229,15 +251,46 @@ class PersonTracker:
                 self._known_ids.add(matched_id)
                 # Grow the multi-anchor gallery of the recovered identity with
                 # this new pose, so future matches against it cover more poses.
-                try:
-                    self.reid_engine.register_anchor(
-                        track_id=matched_id,
-                        embedding=embedding,
-                        db_conn=db_conn,
-                        timestamp=timestamp_sec,
+                # Gate on bbox quality + sharpness so blurry/off crops do not
+                # poison the gallery and bias future MAX-similarity matches.
+                anchor_ok = self._is_reid_crop_valid(bbox)
+                sharpness = 0.0
+                if anchor_ok and self.anchor_min_sharpness > 0.0:
+                    sharpness = self._crop_sharpness(crop)
+                    if sharpness < self.anchor_min_sharpness:
+                        anchor_ok = False
+                if anchor_ok:
+                    try:
+                        self.reid_engine.register_anchor(
+                            track_id=matched_id,
+                            embedding=embedding,
+                            db_conn=db_conn,
+                            timestamp=timestamp_sec,
+                        )
+                    except Exception as exc:  # pragma: no cover - defensive
+                        logger.info("anchor_register_failed tid=%s: %s", matched_id, exc)
+                else:
+                    pipeline_db.log_reid_attempt(
+                        db_conn,
+                        video_id=self.video_id,
+                        frame_idx=frame_idx,
+                        timestamp_sec=timestamp_sec,
+                        query_tracker_id=int(tracker_id),
+                        candidate_track_id=matched_id,
+                        best_similarity=float(self.reid_engine.last_match_similarity or 0.0),
+                        second_best_similarity=None,
+                        num_candidates=0,
+                        num_anchors=0,
+                        threshold=self.reid_engine.similarity_threshold,
+                        matched=False,
+                        reason="anchor_rejected_blur",
                     )
-                except Exception as exc:  # pragma: no cover - defensive
-                    logger.info("anchor_register_failed tid=%s: %s", matched_id, exc)
+                    logger.info(
+                        "anchor_rejected tid=%s sharpness=%.2f min=%.2f",
+                        matched_id,
+                        sharpness,
+                        self.anchor_min_sharpness,
+                    )
                 logger.info(
                     "ReID hit: tid=%s recovered as old tid=%s, similarity=%.2f",
                     tracker_id,
@@ -254,6 +307,34 @@ class PersonTracker:
             )
             self._known_ids.add(tracker_id)
             logger.info("New track: tid=%s embedding stored", tracker_id)
+
+        if self.active_anchor_refresh_every > 0:
+            for tid in current_ids:
+                self._active_frames_per_id[tid] = self._active_frames_per_id.get(tid, 0) + 1
+                counter = self._active_frames_per_id[tid]
+                if counter <= 1 or counter % self.active_anchor_refresh_every != 0:
+                    continue
+                indices = id_to_indices.get(tid, [])
+                if not indices:
+                    continue
+                bbox = tuple(float(v) for v in tracked.xyxy[indices[0]].tolist())
+                if not self._is_reid_crop_valid(bbox):
+                    continue
+                reid_bbox = self._expand_bbox_for_reid(bbox, frame_image.size)
+                crop = self._crop_frame(frame_image, reid_bbox)
+                if self.anchor_min_sharpness > 0.0:
+                    if self._crop_sharpness(crop) < self.anchor_min_sharpness:
+                        continue
+                try:
+                    embedding = self.reid_engine.compute_embedding(crop)
+                    self.reid_engine.register_anchor(
+                        track_id=tid,
+                        embedding=embedding,
+                        db_conn=db_conn,
+                        timestamp=timestamp_sec,
+                    )
+                except Exception as exc:  # pragma: no cover - defensive
+                    logger.info("active_anchor_refresh_failed tid=%s: %s", tid, exc)
 
         lost_ids = self._active_ids - current_ids
         for lost_id in sorted(lost_ids):

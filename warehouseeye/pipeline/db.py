@@ -81,12 +81,34 @@ def init_db(db_path: str | Path) -> sqlite3.Connection:
         )
         """
     )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS reid_attempts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            video_id TEXT,
+            frame_idx INTEGER,
+            timestamp_sec REAL,
+            query_tracker_id INTEGER,
+            candidate_track_id INTEGER,
+            best_similarity REAL,
+            second_best_similarity REAL,
+            num_candidates INTEGER,
+            num_anchors INTEGER,
+            threshold REAL,
+            matched INTEGER,
+            reason TEXT,
+            created_at REAL NOT NULL
+        )
+        """
+    )
     cur.execute("CREATE INDEX IF NOT EXISTS idx_tracks_track_id ON tracks(track_id)")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_tracks_timestamp ON tracks(timestamp_sec)")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_videos_status ON videos(status)")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_embeddings_state ON embeddings(state)")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_embeddings_last_seen ON embeddings(last_seen_sec)")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_embedding_anchors_track ON embedding_anchors(track_id)")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_reid_attempts_match ON reid_attempts(matched)")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_reid_attempts_video ON reid_attempts(video_id)")
     conn.commit()
     return conn
 
@@ -382,6 +404,50 @@ def add_anchor(
         conn.execute("DELETE FROM embedding_anchors WHERE id = ?", (oldest_row_id,))
     conn.commit()
     return True
+
+
+def log_reid_attempt(
+    conn: sqlite3.Connection,
+    *,
+    video_id: str | None,
+    frame_idx: int | None,
+    timestamp_sec: float | None,
+    query_tracker_id: int | None,
+    candidate_track_id: int | None,
+    best_similarity: float | None,
+    second_best_similarity: float | None,
+    num_candidates: int,
+    num_anchors: int,
+    threshold: float,
+    matched: bool,
+    reason: str,
+) -> None:
+    """Persist one ReID decision (matched, rejected, or no-candidates)."""
+    conn.execute(
+        """
+        INSERT INTO reid_attempts (
+            video_id, frame_idx, timestamp_sec, query_tracker_id,
+            candidate_track_id, best_similarity, second_best_similarity,
+            num_candidates, num_anchors, threshold, matched, reason, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            video_id,
+            frame_idx,
+            timestamp_sec,
+            query_tracker_id,
+            candidate_track_id,
+            best_similarity,
+            second_best_similarity,
+            int(num_candidates),
+            int(num_anchors),
+            float(threshold),
+            1 if matched else 0,
+            reason,
+            time.time(),
+        ),
+    )
+    conn.commit()
 
 
 def get_anchors_for_lost_tracks(

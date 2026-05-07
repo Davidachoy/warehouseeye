@@ -79,6 +79,14 @@ class Orchestrator:
         max_bbox_aspect_ratio: float = 4.5,
         reid_similarity_threshold: float = 0.9,
         reid_crop_expand_ratio: float = 0.15,
+        reid_max_anchors: int = 5,
+        reid_anchor_min_distance: float = 0.15,
+        reid_aggregation: str = "max",
+        reid_topk: int = 3,
+        reid_tta_hflip: bool = False,
+        reid_anchor_min_sharpness: float = 0.0,
+        reid_max_lost_age_sec: float = 300.0,
+        reid_active_anchor_refresh_every: int = 0,
     ) -> None:
         self.base_dir = Path(base_dir)
         self.model_id = model_id
@@ -123,6 +131,38 @@ class Orchestrator:
         self.reid_crop_expand_ratio = _env_float(
             "WAREHOUSEEYE_REID_CROP_EXPAND_RATIO",
             reid_crop_expand_ratio,
+        )
+        self.reid_max_anchors = _env_int(
+            "WAREHOUSEEYE_REID_MAX_ANCHORS", reid_max_anchors, min_value=1
+        )
+        self.reid_anchor_min_distance = _env_float(
+            "WAREHOUSEEYE_REID_ANCHOR_MIN_DISTANCE",
+            reid_anchor_min_distance,
+            min_value=0.0,
+        )
+        agg_raw = os.getenv("WAREHOUSEEYE_REID_AGGREGATION", reid_aggregation).strip().lower()
+        if agg_raw not in ("max", "mean_topk"):
+            logger.warning("invalid_reid_aggregation using_default: %s", agg_raw)
+            agg_raw = reid_aggregation
+        self.reid_aggregation = agg_raw
+        self.reid_topk = _env_int("WAREHOUSEEYE_REID_TOPK", reid_topk, min_value=1)
+        self.reid_tta_hflip = os.getenv(
+            "WAREHOUSEEYE_REID_TTA_HFLIP", "1" if reid_tta_hflip else "0"
+        ).strip() == "1"
+        self.reid_anchor_min_sharpness = _env_float(
+            "WAREHOUSEEYE_REID_ANCHOR_MIN_SHARPNESS",
+            reid_anchor_min_sharpness,
+            min_value=0.0,
+        )
+        self.reid_max_lost_age_sec = _env_float(
+            "WAREHOUSEEYE_REID_MAX_LOST_AGE_SEC",
+            reid_max_lost_age_sec,
+            min_value=1.0,
+        )
+        self.reid_active_anchor_refresh_every = _env_int(
+            "WAREHOUSEEYE_REID_ACTIVE_ANCHOR_REFRESH_EVERY",
+            reid_active_anchor_refresh_every,
+            min_value=0,
         )
         self.downloader = VideoDownloader()
         self.frame_extractor = FrameExtractor()
@@ -236,6 +276,12 @@ class Orchestrator:
             reid_engine = ReIDEngine(
                 embedding_client,
                 similarity_threshold=self.reid_similarity_threshold,
+                max_lost_track_age_sec=self.reid_max_lost_age_sec,
+                max_anchors_per_track=self.reid_max_anchors,
+                anchor_min_distance=self.reid_anchor_min_distance,
+                aggregation=self.reid_aggregation,  # type: ignore[arg-type]
+                topk=self.reid_topk,
+                tta_hflip=self.reid_tta_hflip,
             )
         tracker_frame_rate = (
             self.tracker_frame_rate
@@ -254,6 +300,9 @@ class Orchestrator:
             min_reid_crop_aspect_ratio=self.min_bbox_aspect_ratio,
             max_reid_crop_aspect_ratio=self.max_bbox_aspect_ratio,
             reid_crop_expand_ratio=self.reid_crop_expand_ratio,
+            anchor_min_sharpness=self.reid_anchor_min_sharpness,
+            video_id=self.base_dir.name,
+            active_anchor_refresh_every=self.reid_active_anchor_refresh_every,
         )
         identity_state: dict[int, dict[str, Any]] = {}
 
@@ -331,6 +380,16 @@ class Orchestrator:
                 "tracker_frame_rate": tracker_frame_rate,
                 "reid_match_count": int(self.last_reid_stats["match_count"]),
                 "reid_average_similarity": round(self.last_reid_stats["average_similarity"], 4),
+                "reid_similarity_threshold": self.reid_similarity_threshold,
+                "reid_crop_expand_ratio": self.reid_crop_expand_ratio,
+                "reid_max_anchors": self.reid_max_anchors,
+                "reid_anchor_min_distance": self.reid_anchor_min_distance,
+                "reid_aggregation": self.reid_aggregation,
+                "reid_topk": self.reid_topk,
+                "reid_tta_hflip": self.reid_tta_hflip,
+                "reid_anchor_min_sharpness": self.reid_anchor_min_sharpness,
+                "reid_max_lost_age_sec": self.reid_max_lost_age_sec,
+                "reid_active_anchor_refresh_every": self.reid_active_anchor_refresh_every,
             },
         )
         conn.close()
