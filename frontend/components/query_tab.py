@@ -69,7 +69,7 @@ def _render_crops(candidates: list[dict[str, Any]], workspace_root: Path, key_pr
         caption = f"Track {candidate.get('track_id', '?')}"
         with cols[index % len(cols)]:
             if crop is not None:
-                st.image(str(crop), caption=caption, use_container_width=True)
+                st.image(str(crop), caption=caption, width="stretch")
             else:
                 st.caption(f"{caption}: crop unavailable")
             st.button(
@@ -100,7 +100,7 @@ def _handle_ambiguous_response(
             st.markdown(f"**{label}**")
             st.caption(f"Color tag: `{color_tag}`")
             if crop is not None:
-                st.image(str(crop), use_container_width=True)
+                st.image(str(crop), width="stretch")
             if st.button(
                 f"Refine to {label}",
                 key=f"{key_prefix}-refine-{index}",
@@ -129,7 +129,7 @@ def render_query_tab(
     st.markdown("#### Suggested Questions")
     suggestion_cols = st.columns(2)
     for idx, prompt in enumerate(SUGGESTED_QUESTIONS):
-        if suggestion_cols[idx % 2].button(prompt, key=f"suggest-{idx}", use_container_width=True):
+        if suggestion_cols[idx % 2].button(prompt, key=f"suggest-{idx}", width="stretch"):
             st.session_state.pending_prompt = prompt
 
     for message in st.session_state.chat_history:

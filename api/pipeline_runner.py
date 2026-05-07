@@ -55,9 +55,14 @@ def run_pipeline_job(
     data_root: str | Path,
     status_db_path: str | Path,
     emit: ProgressEmitter,
+    semantic_progress: ProgressEmitter | None = None,
 ) -> dict[str, Any]:
     """Run orchestrator + semantic analysis + timeline write for one video."""
     started_at = time.perf_counter()
+    logger.info(
+        "pipeline_job_begin",
+        extra={"video_id": video_id, "task_id": task_id, "data_root": str(data_root)},
+    )
     video_dir = Path(data_root) / video_id
     video_dir.mkdir(parents=True, exist_ok=True)
     db_path = video_dir / "warehouseeye.sqlite3"
@@ -71,16 +76,26 @@ def run_pipeline_job(
 
     try:
         _emit_progress(emit, "extracting_frames", 10)
+        logger.info("pipeline_stage", extra={"stage": "orchestrator_begin", "video_id": video_id, "task_id": task_id})
         orchestrator = Orchestrator(base_dir=video_dir)
         orchestrator.run(video_url)
+        logger.info("pipeline_stage", extra={"stage": "orchestrator_done", "video_id": video_id, "task_id": task_id})
 
         _emit_progress(emit, "semantic_analysis", 55)
-        client = VLLMClient()
-        analyzer = VisionAnalyzer(vllm_client=client, base_dir=video_dir)
-        try:
-            vision_summary = asyncio.run(analyzer.analyze_all_tracks_async(db_path=db_path))
-        finally:
-            asyncio.run(client.aclose())
+        logger.info("pipeline_stage", extra={"stage": "vllm_begin", "video_id": video_id, "task_id": task_id})
+        async def _run_semantic_phase() -> dict[str, Any]:
+            client = VLLMClient()
+            analyzer = VisionAnalyzer(vllm_client=client, base_dir=video_dir)
+            try:
+                return await analyzer.analyze_all_tracks_async(
+                    db_path=db_path,
+                    on_crop_progress=semantic_progress,
+                )
+            finally:
+                await client.aclose()
+
+        vision_summary = asyncio.run(_run_semantic_phase())
+        logger.info("pipeline_stage", extra={"stage": "vllm_done", "video_id": video_id, "task_id": task_id})
 
         _emit_progress(emit, "transcription", 80, "whisper step unavailable in this branch; skipped")
         _emit_progress(emit, "building_timeline", 90)
@@ -113,12 +128,21 @@ def run_pipeline_job(
         )
         done_status_conn.close()
         _emit_progress(emit, "done", 100)
+        logger.info(
+            "pipeline_job_success",
+            extra={
+                "video_id": video_id,
+                "task_id": task_id,
+                "wall_sec": round(time.perf_counter() - started_at, 2),
+            },
+        )
         return {
             "video_id": video_id,
             "task_id": task_id,
             "db_path": str(db_path),
             "timeline_path": str(timeline_path),
             "benchmark": benchmark,
+            "vision_summary": vision_summary,
         }
     except Exception as exc:
         logger.exception("pipeline_job_failed", extra={"video_id": video_id, "task_id": task_id})

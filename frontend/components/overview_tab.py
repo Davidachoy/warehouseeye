@@ -87,7 +87,7 @@ def _plot_timeline(df: pd.DataFrame) -> None:
     )
     fig.update_traces(marker_line_width=0)
     fig.update_yaxes(autorange="reversed")
-    st.plotly_chart(fig, use_container_width=True, theme=None)
+    st.plotly_chart(fig, width="stretch", theme=None)
 
 
 def render_operation_overview(video: VideoRecord, timeline_rows: list[dict[str, Any]]) -> None:

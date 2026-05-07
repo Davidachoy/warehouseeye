@@ -1,0 +1,1227 @@
+{
+  "timeline": [
+    {
+      "track_id": 1,
+      "timestamp_sec": 0.0,
+      "frame_idx": 0,
+      "bbox": [
+        178.64707946777344,
+        33.70446014404297,
+        268.95843505859375,
+        159.35153198242188
+      ],
+      "confidence": 0.9439461827278137,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00000.jpg",
+      "activity": {
+        "activity": "standing near equipment",
+        "relative_location": "near industrial equipment",
+        "visible_tools": [],
+        "object_interaction": "no direct interaction",
+        "posture": "standing, slightly leaning",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 4.9,
+      "frame_idx": 1,
+      "bbox": [
+        178.23489379882812,
+        33.5653190612793,
+        266.9375915527344,
+        159.37881469726562
+      ],
+      "confidence": 0.943199098110199,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00001.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 7.033,
+      "frame_idx": 2,
+      "bbox": [
+        178.7568359375,
+        33.665618896484375,
+        296.1175231933594,
+        159.3540802001953
+      ],
+      "confidence": 0.9166874885559082,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00002.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 7.633,
+      "frame_idx": 3,
+      "bbox": [
+        177.0950469970703,
+        33.61821365356445,
+        285.9972839355469,
+        159.14920043945312
+      ],
+      "confidence": 0.9145451784133911,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00003.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 9.033,
+      "frame_idx": 4,
+      "bbox": [
+        183.9021453857422,
+        33.84758758544922,
+        274.6080322265625,
+        159.42359924316406
+      ],
+      "confidence": 0.9366257786750793,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00004.jpg",
+      "activity": {
+        "activity": "standing near storage bins",
+        "relative_location": "near storage bins and shelving",
+        "visible_tools": [],
+        "object_interaction": "no direct interaction with objects",
+        "posture": "standing with one foot raised",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 9.7,
+      "frame_idx": 5,
+      "bbox": [
+        184.50604248046875,
+        33.75031661987305,
+        272.98248291015625,
+        159.2854461669922
+      ],
+      "confidence": 0.9375637769699097,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00005.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 14.7,
+      "frame_idx": 6,
+      "bbox": [
+        185.03961181640625,
+        33.73927688598633,
+        272.1982727050781,
+        159.37380981445312
+      ],
+      "confidence": 0.9432286620140076,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00006.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 19.7,
+      "frame_idx": 7,
+      "bbox": [
+        185.0717010498047,
+        33.83892059326172,
+        272.3924865722656,
+        152.27395629882812
+      ],
+      "confidence": 0.9273954629898071,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00007.jpg",
+      "activity": {
+        "activity": "standing near equipment",
+        "relative_location": "near machinery or workbench",
+        "visible_tools": [],
+        "object_interaction": "no direct interaction with objects",
+        "posture": "standing, slightly leaning",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 24.7,
+      "frame_idx": 8,
+      "bbox": [
+        184.84872436523438,
+        33.71468734741211,
+        272.2729187011719,
+        159.12635803222656
+      ],
+      "confidence": 0.940398633480072,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00008.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 29.7,
+      "frame_idx": 9,
+      "bbox": [
+        210.7857666015625,
+        33.90391159057617,
+        264.7202453613281,
+        108.39337921142578
+      ],
+      "confidence": 0.8984721899032593,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00009.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 33.167,
+      "frame_idx": 10,
+      "bbox": [
+        235.47195434570312,
+        33.98252487182617,
+        287.50030517578125,
+        174.33763122558594
+      ],
+      "confidence": 0.8771545886993408,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00010.jpg",
+      "activity": {
+        "activity": "standing",
+        "relative_location": "near shelving or storage unit",
+        "visible_tools": [],
+        "object_interaction": "none",
+        "posture": "upright",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 35.033,
+      "frame_idx": 12,
+      "bbox": [
+        229.6786651611328,
+        34.20241928100586,
+        275.53839111328125,
+        173.85464477539062
+      ],
+      "confidence": 0.8535081744194031,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00012.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 35.967,
+      "frame_idx": 13,
+      "bbox": [
+        230.03964233398438,
+        34.29258346557617,
+        276.0640869140625,
+        173.67958068847656
+      ],
+      "confidence": 0.8880308270454407,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00013.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 4,
+      "timestamp_sec": 35.967,
+      "frame_idx": 13,
+      "bbox": [
+        275.622802734375,
+        34.19031524658203,
+        309.8619689941406,
+        132.12759399414062
+      ],
+      "confidence": 0.5390387177467346,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0004/frame_00013.jpg",
+      "activity": {
+        "activity": "not clearly visible",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "unknown",
+        "posture": "unknown",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 4: white_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 40.967,
+      "frame_idx": 14,
+      "bbox": [
+        207.1949920654297,
+        88.47279357910156,
+        280.48712158203125,
+        278.69000244140625
+      ],
+      "confidence": 0.9156733155250549,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00014.jpg",
+      "activity": {},
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 45.967,
+      "frame_idx": 15,
+      "bbox": [
+        206.32473754882812,
+        95.76342010498047,
+        276.2989807128906,
+        280.0639343261719
+      ],
+      "confidence": 0.9073053598403931,
+      "color_tag": "yellow_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0001/frame_00015.jpg",
+      "activity": {
+        "activity": "handling a red bag or container",
+        "relative_location": "near a counter or workbench",
+        "visible_tools": [],
+        "object_interaction": "holding and manipulating a red object with both hands",
+        "posture": "standing, leaning forward",
+        "anomaly": true,
+        "severity": "medium"
+      },
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 45.967,
+      "frame_idx": 15,
+      "bbox": [
+        230.44674682617188,
+        34.03746795654297,
+        291.48382568359375,
+        128.02102661132812
+      ],
+      "confidence": 0.7987905740737915,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00015.jpg",
+      "activity": {
+        "activity": "not clearly visible",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "unknown",
+        "posture": "unknown",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 50.967,
+      "frame_idx": 16,
+      "bbox": [
+        208.6997833251953,
+        256.8706359863281,
+        310.62139892578125,
+        359.81500244140625
+      ],
+      "confidence": 0.8929735422134399,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00016.jpg",
+      "activity": {
+        "activity": "not clearly visible",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "unknown",
+        "posture": "unknown",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 50.967,
+      "frame_idx": 16,
+      "bbox": [
+        231.38607788085938,
+        33.89726257324219,
+        286.6319274902344,
+        174.0945281982422
+      ],
+      "confidence": 0.8716920614242554,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00016.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 52.233,
+      "frame_idx": 17,
+      "bbox": [
+        231.4561309814453,
+        33.8043212890625,
+        288.2059326171875,
+        173.92037963867188
+      ],
+      "confidence": 0.873189389705658,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00017.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 53.167,
+      "frame_idx": 18,
+      "bbox": [
+        230.0810546875,
+        33.884124755859375,
+        294.8402404785156,
+        173.9093475341797
+      ],
+      "confidence": 0.917962372303009,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00018.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 58.167,
+      "frame_idx": 19,
+      "bbox": [
+        229.44366455078125,
+        33.914981842041016,
+        297.45989990234375,
+        173.4526824951172
+      ],
+      "confidence": 0.9026108384132385,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00019.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 63.167,
+      "frame_idx": 20,
+      "bbox": [
+        201.04202270507812,
+        245.4358367919922,
+        324.5931701660156,
+        359.57757568359375
+      ],
+      "confidence": 0.8984220623970032,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00020.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 63.167,
+      "frame_idx": 20,
+      "bbox": [
+        229.46092224121094,
+        33.804168701171875,
+        297.251220703125,
+        173.61036682128906
+      ],
+      "confidence": 0.9106970429420471,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00020.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 65.1,
+      "frame_idx": 21,
+      "bbox": [
+        211.27276611328125,
+        270.1965637207031,
+        304.0867614746094,
+        359.7700500488281
+      ],
+      "confidence": 0.8693693280220032,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00021.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 65.1,
+      "frame_idx": 21,
+      "bbox": [
+        230.50296020507812,
+        33.93581771850586,
+        297.3240966796875,
+        173.8540496826172
+      ],
+      "confidence": 0.9129249453544617,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00021.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 65.833,
+      "frame_idx": 22,
+      "bbox": [
+        221.3245849609375,
+        267.8381042480469,
+        312.2066650390625,
+        359.72314453125
+      ],
+      "confidence": 0.8746621012687683,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00022.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 65.833,
+      "frame_idx": 22,
+      "bbox": [
+        230.42739868164062,
+        34.11895751953125,
+        295.7083740234375,
+        173.97532653808594
+      ],
+      "confidence": 0.868614673614502,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00022.jpg",
+      "activity": {
+        "activity": "handling items on a shelf",
+        "relative_location": "near a storage shelf",
+        "visible_tools": [],
+        "object_interaction": "reaching for or placing an item on a shelf",
+        "posture": "standing, leaning forward",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 68.233,
+      "frame_idx": 23,
+      "bbox": [
+        222.69815063476562,
+        277.9584655761719,
+        305.5544738769531,
+        359.9379577636719
+      ],
+      "confidence": 0.8278345465660095,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00023.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 68.233,
+      "frame_idx": 23,
+      "bbox": [
+        229.94932556152344,
+        33.89636993408203,
+        296.8062438964844,
+        173.5168914794922
+      ],
+      "confidence": 0.9022501707077026,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00023.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 69.033,
+      "frame_idx": 24,
+      "bbox": [
+        223.7791290283203,
+        276.308837890625,
+        312.7779541015625,
+        359.85479736328125
+      ],
+      "confidence": 0.8380816578865051,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00024.jpg",
+      "activity": {
+        "activity": "walking",
+        "relative_location": "aisle or corridor",
+        "visible_tools": [],
+        "object_interaction": "none",
+        "posture": "upright",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 69.033,
+      "frame_idx": 24,
+      "bbox": [
+        229.68515014648438,
+        33.9709587097168,
+        296.6927795410156,
+        173.6027069091797
+      ],
+      "confidence": 0.9036611914634705,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00024.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 70.233,
+      "frame_idx": 25,
+      "bbox": [
+        222.8302001953125,
+        276.55670166015625,
+        303.9886779785156,
+        359.9393005371094
+      ],
+      "confidence": 0.85645991563797,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00025.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 70.233,
+      "frame_idx": 25,
+      "bbox": [
+        229.62930297851562,
+        33.90898132324219,
+        297.3038024902344,
+        173.6494140625
+      ],
+      "confidence": 0.9168533086776733,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00025.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 74.167,
+      "frame_idx": 26,
+      "bbox": [
+        227.99404907226562,
+        264.14837646484375,
+        318.0546875,
+        359.9238586425781
+      ],
+      "confidence": 0.865794837474823,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00026.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 74.167,
+      "frame_idx": 26,
+      "bbox": [
+        229.3606414794922,
+        33.92118453979492,
+        297.1328125,
+        173.69190979003906
+      ],
+      "confidence": 0.9200217127799988,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00026.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 75.867,
+      "frame_idx": 27,
+      "bbox": [
+        229.41012573242188,
+        33.86127471923828,
+        297.3597717285156,
+        173.84249877929688
+      ],
+      "confidence": 0.9116315841674805,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00027.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 76.8,
+      "frame_idx": 28,
+      "bbox": [
+        240.33200073242188,
+        313.50909423828125,
+        309.53924560546875,
+        359.8274230957031
+      ],
+      "confidence": 0.7433182001113892,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00028.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 76.8,
+      "frame_idx": 28,
+      "bbox": [
+        229.35867309570312,
+        33.921630859375,
+        297.1719970703125,
+        173.83766174316406
+      ],
+      "confidence": 0.9087362289428711,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00028.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 81.333,
+      "frame_idx": 29,
+      "bbox": [
+        229.3778076171875,
+        280.1963195800781,
+        313.74224853515625,
+        359.68524169921875
+      ],
+      "confidence": 0.8318626880645752,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00029.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 81.333,
+      "frame_idx": 29,
+      "bbox": [
+        229.5037078857422,
+        33.81466293334961,
+        297.1841125488281,
+        173.580322265625
+      ],
+      "confidence": 0.9145690202713013,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00029.jpg",
+      "activity": {
+        "activity": "handling items on a counter",
+        "relative_location": "near a workbench or counter",
+        "visible_tools": [],
+        "object_interaction": "reaching toward or placing items on surface",
+        "posture": "standing, slightly bent forward",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 82.0,
+      "frame_idx": 30,
+      "bbox": [
+        231.84860229492188,
+        278.8776550292969,
+        312.800048828125,
+        359.7900695800781
+      ],
+      "confidence": 0.8401626944541931,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00030.jpg",
+      "activity": {
+        "activity": "not clearly visible",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "unknown",
+        "posture": "unknown",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 82.0,
+      "frame_idx": 30,
+      "bbox": [
+        229.3843994140625,
+        33.84717559814453,
+        294.2306213378906,
+        173.6146240234375
+      ],
+      "confidence": 0.9123098850250244,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00030.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 84.933,
+      "frame_idx": 31,
+      "bbox": [
+        219.1024169921875,
+        307.619384765625,
+        295.8279113769531,
+        359.952880859375
+      ],
+      "confidence": 0.7445063591003418,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00031.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 84.933,
+      "frame_idx": 31,
+      "bbox": [
+        229.41757202148438,
+        33.85272979736328,
+        296.3711853027344,
+        173.51490783691406
+      ],
+      "confidence": 0.9135610461235046,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00031.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 88.767,
+      "frame_idx": 32,
+      "bbox": [
+        236.52574157714844,
+        313.28692626953125,
+        304.74871826171875,
+        359.8433837890625
+      ],
+      "confidence": 0.7685680389404297,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00032.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 88.767,
+      "frame_idx": 32,
+      "bbox": [
+        229.49560546875,
+        34.00878143310547,
+        296.4393310546875,
+        173.30020141601562
+      ],
+      "confidence": 0.9118323922157288,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00032.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 89.967,
+      "frame_idx": 33,
+      "bbox": [
+        240.02195739746094,
+        311.6003112792969,
+        299.5000915527344,
+        359.8701171875
+      ],
+      "confidence": 0.770968496799469,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00033.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 89.967,
+      "frame_idx": 33,
+      "bbox": [
+        229.56297302246094,
+        33.99456787109375,
+        296.56988525390625,
+        173.3013916015625
+      ],
+      "confidence": 0.9131550788879395,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00033.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 90.667,
+      "frame_idx": 34,
+      "bbox": [
+        229.85134887695312,
+        305.9698486328125,
+        303.42315673828125,
+        359.86517333984375
+      ],
+      "confidence": 0.7831721901893616,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00034.jpg",
+      "activity": {
+        "activity": "not clearly visible",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "unknown",
+        "posture": "unknown",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 90.667,
+      "frame_idx": 34,
+      "bbox": [
+        230.26365661621094,
+        33.916587829589844,
+        296.7815856933594,
+        173.8351287841797
+      ],
+      "confidence": 0.91231769323349,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00034.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 92.567,
+      "frame_idx": 35,
+      "bbox": [
+        239.2920684814453,
+        300.02655029296875,
+        306.9324951171875,
+        359.8265686035156
+      ],
+      "confidence": 0.8040242195129395,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00035.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 92.567,
+      "frame_idx": 35,
+      "bbox": [
+        230.7456817626953,
+        33.92790985107422,
+        296.89703369140625,
+        173.72723388671875
+      ],
+      "confidence": 0.8991313576698303,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00035.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 93.567,
+      "frame_idx": 36,
+      "bbox": [
+        230.75875854492188,
+        33.92139434814453,
+        296.2557067871094,
+        173.76943969726562
+      ],
+      "confidence": 0.8849091529846191,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00036.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 94.9,
+      "frame_idx": 37,
+      "bbox": [
+        230.12860107421875,
+        33.77342224121094,
+        296.6084289550781,
+        173.7812957763672
+      ],
+      "confidence": 0.911370038986206,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00037.jpg",
+      "activity": {
+        "activity": "handling items on a shelf",
+        "relative_location": "near shelving unit",
+        "visible_tools": [],
+        "object_interaction": "reaching for or placing an item on a shelf",
+        "posture": "standing, slightly bent forward",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 96.0,
+      "frame_idx": 38,
+      "bbox": [
+        229.78195190429688,
+        33.876583099365234,
+        296.87493896484375,
+        173.81971740722656
+      ],
+      "confidence": 0.9100404381752014,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00038.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 97.967,
+      "frame_idx": 39,
+      "bbox": [
+        229.66433715820312,
+        33.92465591430664,
+        296.6833801269531,
+        173.81996154785156
+      ],
+      "confidence": 0.9059563875198364,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00039.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 99.233,
+      "frame_idx": 40,
+      "bbox": [
+        229.5325927734375,
+        33.92031478881836,
+        296.4364318847656,
+        173.47645568847656
+      ],
+      "confidence": 0.9126052260398865,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00040.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 99.867,
+      "frame_idx": 41,
+      "bbox": [
+        262.4405822753906,
+        312.9875183105469,
+        316.049072265625,
+        360.0035705566406
+      ],
+      "confidence": 0.7205544710159302,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00041.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 99.867,
+      "frame_idx": 41,
+      "bbox": [
+        229.5704345703125,
+        33.933319091796875,
+        295.6750183105469,
+        173.46583557128906
+      ],
+      "confidence": 0.9144635200500488,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00041.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 102.633,
+      "frame_idx": 42,
+      "bbox": [
+        243.8670654296875,
+        231.9144744873047,
+        325.45062255859375,
+        359.7225646972656
+      ],
+      "confidence": 0.8746316432952881,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00042.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 102.633,
+      "frame_idx": 42,
+      "bbox": [
+        229.6798553466797,
+        33.96699523925781,
+        296.915771484375,
+        173.7952423095703
+      ],
+      "confidence": 0.9160125255584717,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00042.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 103.267,
+      "frame_idx": 43,
+      "bbox": [
+        248.27047729492188,
+        226.3841094970703,
+        325.4701232910156,
+        359.6288757324219
+      ],
+      "confidence": 0.8942674398422241,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00043.jpg",
+      "activity": {},
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 103.267,
+      "frame_idx": 43,
+      "bbox": [
+        229.6487274169922,
+        33.97355270385742,
+        296.99560546875,
+        173.80130004882812
+      ],
+      "confidence": 0.920339047908783,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00043.jpg",
+      "activity": {},
+      "narrative_summary": "Track 5: white_top detected."
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 108.267,
+      "frame_idx": 44,
+      "bbox": [
+        231.73890686035156,
+        247.87940979003906,
+        328.153076171875,
+        359.529052734375
+      ],
+      "confidence": 0.8365046977996826,
+      "color_tag": "black_hoodie",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0002/frame_00044.jpg",
+      "activity": {
+        "activity": "not clearly visible",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "unknown",
+        "posture": "unknown",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 5,
+      "timestamp_sec": 108.267,
+      "frame_idx": 44,
+      "bbox": [
+        198.96348571777344,
+        33.986717224121094,
+        285.06170654296875,
+        197.54974365234375
+      ],
+      "confidence": 0.9447159171104431,
+      "color_tag": "white_top",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video/crops/track_0005/frame_00044.jpg",
+      "activity": {
+        "activity": "handling a blue object",
+        "relative_location": "near a workbench or storage area",
+        "visible_tools": [
+          "blue object (possibly a container or tool)"
+        ],
+        "object_interaction": "holding and manipulating a blue object with both hands",
+        "posture": "standing, slightly bent forward",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 5: white_top detected."
+    }
+  ],
+  "identities": [
+    {
+      "track_id": 1,
+      "color_tag": "yellow_top",
+      "first_seen_sec": 0.0,
+      "last_seen_sec": 45.967,
+      "total_frames": 15,
+      "narrative_summary": "Track 1: yellow_top detected."
+    },
+    {
+      "track_id": 2,
+      "color_tag": "black_hoodie",
+      "first_seen_sec": 50.967,
+      "last_seen_sec": 108.267,
+      "total_frames": 20,
+      "narrative_summary": "Track 2: black_hoodie detected."
+    },
+    {
+      "track_id": 4,
+      "color_tag": "white_top",
+      "first_seen_sec": 35.967,
+      "last_seen_sec": 35.967,
+      "total_frames": 1,
+      "narrative_summary": "Track 4: white_top detected."
+    },
+    {
+      "track_id": 5,
+      "color_tag": "white_top",
+      "first_seen_sec": 45.967,
+      "last_seen_sec": 108.267,
+      "total_frames": 30,
+      "narrative_summary": "Track 5: white_top detected."
+    }
+  ],
+  "video_id": "video",
+  "video_url": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/video.mp4",
+  "task_id": "prerender-video-1778121597"
+}

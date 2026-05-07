@@ -146,6 +146,39 @@ class VisionAnalyzer:
                 return candidate.resolve()
         return (Path.cwd() / path).resolve()
 
+    def _load_track_crops(
+        self,
+        conn: sqlite3.Connection,
+        *,
+        track_id: int,
+        db_parent: Path,
+    ) -> list[dict[str, Any]]:
+        rows = conn.execute(
+            """
+            SELECT id, timestamp_sec, frame_idx, crop_path
+            FROM tracks
+            WHERE track_id = ? AND crop_path IS NOT NULL
+            ORDER BY timestamp_sec
+            """,
+            (track_id,),
+        ).fetchall()
+        sampled_rows = self.select_representative_rows(rows=rows)
+        crops: list[dict[str, Any]] = []
+        for row_id, timestamp_sec, frame_idx, crop_path in sampled_rows:
+            if not crop_path:
+                continue
+            resolved_path = self._resolve_crop_path(str(crop_path), db_parent=db_parent)
+            crops.append(
+                {
+                    "row_id": int(row_id),
+                    "timestamp_sec": float(timestamp_sec),
+                    "frame_idx": int(frame_idx),
+                    "crop_path": str(crop_path),
+                    "resolved_path": resolved_path,
+                }
+            )
+        return crops
+
     async def _describe_and_parse(
         self, crop: dict[str, Any], prompt: str
     ) -> tuple[dict[str, Any], str]:
@@ -252,6 +285,7 @@ class VisionAnalyzer:
         db_path: str | Path,
         dry_run: bool = False,
         on_track_complete: Callable[[dict[str, Any]], None] | None = None,
+        on_crop_progress: Callable[[dict[str, Any]], None] | None = None,
     ) -> dict[str, Any]:
         """Analyze representative crops for all tracks and persist to SQLite."""
         db_path_value = Path(db_path)
@@ -263,38 +297,44 @@ class VisionAnalyzer:
             ).fetchall()
             track_ids = [int(row[0]) for row in track_rows]
             self.total_tracks = len(track_ids)
+            crops_by_track: dict[int, list[dict[str, Any]]] = {}
+            for track_id in track_ids:
+                crops_by_track[track_id] = self._load_track_crops(
+                    conn=conn,
+                    track_id=track_id,
+                    db_parent=db_parent,
+                )
+            self.total_crops = sum(len(crops) for crops in crops_by_track.values())
 
             analyzed_tracks = 0
+            completed_crops = 0
+            semantic_started_at = time.perf_counter()
             for index, track_id in enumerate(track_ids, start=1):
                 track_started_at = time.perf_counter()
                 try:
-                    rows = conn.execute(
-                        """
-                        SELECT id, timestamp_sec, frame_idx, crop_path
-                        FROM tracks
-                        WHERE track_id = ? AND crop_path IS NOT NULL
-                        ORDER BY timestamp_sec
-                        """,
-                        (track_id,),
-                    ).fetchall()
-                    sampled_rows = self.select_representative_rows(rows=rows)
-                    crops: list[dict[str, Any]] = []
-                    for row_id, timestamp_sec, frame_idx, crop_path in sampled_rows:
-                        if not crop_path:
-                            continue
-                        resolved_path = self._resolve_crop_path(str(crop_path), db_parent=db_parent)
-                        crops.append(
-                            {
-                                "row_id": int(row_id),
-                                "timestamp_sec": float(timestamp_sec),
-                                "frame_idx": int(frame_idx),
-                                "crop_path": str(crop_path),
-                                "resolved_path": resolved_path,
-                            }
-                        )
-                    self.total_crops += len(crops)
+                    crops = crops_by_track.get(track_id, [])
                     results = await self.analyze_track(track_id=track_id, crops_list=crops)
                     for result in results:
+                        completed_crops += 1
+                        if on_crop_progress is not None:
+                            elapsed_sec = time.perf_counter() - semantic_started_at
+                            avg_sec_per_crop = elapsed_sec / completed_crops if completed_crops > 0 else 0.0
+                            remaining_crops = max(self.total_crops - completed_crops, 0)
+                            on_crop_progress(
+                                {
+                                    "track_id": track_id,
+                                    "index": index,
+                                    "total_tracks": self.total_tracks,
+                                    "completed_crops": completed_crops,
+                                    "total_crops": self.total_crops,
+                                    "remaining_crops": remaining_crops,
+                                    "elapsed_sec": elapsed_sec,
+                                    "avg_sec_per_crop": avg_sec_per_crop,
+                                    "eta_sec": avg_sec_per_crop * remaining_crops,
+                                    "row_id": int(result["row_id"]),
+                                    "status": "ok" if not result.get("error") else "failed",
+                                }
+                            )
                         if dry_run:
                             continue
                         update_track_activity(
@@ -339,6 +379,7 @@ class VisionAnalyzer:
                 "average_latency_ms": self.vllm_client.average_latency_ms,
                 "total_tokens": self.vllm_client.total_tokens,
                 "max_tokens": self.max_tokens,
+                "completed_crops": completed_crops,
             }
         finally:
             conn.close()
@@ -348,6 +389,7 @@ class VisionAnalyzer:
         db_path: str | Path,
         dry_run: bool = False,
         on_track_complete: Callable[[dict[str, Any]], None] | None = None,
+        on_crop_progress: Callable[[dict[str, Any]], None] | None = None,
     ) -> dict[str, Any]:
         """Synchronous wrapper for all-track analysis."""
         return asyncio.run(
@@ -355,5 +397,6 @@ class VisionAnalyzer:
                 db_path=db_path,
                 dry_run=dry_run,
                 on_track_complete=on_track_complete,
+                on_crop_progress=on_crop_progress,
             )
         )

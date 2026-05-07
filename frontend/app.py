@@ -138,7 +138,7 @@ def _render_sidebar(video: VideoRecord | None, client: ApiClient) -> None:
         st.sidebar.warning("No demo videos found in data directory.")
         return
 
-    if st.sidebar.button("Re-analyze", use_container_width=True, type="primary"):
+    if st.sidebar.button("Re-analyze", width="stretch", type="primary"):
         started = time.perf_counter()
         with st.spinner("Submitting analysis job..."):
             try:

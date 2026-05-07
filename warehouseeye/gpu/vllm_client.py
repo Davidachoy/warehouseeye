@@ -41,6 +41,11 @@ class VLLMClient:
         self.max_attempts = max_attempts
         self.initial_backoff_sec = initial_backoff_sec
         self.temperature = temperature
+        self.chat_completion_paths = (
+            ["/chat/completions"]
+            if self.base_url.endswith("/v1")
+            else ["/v1/chat/completions", "/chat/completions"]
+        )
 
         self.request_count = 0
         self.success_count = 0
@@ -153,29 +158,13 @@ class VLLMClient:
         last_error: Exception | None = None
 
         for attempt in range(1, self.max_attempts + 1):
-            started_at = time.perf_counter()
             try:
-                response = await client.post("/chat/completions", json=payload)
-                elapsed_ms = (time.perf_counter() - started_at) * 1000
-                self.latencies_ms.append(elapsed_ms)
-                logger.info(
-                    "vllm_request_timing",
-                    extra={
-                        "attempt": attempt,
-                        "elapsed_ms": round(elapsed_ms, 2),
-                        "request_hint": request_hint,
-                        "status_code": response.status_code,
-                    },
+                response = await self._post_chat_with_fallback(
+                    client=client,
+                    payload=payload,
+                    request_hint=request_hint,
+                    attempt=attempt,
                 )
-
-                if response.status_code >= 400:
-                    if response.status_code in {429, 500, 502, 503, 504}:
-                        raise httpx.HTTPStatusError(
-                            f"Transient HTTP status {response.status_code}",
-                            request=response.request,
-                            response=response,
-                        )
-                    response.raise_for_status()
 
                 body = response.json()
                 usage = body.get("usage", {})
@@ -191,24 +180,66 @@ class VLLMClient:
                         )
                 self.success_count += 1
                 return body
-            except (
-                httpx.TimeoutException,
-                httpx.ConnectError,
-                httpx.ReadError,
-                httpx.HTTPStatusError,
-                ValueError,
-            ) as exc:
+            except (httpx.TimeoutException, httpx.ConnectError, httpx.ReadError, ValueError) as exc:
                 last_error = exc
                 if attempt >= self.max_attempts:
                     break
                 backoff = self.initial_backoff_sec * (2 ** (attempt - 1))
                 await asyncio.sleep(backoff)
+            except httpx.HTTPStatusError as exc:
+                last_error = exc
+                status_code = exc.response.status_code if exc.response is not None else None
+                if status_code in {429, 500, 502, 503, 504} and attempt < self.max_attempts:
+                    backoff = self.initial_backoff_sec * (2 ** (attempt - 1))
+                    await asyncio.sleep(backoff)
+                    continue
+                # Do not retry deterministic failures like 400/401/403/404.
+                break
             except Exception as exc:  # pragma: no cover - hard guard for runtime unknowns.
                 last_error = exc
                 break
 
         self.failure_count += 1
         raise RuntimeError("Failed chat completion after retries.") from last_error
+
+    async def _post_chat_with_fallback(
+        self,
+        client: httpx.AsyncClient,
+        payload: dict[str, Any],
+        request_hint: str,
+        attempt: int,
+    ) -> httpx.Response:
+        last_http_error: httpx.HTTPStatusError | None = None
+        for path in self.chat_completion_paths:
+            started_at = time.perf_counter()
+            response = await client.post(path, json=payload)
+            elapsed_ms = (time.perf_counter() - started_at) * 1000
+            self.latencies_ms.append(elapsed_ms)
+            logger.info(
+                "vllm_request_timing",
+                extra={
+                    "attempt": attempt,
+                    "elapsed_ms": round(elapsed_ms, 2),
+                    "request_hint": request_hint,
+                    "status_code": response.status_code,
+                    "path": path,
+                },
+            )
+            if response.status_code == 404 and path != self.chat_completion_paths[-1]:
+                # Some deployments expose /v1/chat/completions instead of /chat/completions.
+                continue
+            if response.status_code >= 400:
+                last_http_error = httpx.HTTPStatusError(
+                    f"HTTP status {response.status_code}",
+                    request=response.request,
+                    response=response,
+                )
+                raise last_http_error
+            return response
+        if last_http_error is not None:
+            raise last_http_error
+        msg = "Failed to call chat completion endpoint."
+        raise RuntimeError(msg)
 
     def describe_image(self, image_path: str | Path, prompt: str, max_tokens: int = 300) -> str:
         """Synchronous wrapper for image description."""
