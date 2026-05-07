@@ -73,6 +73,49 @@ Input Video
 
 \* GPT-4V estimate is derived from repo baseline logic (`vs_gpt4v_estimated_savings_pct = 35` in `api/pipeline_runner.py`) and pricing notes in `BENCHMARKS.md` ($10/M input, $30/M output).
 
+## Re-ID extension
+- WarehouseEye now supports optional persistent Re-ID using `Qwen/Qwen3-VL-Embedding-2B` (Apache-2.0), which improves identity continuity when people leave and re-enter the frame.
+- This keeps the legal stack requirement intact: Apache-2.0 / MIT / BSD only.
+- Positioning statement for the pitch: **First known open-source video pipeline to use multimodal foundation model embeddings for person Re-Identification.**
+
+### 1) Launch both vLLM services (semantic + embedding)
+```bash
+scripts/launch_embedding_server.sh
+```
+
+This script launches:
+- Semantic model on `http://localhost:8000/v1/models` with reduced GPU allocation (`--gpu-memory-utilization 0.6`)
+- Embedding model on `http://localhost:8001/v1/models` with low GPU allocation (`--gpu-memory-utilization 0.05`)
+
+It also applies AMD recipe environment settings:
+- `MIOPEN_FIND_MODE=FAST`
+- `VLLM_ROCM_USE_AITER=1`
+
+### 2) Enable Re-ID in pipeline runs
+Use either CLI flag or environment variable:
+```bash
+PYTHONPATH=. python scripts/test_pipeline_local.py --video-path "/absolute/path/to/video.mp4" --enable-reid
+```
+
+```bash
+ENABLE_REID=1 PYTHONPATH=. python scripts/test_pipeline_local.py --video-path "/absolute/path/to/video.mp4"
+```
+
+### 3) Produce before/after Re-ID metrics
+```bash
+PYTHONPATH=. python scripts/test_reid_pipeline.py --video-path "data/warehouse_demo_1.mp4"
+```
+
+Outputs:
+- `data/reid_comparison.json`
+- Terminal summary with:
+  - ID switches (without Re-ID vs with Re-ID)
+  - Unique tracks (without Re-ID vs with Re-ID)
+  - Number of Re-ID matches
+  - Average match similarity
+
+Use these before/after numbers as your benchmark metric in demos and pitch materials.
+
 ## Setup
 ```bash
 git clone https://github.com/[TODO-org]/warehouseeye.git
