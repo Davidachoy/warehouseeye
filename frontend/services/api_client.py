@@ -47,9 +47,9 @@ class ApiClient:
     def get_track_timeline(self, video_id: str, track_id: int) -> dict[str, Any]:
         return self._request("GET", f"/timeline/{video_id}/track/{track_id}")
 
-    def analyze(self, video_id: str, video_url: str) -> dict[str, Any]:
+    def analyze(self, video_id: str, video_url: str, force: bool = False) -> dict[str, Any]:
         # API currently requires video_url in AnalyzeRequest schema.
-        return self._request("POST", "/analyze", {"video_id": video_id, "video_url": video_url})
+        return self._request("POST", "/analyze", {"video_id": video_id, "video_url": video_url, "force": force})
 
     def query(self, video_id: str, question: str) -> dict[str, Any]:
         return self._request("POST", "/query", {"video_id": video_id, "question": question})

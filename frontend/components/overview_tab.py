@@ -12,6 +12,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+from frontend.services.annotated_video import ensure_annotated_video
 from frontend.services.video_registry import VideoRecord
 
 
@@ -64,6 +65,26 @@ def _compute_stats(timeline_rows: list[dict[str, Any]]) -> OverviewStats:
     )
 
 
+def _render_video_player(video_path: Path) -> None:
+    # Keep the player readable on ultrawide displays while remaining fluid on small screens.
+    st.markdown(
+        """
+        <style>
+        video.stVideo,
+        [data-testid="stVideo"] {
+            display: block;
+            width: 100%;
+            max-width: min(960px, 100%);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.video(str(video_path))
+
+
 def _plot_timeline(df: pd.DataFrame) -> None:
     if df.empty:
         st.info("No timeline segments available for this video yet.")
@@ -92,7 +113,20 @@ def _plot_timeline(df: pd.DataFrame) -> None:
 
 def render_operation_overview(video: VideoRecord, timeline_rows: list[dict[str, Any]]) -> None:
     if video.video_path.exists():
-        st.video(str(video.video_path))
+        show_overlay = st.toggle("Mostrar IDs sobre el video", value=True, key=f"overlay-{video.video_id}")
+        render_path = video.video_path
+        if show_overlay:
+            with st.spinner("Generando overlay de IDs..."):
+                annotated_path = ensure_annotated_video(
+                    video_path=video.video_path,
+                    video_id=video.video_id,
+                    timeline_rows=timeline_rows,
+                )
+            if annotated_path is not None:
+                render_path = annotated_path
+            else:
+                st.info("No se pudo generar overlay para este video. Mostrando video original.")
+        _render_video_player(render_path)
     else:
         st.warning(f"Video file unavailable: {video.video_path}")
 

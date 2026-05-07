@@ -74,9 +74,25 @@ Input Video
 \* GPT-4V estimate is derived from repo baseline logic (`vs_gpt4v_estimated_savings_pct = 35` in `api/pipeline_runner.py`) and pricing notes in `BENCHMARKS.md` ($10/M input, $30/M output).
 
 ## Re-ID extension
-- WarehouseEye now supports optional persistent Re-ID using `Qwen/Qwen3-VL-Embedding-2B` (Apache-2.0), which improves identity continuity when people leave and re-enter the frame.
-- This keeps the legal stack requirement intact: Apache-2.0 / MIT / BSD only.
-- Positioning statement for the pitch: **First known open-source video pipeline to use multimodal foundation model embeddings for person Re-Identification.**
+- WarehouseEye supports optional persistent Re-ID with two pluggable backends:
+  - `Qwen/Qwen3-VL-Embedding-2B` (Apache-2.0) — multimodal foundation model embedding served via vLLM. Good for semantic matching.
+  - `OSNet` via `torchreid` (MIT) — specialized person Re-ID model, much tighter same-person cosine clusters. Recommended default for clean identity continuity.
+- License compatibility is preserved: only Apache-2.0 / MIT / BSD components are used.
+- Choose backend with `REID_BACKEND=qwen|osnet` (default `qwen`).
+- Positioning statement for the pitch: **First open-source video pipeline pairing a foundation-model semantic embedder with a specialized OSNet person Re-ID head, fully MIT/Apache-compatible.**
+
+### Backend selection
+```bash
+# Specialized OSNet (MIT) - tighter same-person matching, runs locally on CPU/GPU
+export REID_BACKEND=osnet
+# Optional: override OSNet model variant
+export OSNET_MODEL_NAME=osnet_x0_25     # 2 MB, default
+# export OSNET_MODEL_NAME=osnet_x1_0    # heavier, higher accuracy
+# export OSNET_MODEL_PATH=/abs/path/to/local/weights.pth  # offline weights
+
+# Qwen3-VL multimodal embedding (Apache-2.0) - default
+export REID_BACKEND=qwen
+```
 
 ### 1) Launch both vLLM services (semantic + embedding)
 ```bash
@@ -99,6 +115,21 @@ PYTHONPATH=. python scripts/test_pipeline_local.py --video-path "/absolute/path/
 
 ```bash
 ENABLE_REID=1 PYTHONPATH=. python scripts/test_pipeline_local.py --video-path "/absolute/path/to/video.mp4"
+```
+
+Quality-tuned defaults are now optimized for crowded indoor scenes:
+- `sample_every_sec=1.0`
+- `detector_threshold=0.55`
+- `min_bbox_area=8000`
+- `tracker_lost_track_buffer=8`
+- Re-ID similarity threshold = `0.90`
+
+Optional runtime overrides (no code edits required):
+```bash
+export WAREHOUSEEYE_SAMPLE_EVERY_SEC=1.0
+export WAREHOUSEEYE_DETECTOR_THRESHOLD=0.55
+export WAREHOUSEEYE_MIN_BBOX_AREA=8000
+export WAREHOUSEEYE_REID_SIMILARITY_THRESHOLD=0.90
 ```
 
 ### 3) Produce before/after Re-ID metrics

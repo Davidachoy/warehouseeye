@@ -142,8 +142,10 @@ def _render_sidebar(video: VideoRecord | None, client: ApiClient) -> None:
         started = time.perf_counter()
         with st.spinner("Submitting analysis job..."):
             try:
-                response = client.analyze(video_id=video.video_id, video_url=str(video.video_path))
+                response = client.analyze(video_id=video.video_id, video_url=str(video.video_path), force=True)
                 st.sidebar.success(f"Pipeline status: {response.get('status')} (task {response.get('task_id')})")
+                st.session_state.timeline_by_video.pop(video.video_id, None)
+                load_local_timeline.clear()
                 st.session_state.tracker.record_request(
                     name="analyze",
                     elapsed_sec=time.perf_counter() - started,

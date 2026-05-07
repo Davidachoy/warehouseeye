@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 
 from warehouseeye.pipeline.db import get_all_identities, init_db
 from warehouseeye.pipeline.orchestrator import Orchestrator
@@ -37,26 +38,26 @@ def main() -> None:
     parser.add_argument(
         "--sample-every-sec",
         type=float,
-        default=5.0,
-        help="Seconds between sampled frames within each scene (default 5.0).",
+        default=1.0,
+        help="Seconds between sampled frames within each scene (default 1.0).",
     )
     parser.add_argument(
         "--detector-threshold",
         type=float,
-        default=0.5,
-        help="Minimum person detection confidence (default 0.5).",
+        default=0.55,
+        help="Minimum person detection confidence (default 0.55).",
     )
     parser.add_argument(
         "--min-bbox-area",
         type=float,
-        default=0.0,
-        help="Optional minimum bbox area in pixels to keep detections (default 0).",
+        default=8000.0,
+        help="Optional minimum bbox area in pixels to keep detections (default 8000).",
     )
     parser.add_argument(
         "--tracker-frame-rate",
         type=float,
-        default=30.0,
-        help="Frame-rate parameter passed to ByteTrack (default 30.0).",
+        default=None,
+        help="Frame-rate parameter passed to ByteTrack (default derived from sample rate).",
     )
     parser.add_argument(
         "--tracker-activation-threshold",
@@ -67,8 +68,8 @@ def main() -> None:
     parser.add_argument(
         "--tracker-lost-track-buffer",
         type=int,
-        default=30,
-        help="ByteTrack lost track buffer in frames (default 30).",
+        default=8,
+        help="ByteTrack lost track buffer in frames (default 8).",
     )
     parser.add_argument(
         "--tracker-matching-threshold",
@@ -83,7 +84,13 @@ def main() -> None:
         metavar="N",
         help="Require at least N unique identities (default 1). Use 3+ only if the clip clearly shows that many people tracked end-to-end.",
     )
+    parser.add_argument(
+        "--enable-reid",
+        action="store_true",
+        help="Enable persistent Re-ID via embedding endpoint during tracking.",
+    )
     args = parser.parse_args()
+    enable_reid = args.enable_reid or os.getenv("ENABLE_REID", "0") == "1"
 
     video_path = args.video_path_flag or args.video_path
     if not video_path:
@@ -101,7 +108,7 @@ def main() -> None:
         tracker_activation_threshold=args.tracker_activation_threshold,
         tracker_lost_track_buffer=args.tracker_lost_track_buffer,
         tracker_matching_threshold=args.tracker_matching_threshold,
-    ).run(video_path)
+    ).run(video_path, enable_reid=enable_reid)
     conn = init_db(db_path)
     identities = get_all_identities(conn)
     for row in identities:

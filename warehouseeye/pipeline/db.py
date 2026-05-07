@@ -7,6 +7,8 @@ import time
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+
 
 def init_db(db_path: str | Path) -> sqlite3.Connection:
     """Initialize schema and return an open SQLite connection."""
@@ -55,9 +57,36 @@ def init_db(db_path: str | Path) -> sqlite3.Connection:
         )
         """
     )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS embeddings (
+            track_id INTEGER PRIMARY KEY,
+            embedding BLOB NOT NULL,
+            dimension INTEGER NOT NULL,
+            first_seen_sec REAL NOT NULL,
+            last_seen_sec REAL NOT NULL,
+            state TEXT NOT NULL,
+            match_count INTEGER DEFAULT 0
+        )
+        """
+    )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS embedding_anchors (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            track_id INTEGER NOT NULL,
+            embedding BLOB NOT NULL,
+            dimension INTEGER NOT NULL,
+            timestamp_sec REAL NOT NULL
+        )
+        """
+    )
     cur.execute("CREATE INDEX IF NOT EXISTS idx_tracks_track_id ON tracks(track_id)")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_tracks_timestamp ON tracks(timestamp_sec)")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_videos_status ON videos(status)")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_embeddings_state ON embeddings(state)")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_embeddings_last_seen ON embeddings(last_seen_sec)")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_embedding_anchors_track ON embedding_anchors(track_id)")
     conn.commit()
     return conn
 
@@ -212,4 +241,171 @@ def is_video_completed(conn: sqlite3.Connection, video_id: str) -> bool:
     """Return True when video status is completed."""
     row = conn.execute("SELECT status FROM videos WHERE video_id = ?", (video_id,)).fetchone()
     return bool(row and row[0] == "completed")
+
+
+def save_embedding(
+    conn: sqlite3.Connection,
+    track_id: int,
+    vector: np.ndarray,
+    timestamp: float,
+) -> None:
+    """Insert or update an embedding vector for one tracked identity."""
+    vector_f32 = np.asarray(vector, dtype=np.float32).reshape(-1)
+    conn.execute(
+        """
+        INSERT INTO embeddings (
+            track_id, embedding, dimension, first_seen_sec, last_seen_sec, state, match_count
+        ) VALUES (?, ?, ?, ?, ?, 'active', 0)
+        ON CONFLICT(track_id) DO UPDATE SET
+            embedding=excluded.embedding,
+            dimension=excluded.dimension,
+            last_seen_sec=excluded.last_seen_sec,
+            state='active'
+        """,
+        (
+            track_id,
+            vector_f32.tobytes(),
+            int(vector_f32.shape[0]),
+            timestamp,
+            timestamp,
+        ),
+    )
+    conn.commit()
+
+
+def get_lost_embeddings(
+    conn: sqlite3.Connection,
+    max_age_sec: float,
+    current_timestamp: float | None = None,
+) -> list[tuple[int, np.ndarray]]:
+    """Return lost-track embeddings newer than current_timestamp-max_age_sec."""
+    if current_timestamp is None:
+        current_timestamp = time.time()
+    cutoff = current_timestamp - max_age_sec
+    rows = conn.execute(
+        """
+        SELECT track_id, embedding, dimension
+        FROM embeddings
+        WHERE state = 'lost' AND last_seen_sec >= ?
+        ORDER BY last_seen_sec DESC
+        """,
+        (cutoff,),
+    ).fetchall()
+    results: list[tuple[int, np.ndarray]] = []
+    for track_id, blob, dimension in rows:
+        vector = np.frombuffer(blob, dtype=np.float32).reshape(int(dimension))
+        results.append((int(track_id), vector))
+    return results
+
+
+def mark_track_active(conn: sqlite3.Connection, track_id: int, current_timestamp: float) -> None:
+    """Mark one embedding entry as active and refresh last-seen timestamp."""
+    conn.execute(
+        """
+        UPDATE embeddings
+        SET state = 'active', last_seen_sec = ?
+        WHERE track_id = ?
+        """,
+        (current_timestamp, track_id),
+    )
+    conn.commit()
+
+
+def mark_track_lost(conn: sqlite3.Connection, track_id: int, last_seen_timestamp: float) -> None:
+    """Mark one embedding entry as lost at a given timestamp."""
+    conn.execute(
+        """
+        UPDATE embeddings
+        SET state = 'lost', last_seen_sec = ?
+        WHERE track_id = ?
+        """,
+        (last_seen_timestamp, track_id),
+    )
+    conn.commit()
+
+
+def increment_match_count(conn: sqlite3.Connection, track_id: int) -> None:
+    """Increment Re-ID recovery count for one track."""
+    conn.execute(
+        """
+        UPDATE embeddings
+        SET match_count = COALESCE(match_count, 0) + 1
+        WHERE track_id = ?
+        """,
+        (track_id,),
+    )
+    conn.commit()
+
+
+def add_anchor(
+    conn: sqlite3.Connection,
+    track_id: int,
+    vector: np.ndarray,
+    timestamp: float,
+    *,
+    max_anchors: int = 5,
+    min_distance: float = 0.15,
+) -> bool:
+    """Append a new embedding anchor for one track if it adds enough novelty.
+
+    Drops the request when there is already a near-duplicate anchor for the
+    same track (cosine similarity above 1-min_distance), and trims the oldest
+    anchor when max_anchors is exceeded so the gallery stays bounded.
+    """
+    vector_f32 = np.asarray(vector, dtype=np.float32).reshape(-1)
+    rows = conn.execute(
+        """
+        SELECT id, embedding, dimension, timestamp_sec
+        FROM embedding_anchors
+        WHERE track_id = ?
+        ORDER BY timestamp_sec ASC
+        """,
+        (track_id,),
+    ).fetchall()
+    for _row_id, blob, dim, _ts in rows:
+        existing = np.frombuffer(blob, dtype=np.float32).reshape(int(dim))
+        similarity = float(
+            np.dot(existing, vector_f32)
+            / max(np.linalg.norm(existing) * np.linalg.norm(vector_f32), 1e-9)
+        )
+        if similarity >= (1.0 - min_distance):
+            return False
+    conn.execute(
+        """
+        INSERT INTO embedding_anchors (track_id, embedding, dimension, timestamp_sec)
+        VALUES (?, ?, ?, ?)
+        """,
+        (track_id, vector_f32.tobytes(), int(vector_f32.shape[0]), timestamp),
+    )
+    if len(rows) + 1 > max_anchors:
+        oldest_row_id = rows[0][0]
+        conn.execute("DELETE FROM embedding_anchors WHERE id = ?", (oldest_row_id,))
+    conn.commit()
+    return True
+
+
+def get_anchors_for_lost_tracks(
+    conn: sqlite3.Connection,
+    max_age_sec: float,
+    current_timestamp: float | None = None,
+) -> list[tuple[int, np.ndarray]]:
+    """Return (track_id, anchor_vector) pairs for all anchors of lost tracks."""
+    if current_timestamp is None:
+        current_timestamp = time.time()
+    cutoff = current_timestamp - max_age_sec
+    rows = conn.execute(
+        """
+        SELECT a.track_id, a.embedding, a.dimension
+        FROM embedding_anchors AS a
+        INNER JOIN embeddings AS e ON e.track_id = a.track_id
+        WHERE e.state = 'lost' AND e.last_seen_sec >= ?
+        ORDER BY a.timestamp_sec DESC
+        """,
+        (cutoff,),
+    ).fetchall()
+    results: list[tuple[int, np.ndarray]] = []
+    for track_id, blob, dimension in rows:
+        vector = np.frombuffer(blob, dtype=np.float32).reshape(int(dimension))
+        results.append((int(track_id), vector))
+    return results
 

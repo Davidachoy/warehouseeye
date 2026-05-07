@@ -6,6 +6,7 @@ import asyncio
 import json
 import logging
 import os
+import shutil
 import threading
 import uuid
 from collections.abc import AsyncIterator
@@ -210,11 +211,41 @@ def _launch_pipeline_task(
         logger.info("pipeline_thread_spawned task_id=%s video_id=%s thread=%s", task_id, video_id, thread.name)
 
 
+def _reset_video_state(video_id: str, conn) -> None:  # type: ignore[no-untyped-def]
+    """Delete artifacts + status rows so one video_id can be reprocessed from zero."""
+    artifact_dir = app.state.data_root / video_id
+    if artifact_dir.exists():
+        shutil.rmtree(artifact_dir, ignore_errors=True)
+    conn.execute("DELETE FROM videos WHERE video_id = ?", (video_id,))
+    conn.commit()
+    stale_task_ids = [
+        task_id
+        for task_id, task in app.state.tasks.items()
+        if task.get("video_id") == video_id
+    ]
+    for task_id in stale_task_ids:
+        app.state.tasks.pop(task_id, None)
+        app.state.task_queues.pop(task_id, None)
+
+
 @app.post("/analyze", response_model=AnalyzeResponse)
 async def analyze(request: AnalyzeRequest) -> AnalyzeResponse:
     """Launch the WarehouseEye pipeline asynchronously and return immediately."""
     conn = init_db(app.state.status_db_path)
     existing = get_video(conn, request.video_id)
+
+    if request.force:
+        if existing and existing.get("status") == "running":
+            tid = str(existing.get("task_id") or "")
+            if tid and tid in app.state.task_queues:
+                conn.close()
+                if structlog is not None:
+                    logger.info("analyze_force_ignored_active_run", video_id=request.video_id, task_id=tid)
+                else:
+                    logger.info("analyze_force_ignored_active_run video_id=%s task_id=%s", request.video_id, tid)
+                return AnalyzeResponse(status="running", task_id=tid)
+        _reset_video_state(request.video_id, conn)
+        existing = None
 
     if existing and existing.get("status") == "completed":
         tid = str(existing.get("task_id") or "unknown")
@@ -373,4 +404,6 @@ async def health() -> HealthResponse:
         vllm_reachable=await _is_vllm_reachable(),
         db_path=str(app.state.status_db_path),
         version=__version__,
+        reid_enabled=os.getenv("ENABLE_REID", "0") == "1",
+        embedding_url=os.getenv("EMBEDDING_URL"),
     )

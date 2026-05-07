@@ -1,10 +1,16 @@
 """Tests for SQLite helpers."""
 
+import numpy as np
+
 from warehouseeye.pipeline.db import (
     get_all_identities,
+    get_lost_embeddings,
     get_tracks_by_id,
+    increment_match_count,
     init_db,
     insert_track,
+    mark_track_lost,
+    save_embedding,
     update_track_activity,
     upsert_identity,
 )
@@ -61,5 +67,25 @@ def test_update_track_activity(tmp_path) -> None:
     update_track_activity(conn=conn, row_id=row_id, activity_json='{"activity":"packing"}')
     updated = get_tracks_by_id(conn, 2)
     assert updated[0][11] == '{"activity":"packing"}'
+    conn.close()
+
+
+def test_embedding_lifecycle_helpers(tmp_path) -> None:
+    db_path = tmp_path / "test_embeddings.sqlite3"
+    conn = init_db(db_path)
+    vector = np.ones(1536, dtype=np.float32)
+    vector /= np.linalg.norm(vector)
+    save_embedding(conn, track_id=99, vector=vector, timestamp=10.0)
+    mark_track_lost(conn, track_id=99, last_seen_timestamp=11.0)
+
+    lost_rows = get_lost_embeddings(conn, max_age_sec=30, current_timestamp=20.0)
+    assert len(lost_rows) == 1
+    assert lost_rows[0][0] == 99
+    assert lost_rows[0][1].shape == (1536,)
+
+    increment_match_count(conn, track_id=99)
+    row = conn.execute("SELECT match_count FROM embeddings WHERE track_id = 99").fetchone()
+    assert row is not None
+    assert row[0] == 1
     conn.close()
 

@@ -12,6 +12,10 @@ class AnalyzeRequest(BaseModel):
 
     video_url: str = Field(..., description="Video URL or local path accepted by the pipeline.")
     video_id: str = Field(..., description="Stable identifier used for idempotent processing.")
+    force: bool = Field(
+        default=False,
+        description="If true, reset existing artifacts/status for this video_id and launch a fresh run.",
+    )
 
 
 class AnalyzeResponse(BaseModel):
@@ -64,3 +68,5 @@ class HealthResponse(BaseModel):
     vllm_reachable: bool
     db_path: str
     version: str
+    reid_enabled: bool = False
+    embedding_url: str | None = None

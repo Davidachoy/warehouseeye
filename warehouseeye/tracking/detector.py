@@ -21,10 +21,12 @@ class PersonDetector:
         self,
         model_id: str = "PekingU/rtdetr_v2_r50vd",
         device: str | None = None,
-        threshold: float = 0.5,
+        threshold: float = 0.4,
+        input_size: int | None = None,
     ) -> None:
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.threshold = threshold
+        self.input_size = input_size
         self.processor = RTDetrImageProcessor.from_pretrained(model_id)
         self.model = RTDetrV2ForObjectDetection.from_pretrained(model_id).to(self.device).eval()
 
@@ -37,7 +39,11 @@ class PersonDetector:
     def detect(self, frame_path: str | Path) -> list[BoundingBox]:
         """Detect only people in the given frame."""
         image = Image.open(frame_path).convert("RGB")
-        inputs = self.processor(images=image, return_tensors="pt")
+        processor_kwargs: dict[str, object] = {"images": image, "return_tensors": "pt"}
+        if self.input_size is not None and self.input_size > 0:
+            # Hugging Face RTDetrImageProcessor accepts a per-call resize override.
+            processor_kwargs["size"] = {"height": self.input_size, "width": self.input_size}
+        inputs = self.processor(**processor_kwargs)
         inputs = {key: value.to(self.device) for key, value in inputs.items()}
         with torch.no_grad():
             outputs = self.model(**inputs)

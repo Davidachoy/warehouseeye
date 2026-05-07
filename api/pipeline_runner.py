@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
 import time
 from pathlib import Path
 from typing import Any, Callable
@@ -76,9 +77,18 @@ def run_pipeline_job(
 
     try:
         _emit_progress(emit, "extracting_frames", 10)
-        logger.info("pipeline_stage", extra={"stage": "orchestrator_begin", "video_id": video_id, "task_id": task_id})
+        enable_reid = os.getenv("ENABLE_REID", "0") == "1"
+        logger.info(
+            "pipeline_stage",
+            extra={
+                "stage": "orchestrator_begin",
+                "video_id": video_id,
+                "task_id": task_id,
+                "enable_reid": enable_reid,
+            },
+        )
         orchestrator = Orchestrator(base_dir=video_dir)
-        orchestrator.run(video_url)
+        orchestrator.run(video_url, enable_reid=enable_reid)
         logger.info("pipeline_stage", extra={"stage": "orchestrator_done", "video_id": video_id, "task_id": task_id})
 
         _emit_progress(emit, "semantic_analysis", 55)

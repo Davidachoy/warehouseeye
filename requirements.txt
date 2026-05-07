@@ -19,3 +19,6 @@ structlog
 streamlit
 plotly
 pandas
+openai
+torchreid>=0.2.5
+gdown
