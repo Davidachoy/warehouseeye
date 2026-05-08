@@ -1,0 +1,8 @@
+{
+  "source_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/video2.mp4",
+  "source_mtime": 1777959918.3999574,
+  "timeline_signature": "0a635006699290de70c72cb80e4c95f7a855b8d3",
+  "max_segment_hold_sec": 0.6,
+  "max_terminal_hold_sec": 0.25,
+  "h264_transcoded": true
+}

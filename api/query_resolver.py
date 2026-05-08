@@ -19,6 +19,9 @@ COLOR_KEYWORDS = ("orange", "yellow", "green", "blue", "red", "black", "white")
 GARMENT_KEYWORDS = ("vest", "hoodie", "shirt", "top", "jacket", "bandana")
 POSITION_KEYWORDS = ("left", "right", "center", "box", "area", "zone")
 ACTIVITY_KEYWORDS = ("walk", "carry", "load", "pack", "idle", "stand", "move", "lift")
+MAX_VLLM_IMAGES_PER_PROMPT = 4
+PICTURE_KEYWORDS = ("picture", "photo", "image", "keyframe", "frame", "snapshot")
+END_OF_VIDEO_KEYWORDS = ("al final", "final del video", "ultimo", "último", "end", "at the end", "last")
 
 
 def parse_descriptors(question: str) -> dict[str, Any]:
@@ -212,6 +215,49 @@ def _select_keyframes_for_track(conn: sqlite3.Connection, track_id: int, limit: 
     ]
 
 
+def _select_end_keyframes_for_track(conn: sqlite3.Connection, track_id: int, limit: int = 3) -> list[dict[str, Any]]:
+    """Select latest keyframes for a track, then return chronologically."""
+    try:
+        rows = conn.execute(
+            """
+            SELECT track_id, timestamp_sec, frame_idx, crop_path, frame_path, bbox_x1, bbox_y1, bbox_x2, bbox_y2
+            FROM tracks
+            WHERE track_id = ?
+            ORDER BY timestamp_sec DESC
+            LIMIT ?
+            """,
+            (track_id, limit),
+        ).fetchall()
+    except sqlite3.OperationalError:
+        rows = conn.execute(
+            """
+            SELECT track_id, timestamp_sec, frame_idx, crop_path, NULL, bbox_x1, bbox_y1, bbox_x2, bbox_y2
+            FROM tracks
+            WHERE track_id = ?
+            ORDER BY timestamp_sec DESC
+            LIMIT ?
+            """,
+            (track_id, limit),
+        ).fetchall()
+    rows = sorted(rows, key=lambda row: float(row[1]))
+    return [
+        {
+            "track_id": int(row[0]),
+            "timestamp_sec": float(row[1]),
+            "frame_idx": int(row[2]),
+            "crop_path": row[3],
+            "frame_path": row[4],
+            "bbox": (float(row[5]), float(row[6]), float(row[7]), float(row[8])),
+        }
+        for row in rows
+    ]
+
+
+def _is_end_of_video_query(question: str) -> bool:
+    lowered = question.lower()
+    return any(keyword in lowered for keyword in END_OF_VIDEO_KEYWORDS)
+
+
 def _annotated_frame_path(
     conn: sqlite3.Connection,
     *,
@@ -283,12 +329,16 @@ def _choose_track_with_vlm(
             ),
         }
     ]
+    image_count = 0
     for candidate in candidates:
+        if image_count >= MAX_VLLM_IMAGES_PER_PROMPT:
+            break
         crop_path = _resolve_media_path(candidate["crop_path"], db_parent=db_parent)
         if crop_path is None:
             continue
         content.append({"type": "text", "text": f"Candidate track_id={candidate['track_id']}"})
         content.append({"type": "image_url", "image_url": {"url": VLLMClient._image_data_url(crop_path)}})
+        image_count += 1
 
     if len(content) == 1:
         return None
@@ -332,6 +382,167 @@ def _build_video_summary(conn: sqlite3.Connection) -> str:
     )
 
 
+def _extract_target_second(question: str) -> float | None:
+    lowered = question.lower()
+    minute_match = re.search(r"\b(?:minute|min)\s+(\d{1,3})\b", lowered)
+    if minute_match:
+        return float(int(minute_match.group(1)) * 60)
+
+    mm_ss_match = re.search(r"\b(\d{1,2})\s*:\s*([0-5]\d)\b", lowered)
+    if mm_ss_match:
+        minutes = int(mm_ss_match.group(1))
+        seconds = int(mm_ss_match.group(2))
+        return float((minutes * 60) + seconds)
+    return None
+
+
+def _is_picture_request(question: str) -> bool:
+    lowered = question.lower()
+    return any(keyword in lowered for keyword in PICTURE_KEYWORDS) or "show me" in lowered
+
+
+def _resolve_keyframe_minute_query(
+    *,
+    conn: sqlite3.Connection,
+    question: str,
+) -> dict[str, Any] | None:
+    if not _is_picture_request(question):
+        return None
+
+    full_timeline = _timeline_entries(conn)
+    if not full_timeline:
+        return {
+            "matched_track_id": None,
+            "ambiguous": False,
+            "alternatives": [],
+            "narrative": "No timeline rows are available for this video yet.",
+            "timeline": [],
+            "intent": "keyframe_lookup",
+        }
+
+    descriptors = parse_descriptors(question)
+    matched_tracks = find_matching_tracks(descriptors, conn)
+    if not matched_tracks:
+        top_rows = conn.execute(
+            """
+            SELECT track_id, COUNT(*) AS c
+            FROM tracks
+            GROUP BY track_id
+            ORDER BY c DESC
+            LIMIT 3
+            """
+        ).fetchall()
+        matched_tracks = [int(row[0]) for row in top_rows]
+    allowed_tracks = set(matched_tracks)
+
+    target_second = _extract_target_second(question)
+    selected_rows: list[dict[str, Any]] = []
+    if target_second is not None:
+        window_start = max(0.0, target_second - 10.0)
+        window_end = target_second + 10.0
+        nearby = [
+            row
+            for row in full_timeline
+            if window_start <= float(row.get("timestamp_sec", 0.0)) <= window_end
+            and (not allowed_tracks or int(row.get("track_id", -1)) in allowed_tracks)
+        ]
+        if not nearby:
+            wider_start = max(0.0, target_second - 30.0)
+            wider_end = target_second + 30.0
+            nearby = [
+                row
+                for row in full_timeline
+                if wider_start <= float(row.get("timestamp_sec", 0.0)) <= wider_end
+                and (not allowed_tracks or int(row.get("track_id", -1)) in allowed_tracks)
+            ]
+        nearby.sort(key=lambda row: abs(float(row.get("timestamp_sec", 0.0)) - target_second))
+        seen_keys: set[tuple[int, int]] = set()
+        for row in nearby:
+            crop_path = row.get("crop_path")
+            if not crop_path:
+                continue
+            key = (int(row.get("track_id", -1)), int(row.get("frame_idx", -1)))
+            if key in seen_keys:
+                continue
+            seen_keys.add(key)
+            selected_rows.append(row)
+            if len(selected_rows) >= 8:
+                break
+    else:
+        preferred_tracks = matched_tracks[:2]
+        if not preferred_tracks:
+            preferred_tracks = sorted({int(row.get("track_id", -1)) for row in full_timeline if row.get("track_id") is not None})[:2]
+        use_end_keyframes = _is_end_of_video_query(question)
+        by_key: dict[tuple[int, int], dict[str, Any]] = {
+            (int(row.get("track_id", -1)), int(row.get("frame_idx", -1))): row for row in full_timeline
+        }
+        for track_id in preferred_tracks:
+            keyframes = (
+                _select_end_keyframes_for_track(conn, track_id=track_id, limit=4)
+                if use_end_keyframes
+                else _select_keyframes_for_track(conn, track_id=track_id, limit=4)
+            )
+            for keyframe in keyframes:
+                key = (int(keyframe["track_id"]), int(keyframe["frame_idx"]))
+                timeline_row = by_key.get(key)
+                if timeline_row is None:
+                    continue
+                if not timeline_row.get("crop_path"):
+                    continue
+                selected_rows.append(timeline_row)
+            if len(selected_rows) >= 8:
+                break
+
+    if not selected_rows:
+        if target_second is not None:
+            mm = int(target_second // 60)
+            ss = int(target_second % 60)
+            failure = f"No keyframes found near {mm:02d}:{ss:02d} for the requested person."
+        elif _is_end_of_video_query(question):
+            failure = "No end-of-video keyframes were found for the requested person."
+        else:
+            failure = "No keyframes were found for that request."
+        return {
+            "matched_track_id": None,
+            "ambiguous": False,
+            "alternatives": _load_candidate_crops(conn),
+            "narrative": failure,
+            "timeline": [],
+            "intent": "keyframe_lookup",
+        }
+
+    alternatives = [
+        {
+            "track_id": int(row.get("track_id", -1)),
+            "color_tag": row.get("color_tag"),
+            "crop_path": row.get("crop_path"),
+        }
+        for row in selected_rows
+    ]
+    if target_second is not None:
+        mm = int(target_second // 60)
+        ss = int(target_second % 60)
+        focus_phrase = f"near {mm:02d}:{ss:02d}"
+    elif _is_end_of_video_query(question):
+        focus_phrase = "from the end of the video"
+    else:
+        focus_phrase = "for the requested person"
+    tracks_in_result = sorted({int(row.get("track_id", -1)) for row in selected_rows if row.get("track_id") is not None})
+    track_label = ", ".join(f"#{track_id}" for track_id in tracks_in_result if track_id >= 0) or "unknown tracks"
+    narrative = (
+        f"Showing {len(alternatives)} keyframe(s) {focus_phrase} "
+        f"for track(s) {track_label}."
+    )
+    return {
+        "matched_track_id": tracks_in_result[0] if len(tracks_in_result) == 1 else None,
+        "ambiguous": False,
+        "alternatives": alternatives,
+        "narrative": narrative,
+        "timeline": selected_rows[:30],
+        "intent": "keyframe_lookup",
+    }
+
+
 def resolve_conversational_query(
     *,
     conn: sqlite3.Connection,
@@ -340,6 +551,7 @@ def resolve_conversational_query(
     vllm_client: VLLMClient | None = None,
 ) -> dict[str, Any]:
     full_timeline = _timeline_entries(conn)
+    focus_on_end = _is_end_of_video_query(question)
     if vllm_client is None:
         return {
             "matched_track_id": None,
@@ -375,9 +587,18 @@ def resolve_conversational_query(
             ),
         }
     ]
+    image_count = 0
     for track_id in relevant_tracks:
-        keyframes = _select_keyframes_for_track(conn, track_id=track_id, limit=3)
+        if image_count >= MAX_VLLM_IMAGES_PER_PROMPT:
+            break
+        keyframes = (
+            _select_end_keyframes_for_track(conn, track_id=track_id, limit=3)
+            if focus_on_end
+            else _select_keyframes_for_track(conn, track_id=track_id, limit=3)
+        )
         for keyframe in keyframes:
+            if image_count >= MAX_VLLM_IMAGES_PER_PROMPT:
+                break
             annotated = _annotated_frame_path(conn, keyframe=keyframe, db_parent=db_parent)
             if annotated is None:
                 continue
@@ -390,6 +611,7 @@ def resolve_conversational_query(
             content.append(
                 {"type": "image_url", "image_url": {"url": VLLMClient._image_data_url(annotated)}}
             )
+            image_count += 1
 
     if len(content) == 1:
         return {
@@ -417,7 +639,11 @@ def resolve_conversational_query(
         "ambiguous": False,
         "alternatives": _load_candidate_crops(conn),
         "narrative": response.strip(),
-        "timeline": selected_timeline,
+        "timeline": (
+            sorted(selected_timeline, key=lambda row: float(row.get("timestamp_sec", 0.0)), reverse=True)[:40]
+            if focus_on_end
+            else selected_timeline
+        ),
     }
 
 
@@ -492,6 +718,9 @@ def resolve_query(db_path: str | Path, question: str) -> dict[str, Any]:
         aggregate = _resolve_aggregate_query(question, conn)
         if aggregate is not None:
             return aggregate
+        keyframe_lookup = _resolve_keyframe_minute_query(conn=conn, question=question)
+        if keyframe_lookup is not None:
+            return keyframe_lookup
 
         db_parent = Path(db_path).resolve().parent
         try:
@@ -505,16 +734,11 @@ def resolve_query(db_path: str | Path, question: str) -> dict[str, Any]:
                 db_parent=db_parent,
                 vllm_client=client,
             )
-            if conversational.get("matched_track_id") is not None and client is not None:
-                track_id = int(conversational["matched_track_id"])
-                conversational["narrative"] = generate_narrative(
-                    track_id=track_id,
-                    conn=conn,
-                    vllm_client=client,
-                )
             return conversational
         finally:
-            if client is not None:
-                asyncio.run(client.aclose())
+            # Avoid closing this async client via a different event loop;
+            # this sync resolver may call asyncio.run multiple times.
+            # Process lifetime cleanup is acceptable for this short-lived path.
+            pass
     finally:
         conn.close()

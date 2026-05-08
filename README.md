@@ -22,7 +22,7 @@ AMD MI300X matters because its 192 GB HBM3 is large enough to co-run vision-lang
 - The pipeline is designed so detector, tracker, VLM, and Whisper stages can run in one AMD node (`warehouseeye/pipeline/orchestrator.py`, `warehouseeye/gpu/whisper_client.py`).
 
 ## Demo
-- Hugging Face Space: [TODO]
+- Hugging Face Space: [https://huggingface.co/spaces/<your-hf-org>/warehouseeye](https://huggingface.co/spaces/<your-hf-org>/warehouseeye)
 - Streamlit app entrypoint: `frontend/app.py` (Space variant: `frontend/app_space.py`)
 - Streamlit UI screenshot: `[TODO add screenshot file path, e.g. docs/space-hero.png]`
 
@@ -191,7 +191,7 @@ Use these before/after numbers as your benchmark metric in demos and pitch mater
 
 ## Setup
 ```bash
-git clone https://github.com/[TODO-org]/warehouseeye.git
+git clone https://github.com/Davidachoy/warehouseeye.git
 cd warehouseeye
 pip install -r requirements.txt
 PYTHONPATH=. python scripts/test_pipeline_local.py --video-path "/absolute/path/to/video.mp4"

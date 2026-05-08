@@ -374,7 +374,7 @@ async def query(request: QueryRequest) -> QueryResponse:
     db_path = app.state.data_root / request.video_id / "warehouseeye.sqlite3"
     if not db_path.exists():
         raise HTTPException(status_code=404, detail="Video not processed")
-    payload = resolve_query(db_path=db_path, question=request.question)
+    payload = await asyncio.to_thread(resolve_query, db_path=db_path, question=request.question)
     return QueryResponse(**payload)
 
 
