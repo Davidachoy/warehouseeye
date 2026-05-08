@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -48,6 +48,30 @@ class QueryResponse(BaseModel):
     alternatives: list[QueryAlternative]
     narrative: str
     timeline: list[dict[str, Any]]
+
+
+class ActivityAnalysisSchema(BaseModel):
+    """Structured activity contract returned by VLM analysis."""
+
+    activity: Literal[
+        "walking",
+        "standing",
+        "handling_object",
+        "lifting",
+        "interacting",
+        "inspecting",
+        "idle",
+        "other",
+    ]
+    activity_description: str = Field(..., min_length=1)
+    objects_involved: list[str]
+    zone_inference: str = Field(..., min_length=1)
+    interaction_with_others: str | None = None
+    anomaly_flag: bool
+    anomaly_reason: str | None = None
+    supervisor_attention_recommended: bool
+    confidence: float = Field(..., ge=0.0, le=1.0)
+    reasoning: str = Field(..., min_length=1)
 
 
 class BenchmarkResponse(BaseModel):
