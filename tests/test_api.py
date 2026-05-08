@@ -29,7 +29,17 @@ def _seed_video_db(db_path: Path) -> None:
     conn = init_db(db_path)
     upsert_identity(conn, 1, "orange_vest", 0.0, 6.0, 3, "Orange vest worker moved boxes.")
     upsert_identity(conn, 2, "blue_top", 1.0, 5.0, 2, "Blue top worker stood near aisle.")
-    insert_track(conn, 1, 1.0, 0, (0.0, 0.0, 1.0, 1.0), 0.9, "orange_vest", "crop1.jpg", "{}")
+    insert_track(
+        conn,
+        1,
+        1.0,
+        0,
+        (0.0, 0.0, 1.0, 1.0),
+        0.9,
+        "orange_vest",
+        "crop1.jpg",
+        activity_json="{}",
+    )
     insert_track(
         conn,
         1,
@@ -39,7 +49,7 @@ def _seed_video_db(db_path: Path) -> None:
         0.9,
         "orange_vest",
         "crop2.jpg",
-        '{"activity":"packing","relative_location":"box area","anomaly":false}',
+        activity_json='{"activity":"packing","relative_location":"box area","anomaly":false}',
     )
     insert_track(
         conn,
@@ -50,7 +60,7 @@ def _seed_video_db(db_path: Path) -> None:
         0.9,
         "orange_vest",
         "crop3.jpg",
-        '{"activity":"packing","relative_location":"box area","anomaly":true}',
+        activity_json='{"activity":"packing","relative_location":"box area","anomaly":true}',
     )
     insert_track(
         conn,
@@ -61,7 +71,7 @@ def _seed_video_db(db_path: Path) -> None:
         0.8,
         "blue_top",
         "crop4.jpg",
-        '{"activity":"idle","relative_location":"aisle","anomaly":false}',
+        activity_json='{"activity":"idle","relative_location":"aisle","anomaly":false}',
     )
     rows = conn.execute("SELECT id, track_id FROM tracks ORDER BY id").fetchall()
     for row_id, track_id in rows:

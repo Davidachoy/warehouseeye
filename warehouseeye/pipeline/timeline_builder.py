@@ -7,6 +7,8 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
+from warehouseeye.pipeline.activity_adapter import normalize_activity_payload
+
 
 class TimelineBuilder:
     """Create a searchable timeline from tracks and Whisper words."""
@@ -23,10 +25,10 @@ class TimelineBuilder:
             payload = json.loads(activity_json)
         except Exception:
             return "unknown"
-        if isinstance(payload, dict):
-            activity = payload.get("activity")
-            if isinstance(activity, str) and activity.strip():
-                return activity.strip()
+        normalized = normalize_activity_payload(payload)
+        activity = normalized.get("activity")
+        if isinstance(activity, str) and activity.strip():
+            return activity.strip()
         return "unknown"
 
     def _audio_context_for_time(self, timestamp: float, audio_transcript: list[dict[str, Any]]) -> str:
@@ -123,36 +125,63 @@ class TimelineBuilder:
 
 def build_rich_timeline_from_db(conn: sqlite3.Connection) -> dict[str, Any]:
     """Return timeline entries plus identity summaries."""
-    rows = conn.execute(
-        """
-        SELECT
-            t.track_id,
-            t.timestamp_sec,
-            t.frame_idx,
-            t.bbox_x1,
-            t.bbox_y1,
-            t.bbox_x2,
-            t.bbox_y2,
-            t.confidence,
-            t.color_tag,
-            t.crop_path,
-            t.activity_json,
-            i.narrative_summary
-        FROM tracks t
-        LEFT JOIN identities i ON i.track_id = t.track_id
-        ORDER BY t.timestamp_sec, t.track_id
-        """
-    ).fetchall()
+    try:
+        rows = conn.execute(
+            """
+            SELECT
+                t.track_id,
+                t.timestamp_sec,
+                t.frame_idx,
+                t.bbox_x1,
+                t.bbox_y1,
+                t.bbox_x2,
+                t.bbox_y2,
+                t.confidence,
+                t.color_tag,
+                t.crop_path,
+                t.frame_path,
+                t.activity_json,
+                i.narrative_summary
+            FROM tracks t
+            LEFT JOIN identities i ON i.track_id = t.track_id
+            ORDER BY t.timestamp_sec, t.track_id
+            """
+        ).fetchall()
+        has_frame_path = True
+    except sqlite3.OperationalError:
+        rows = conn.execute(
+            """
+            SELECT
+                t.track_id,
+                t.timestamp_sec,
+                t.frame_idx,
+                t.bbox_x1,
+                t.bbox_y1,
+                t.bbox_x2,
+                t.bbox_y2,
+                t.confidence,
+                t.color_tag,
+                t.crop_path,
+                t.activity_json,
+                i.narrative_summary
+            FROM tracks t
+            LEFT JOIN identities i ON i.track_id = t.track_id
+            ORDER BY t.timestamp_sec, t.track_id
+            """
+        ).fetchall()
+        has_frame_path = False
 
     timeline: list[dict[str, Any]] = []
     for row in rows:
-        activity_json = row[10] or "{}"
+        activity_json = row[11] if has_frame_path else row[10]
+        activity_json = activity_json or "{}"
         try:
             activity = json.loads(activity_json)
             if not isinstance(activity, dict):
                 activity = {"raw": activity_json}
         except json.JSONDecodeError:
             activity = {"raw": activity_json}
+        activity = normalize_activity_payload(activity)
         timeline.append(
             {
                 "track_id": row[0],
@@ -162,8 +191,9 @@ def build_rich_timeline_from_db(conn: sqlite3.Connection) -> dict[str, Any]:
                 "confidence": row[7],
                 "color_tag": row[8],
                 "crop_path": row[9],
+                "frame_path": row[10] if has_frame_path else None,
                 "activity": activity,
-                "narrative_summary": row[11],
+                "narrative_summary": row[12] if has_frame_path else row[11],
             }
         )
 

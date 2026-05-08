@@ -11,21 +11,24 @@ import time
 from pathlib import Path
 from typing import Any, Callable
 
+from PIL import Image, ImageDraw
+
+from api.schemas import ActivityAnalysisSchema
 from warehouseeye.gpu.vllm_client import VLLMClient
 from warehouseeye.pipeline.db import update_track_activity
 
 logger = logging.getLogger(__name__)
 
-REQUIRED_ACTIVITY_KEYS = {
-    "activity",
-    "relative_location",
-    "visible_tools",
-    "object_interaction",
-    "posture",
-    "anomaly",
-    "severity",
+VALID_ACTIVITIES = {
+    "walking",
+    "standing",
+    "handling_object",
+    "lifting",
+    "interacting",
+    "inspecting",
+    "idle",
+    "other",
 }
-VALID_SEVERITY_VALUES = {None, "low", "medium", "high"}
 
 
 class VisionAnalyzer:
@@ -44,6 +47,8 @@ class VisionAnalyzer:
         self.base_dir = Path(base_dir).resolve() if base_dir else None
         self.concurrency = concurrency or int(os.getenv("AMD_CONCURRENCY", "8"))
         self.max_tokens = max_tokens or int(os.getenv("AMD_MAX_TOKENS", "300"))
+        self.min_gate_width = float(os.getenv("WAREHOUSEEYE_VLM_MIN_WIDTH", "30"))
+        self.min_gate_height = float(os.getenv("WAREHOUSEEYE_VLM_MIN_HEIGHT", "60"))
 
         prompt_path_value = Path(
             prompt_path or os.getenv("ACTIVITY_PROMPT_PATH", "prompts/activity_extraction.txt")
@@ -62,23 +67,24 @@ class VisionAnalyzer:
 
     @staticmethod
     def select_representative_rows(
-        rows: list[tuple[Any, ...]], min_count: int = 3, max_count: int = 5
+        rows: list[tuple[Any, ...]], min_count: int = 2, max_count: int = 3
     ) -> list[tuple[Any, ...]]:
-        """Pick temporally spread rows while capping request volume."""
+        """Select 2-3 rows with the largest bbox area."""
+        if not rows:
+            return []
         total = len(rows)
-        if total <= max_count:
-            return rows
         sample_count = min(max_count, total)
         sample_count = max(sample_count, min(min_count, total))
-        if sample_count >= total:
-            return rows
-        indices = sorted(
-            {
-                round(step * (total - 1) / (sample_count - 1))
-                for step in range(sample_count)
-            }
+        ranked = sorted(
+            rows,
+            key=lambda row: (
+                max(float(row[7]) - float(row[5]), 0.0) * max(float(row[8]) - float(row[6]), 0.0),
+                -float(row[1]),
+            ),
+            reverse=True,
         )
-        return [rows[index] for index in indices]
+        selected = ranked[:sample_count]
+        return sorted(selected, key=lambda row: float(row[1]))
 
     @staticmethod
     def _extract_json_block(text: str) -> str:
@@ -112,39 +118,58 @@ class VisionAnalyzer:
 
     @staticmethod
     def _validate_activity_payload(payload: dict[str, Any]) -> dict[str, Any]:
-        if set(payload.keys()) != REQUIRED_ACTIVITY_KEYS:
-            raise ValueError("Activity JSON keys do not match required contract.")
-        if not isinstance(payload["activity"], str):
-            raise ValueError("activity must be a string.")
-        if not isinstance(payload["relative_location"], str):
-            raise ValueError("relative_location must be a string.")
-        if not isinstance(payload["visible_tools"], list) or not all(
-            isinstance(item, str) for item in payload["visible_tools"]
-        ):
-            raise ValueError("visible_tools must be a list of strings.")
-        if not isinstance(payload["object_interaction"], str):
-            raise ValueError("object_interaction must be a string.")
-        if not isinstance(payload["posture"], str):
-            raise ValueError("posture must be a string.")
-        if not isinstance(payload["anomaly"], bool):
-            raise ValueError("anomaly must be a boolean.")
-        if payload["severity"] not in VALID_SEVERITY_VALUES:
-            raise ValueError("severity must be null or low|medium|high.")
-        return payload
+        candidate = dict(payload)
+        if "relative_location" in candidate:
+            legacy_activity = str(candidate.get("activity") or "").strip().lower()
+            if legacy_activity not in VALID_ACTIVITIES:
+                legacy_activity = "other"
+            legacy_anomaly = bool(candidate.get("anomaly"))
+            legacy_severity = candidate.get("severity")
+            candidate = {
+                "activity": legacy_activity,
+                "activity_description": str(candidate.get("object_interaction") or "Observed person activity."),
+                "objects_involved": [
+                    str(item)
+                    for item in candidate.get("visible_tools", [])
+                    if isinstance(item, str) and item.strip()
+                ],
+                "zone_inference": str(candidate.get("relative_location") or "unknown"),
+                "interaction_with_others": None,
+                "anomaly_flag": legacy_anomaly,
+                "anomaly_reason": str(legacy_severity) if legacy_anomaly and legacy_severity else None,
+                "supervisor_attention_recommended": legacy_anomaly,
+                "confidence": 0.45,
+                "reasoning": "Converted from legacy activity schema.",
+            }
+        if "activity" in candidate:
+            normalized_activity = str(candidate["activity"]).strip().lower()
+            if normalized_activity not in VALID_ACTIVITIES:
+                candidate["activity"] = "other"
+            else:
+                candidate["activity"] = normalized_activity
+        try:
+            candidate["confidence"] = float(candidate.get("confidence", 0.5))
+        except (TypeError, ValueError):
+            candidate["confidence"] = 0.5
+        candidate["confidence"] = min(max(candidate["confidence"], 0.0), 1.0)
+        model = ActivityAnalysisSchema.model_validate(candidate)
+        return model.model_dump()
 
-    def _resolve_crop_path(self, crop_path: str, db_parent: Path) -> Path:
-        path = Path(crop_path)
+    def _resolve_media_path(self, maybe_path: str | None, db_parent: Path) -> Path | None:
+        if not maybe_path:
+            return None
+        path = Path(maybe_path)
+        candidates: list[Path]
         if path.is_absolute():
-            return path
-
-        candidates = [Path.cwd() / path, db_parent / path]
-        if self.base_dir:
-            candidates.append(self.base_dir / path)
-
+            candidates = [path]
+        else:
+            candidates = [Path.cwd() / path, db_parent / path]
+            if self.base_dir:
+                candidates.append(self.base_dir / path)
         for candidate in candidates:
             if candidate.exists():
                 return candidate.resolve()
-        return (Path.cwd() / path).resolve()
+        return None
 
     def _load_track_crops(
         self,
@@ -155,7 +180,7 @@ class VisionAnalyzer:
     ) -> list[dict[str, Any]]:
         rows = conn.execute(
             """
-            SELECT id, timestamp_sec, frame_idx, crop_path
+            SELECT id, timestamp_sec, frame_idx, crop_path, frame_path, bbox_x1, bbox_y1, bbox_x2, bbox_y2
             FROM tracks
             WHERE track_id = ? AND crop_path IS NOT NULL
             ORDER BY timestamp_sec
@@ -164,26 +189,213 @@ class VisionAnalyzer:
         ).fetchall()
         sampled_rows = self.select_representative_rows(rows=rows)
         crops: list[dict[str, Any]] = []
-        for row_id, timestamp_sec, frame_idx, crop_path in sampled_rows:
-            if not crop_path:
+        for row in sampled_rows:
+            row_id, timestamp_sec, frame_idx, crop_path, frame_path, x1, y1, x2, y2 = row
+            resolved_crop_path = self._resolve_media_path(str(crop_path), db_parent=db_parent)
+            if resolved_crop_path is None:
                 continue
-            resolved_path = self._resolve_crop_path(str(crop_path), db_parent=db_parent)
+            bbox = (float(x1), float(y1), float(x2), float(y2))
+            width = max(bbox[2] - bbox[0], 1.0)
+            height = max(bbox[3] - bbox[1], 1.0)
             crops.append(
                 {
                     "row_id": int(row_id),
+                    "track_id": int(track_id),
                     "timestamp_sec": float(timestamp_sec),
                     "frame_idx": int(frame_idx),
                     "crop_path": str(crop_path),
-                    "resolved_path": resolved_path,
+                    "frame_path": str(frame_path) if frame_path else None,
+                    "resolved_crop_path": resolved_crop_path,
+                    "resolved_frame_path": self._resolve_media_path(
+                        str(frame_path) if frame_path else None, db_parent=db_parent
+                    ),
+                    "bbox": bbox,
+                    "bbox_width": width,
+                    "bbox_height": height,
                 }
             )
         return crops
 
+    def _insufficient_resolution_payload(self, *, width: float, height: float) -> dict[str, Any]:
+        return {
+            "activity": "other",
+            "activity_description": "insufficient_resolution",
+            "objects_involved": [],
+            "zone_inference": "unknown",
+            "interaction_with_others": None,
+            "anomaly_flag": False,
+            "anomaly_reason": f"bbox_too_small:{int(width)}x{int(height)}",
+            "supervisor_attention_recommended": False,
+            "confidence": 0.0,
+            "reasoning": "Target bbox is below minimum size threshold; VLM call skipped.",
+            "_status": "insufficient_resolution",
+        }
+
+    def _artifact_dir(self, track_id: int) -> Path:
+        root = self.base_dir if self.base_dir is not None else Path.cwd()
+        packet_dir = root / "vlm_packets" / f"track_{track_id:04d}"
+        packet_dir.mkdir(parents=True, exist_ok=True)
+        return packet_dir
+
+    @staticmethod
+    def _expanded_bbox(
+        bbox: tuple[float, float, float, float], width: int, height: int, expand_ratio: float = 0.5
+    ) -> tuple[int, int, int, int]:
+        x1, y1, x2, y2 = bbox
+        box_w = max(x2 - x1, 1.0)
+        box_h = max(y2 - y1, 1.0)
+        pad_x = box_w * expand_ratio
+        pad_y = box_h * expand_ratio
+        ex1 = max(0, int(round(x1 - pad_x)))
+        ey1 = max(0, int(round(y1 - pad_y)))
+        ex2 = min(width, int(round(x2 + pad_x)))
+        ey2 = min(height, int(round(y2 + pad_y)))
+        ex2 = max(ex1 + 1, ex2)
+        ey2 = max(ey1 + 1, ey2)
+        return ex1, ey1, ex2, ey2
+
+    def _collect_frame_boxes(
+        self, conn: sqlite3.Connection, *, frame_path: str | None, frame_idx: int
+    ) -> list[tuple[int, tuple[float, float, float, float]]]:
+        if frame_path:
+            rows = conn.execute(
+                """
+                SELECT track_id, bbox_x1, bbox_y1, bbox_x2, bbox_y2
+                FROM tracks
+                WHERE frame_path = ?
+                """,
+                (frame_path,),
+            ).fetchall()
+            if rows:
+                return [
+                    (int(track_id), (float(x1), float(y1), float(x2), float(y2)))
+                    for track_id, x1, y1, x2, y2 in rows
+                ]
+        rows = conn.execute(
+            """
+            SELECT track_id, bbox_x1, bbox_y1, bbox_x2, bbox_y2
+            FROM tracks
+            WHERE frame_idx = ?
+            """,
+            (frame_idx,),
+        ).fetchall()
+        return [
+            (int(track_id), (float(x1), float(y1), float(x2), float(y2)))
+            for track_id, x1, y1, x2, y2 in rows
+        ]
+
+    @staticmethod
+    def _draw_overlay(
+        image: Image.Image,
+        *,
+        boxes: list[tuple[int, tuple[float, float, float, float]]],
+        target_track: int,
+    ) -> Image.Image:
+        copy = image.copy()
+        draw = ImageDraw.Draw(copy)
+        for box_track_id, box in boxes:
+            color = (235, 235, 235) if box_track_id != target_track else (255, 0, 0)
+            thickness = 1 if box_track_id != target_track else 3
+            x1, y1, x2, y2 = box
+            for delta in range(thickness):
+                draw.rectangle((x1 - delta, y1 - delta, x2 + delta, y2 + delta), outline=color)
+        return copy
+
+    def _find_previous_track_frame(
+        self, conn: sqlite3.Connection, crop: dict[str, Any], db_parent: Path
+    ) -> tuple[Path, tuple[float, float, float, float]] | None:
+        current_ts = float(crop["timestamp_sec"])
+        if current_ts < 0.9:
+            return None
+        target_ts = current_ts - 1.0
+        row = conn.execute(
+            """
+            SELECT frame_path, bbox_x1, bbox_y1, bbox_x2, bbox_y2
+            FROM tracks
+            WHERE track_id = ? AND timestamp_sec <= ?
+            ORDER BY ABS(timestamp_sec - ?) ASC
+            LIMIT 1
+            """,
+            (int(crop["track_id"]), current_ts - 0.2, target_ts),
+        ).fetchone()
+        if row is None:
+            return None
+        frame_path, x1, y1, x2, y2 = row
+        resolved = self._resolve_media_path(str(frame_path) if frame_path else None, db_parent=db_parent)
+        if resolved is None:
+            return None
+        return resolved, (float(x1), float(y1), float(x2), float(y2))
+
+    def _build_visual_packet(
+        self,
+        conn: sqlite3.Connection,
+        *,
+        crop: dict[str, Any],
+        db_parent: Path,
+    ) -> list[Path]:
+        frame_path = crop.get("resolved_frame_path")
+        if frame_path is None:
+            return [Path(crop["resolved_crop_path"])]
+
+        packet_dir = self._artifact_dir(int(crop["track_id"]))
+        target_row = int(crop["row_id"])
+        frame_image = Image.open(frame_path).convert("RGB")
+        frame_boxes = self._collect_frame_boxes(
+            conn,
+            frame_path=str(crop.get("frame_path")) if crop.get("frame_path") else None,
+            frame_idx=int(crop["frame_idx"]),
+        )
+        target_box = tuple(crop["bbox"])
+
+        full_frame_overlay = self._draw_overlay(
+            frame_image,
+            boxes=frame_boxes,
+            target_track=int(crop["track_id"]),
+        )
+        full_frame_path = packet_dir / f"row_{target_row:06d}_full_frame.jpg"
+        full_frame_overlay.save(full_frame_path)
+
+        ex1, ey1, ex2, ey2 = self._expanded_bbox(target_box, frame_image.width, frame_image.height, expand_ratio=0.5)
+        expanded_crop = frame_image.crop((ex1, ey1, ex2, ey2))
+        expanded_crop_path = packet_dir / f"row_{target_row:06d}_expanded_crop.jpg"
+        expanded_crop.save(expanded_crop_path)
+
+        packet_paths = [full_frame_path, expanded_crop_path]
+        previous = self._find_previous_track_frame(conn, crop=crop, db_parent=db_parent)
+        if previous is not None:
+            prev_frame_path, prev_bbox = previous
+            prev_image = Image.open(prev_frame_path).convert("RGB")
+            prev_overlay = self._draw_overlay(
+                prev_image,
+                boxes=[(int(crop["track_id"]), prev_bbox)],
+                target_track=int(crop["track_id"]),
+            )
+            prev_path = packet_dir / f"row_{target_row:06d}_previous_frame.jpg"
+            prev_overlay.save(prev_path)
+            packet_paths.append(prev_path)
+        return packet_paths
+
     async def _describe_and_parse(
-        self, crop: dict[str, Any], prompt: str
+        self, crop: dict[str, Any], prompt: str, packet_paths: list[Path]
     ) -> tuple[dict[str, Any], str]:
-        response_text = await self.vllm_client.describe_image_async(
-            image_path=crop["resolved_path"], prompt=prompt, max_tokens=self.max_tokens
+        content: list[dict[str, Any]] = [
+            {
+                "type": "text",
+                "text": (
+                    f"{prompt}\n"
+                    f"Track ID: {crop['track_id']}\n"
+                    f"Timestamp sec: {crop['timestamp_sec']:.2f}\n"
+                    "Use visual evidence from all images."
+                ),
+            }
+        ]
+        for path in packet_paths:
+            content.append(
+                {"type": "image_url", "image_url": {"url": VLLMClient._image_data_url(path)}}
+            )
+        response_text = await self.vllm_client.chat_completion_async(
+            messages=[{"role": "user", "content": content}],
+            max_tokens=self.max_tokens,
         )
         json_block = self._extract_json_block(response_text)
         parsed = json.loads(json_block)
@@ -192,37 +404,79 @@ class VisionAnalyzer:
         validated = self._validate_activity_payload(parsed)
         return validated, response_text
 
-    async def _analyze_crop(self, track_id: int, crop: dict[str, Any]) -> dict[str, Any]:
-        try:
-            parsed, response_text = await self._describe_and_parse(crop=crop, prompt=self.prompt)
-            self.parse_successes += 1
+    async def _analyze_crop(
+        self,
+        *,
+        conn: sqlite3.Connection,
+        track_id: int,
+        crop: dict[str, Any],
+        db_parent: Path,
+    ) -> dict[str, Any]:
+        if crop["bbox_width"] < self.min_gate_width or crop["bbox_height"] < self.min_gate_height:
+            payload = self._insufficient_resolution_payload(
+                width=float(crop["bbox_width"]),
+                height=float(crop["bbox_height"]),
+            )
             return {
                 "track_id": track_id,
                 "row_id": crop["row_id"],
                 "frame_idx": crop["frame_idx"],
                 "timestamp_sec": crop["timestamp_sec"],
                 "crop_path": crop["crop_path"],
+                "frame_path": crop["frame_path"],
+                "analysis": payload,
+                "raw_response": "",
+                "used_strict_prompt": False,
+                "error": None,
+                "vlm_packet_paths": [],
+            }
+
+        packet_paths = self._build_visual_packet(conn, crop=crop, db_parent=db_parent)
+        packet_strings = [str(path) for path in packet_paths]
+        try:
+            parsed, response_text = await self._describe_and_parse(
+                crop=crop,
+                prompt=self.prompt,
+                packet_paths=packet_paths,
+            )
+            self.parse_successes += 1
+            parsed["_status"] = "ok"
+            parsed["_vlm_packet_paths"] = packet_strings
+            return {
+                "track_id": track_id,
+                "row_id": crop["row_id"],
+                "frame_idx": crop["frame_idx"],
+                "timestamp_sec": crop["timestamp_sec"],
+                "crop_path": crop["crop_path"],
+                "frame_path": crop["frame_path"],
                 "analysis": parsed,
                 "raw_response": response_text,
                 "used_strict_prompt": False,
                 "error": None,
+                "vlm_packet_paths": packet_strings,
             }
         except Exception as first_error:
             try:
                 parsed, response_text = await self._describe_and_parse(
-                    crop=crop, prompt=self.strict_prompt
+                    crop=crop,
+                    prompt=self.strict_prompt,
+                    packet_paths=packet_paths,
                 )
                 self.parse_successes += 1
+                parsed["_status"] = "ok"
+                parsed["_vlm_packet_paths"] = packet_strings
                 return {
                     "track_id": track_id,
                     "row_id": crop["row_id"],
                     "frame_idx": crop["frame_idx"],
                     "timestamp_sec": crop["timestamp_sec"],
                     "crop_path": crop["crop_path"],
+                    "frame_path": crop["frame_path"],
                     "analysis": parsed,
                     "raw_response": response_text,
                     "used_strict_prompt": True,
                     "error": None,
+                    "vlm_packet_paths": packet_strings,
                 }
             except Exception as strict_error:
                 self.parse_failures += 1
@@ -232,23 +486,47 @@ class VisionAnalyzer:
                     "frame_idx": crop["frame_idx"],
                     "timestamp_sec": crop["timestamp_sec"],
                     "crop_path": crop["crop_path"],
+                    "frame_path": crop["frame_path"],
                     "analysis": {
-                        "parse_error": True,
-                        "message": str(strict_error),
+                        "activity": "other",
+                        "activity_description": "parse_error",
+                        "objects_involved": [],
+                        "zone_inference": "unknown",
+                        "interaction_with_others": None,
+                        "anomaly_flag": False,
+                        "anomaly_reason": str(strict_error),
+                        "supervisor_attention_recommended": False,
+                        "confidence": 0.0,
+                        "reasoning": f"Parser failed and fallback used: {strict_error}",
+                        "_status": "parse_error",
+                        "_vlm_packet_paths": packet_strings,
                         "raw_snippet": str(first_error)[:200],
                     },
                     "raw_response": "",
                     "used_strict_prompt": True,
                     "error": str(strict_error),
+                    "vlm_packet_paths": packet_strings,
                 }
 
-    async def analyze_track(self, track_id: int, crops_list: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    async def analyze_track(
+        self,
+        *,
+        conn: sqlite3.Connection,
+        track_id: int,
+        crops_list: list[dict[str, Any]],
+        db_parent: Path,
+    ) -> list[dict[str, Any]]:
         """Analyze a single track from a list of crops."""
         semaphore = asyncio.Semaphore(self.concurrency)
 
         async def analyze_with_limit(crop: dict[str, Any]) -> dict[str, Any]:
             async with semaphore:
-                return await self._analyze_crop(track_id=track_id, crop=crop)
+                return await self._analyze_crop(
+                    conn=conn,
+                    track_id=track_id,
+                    crop=crop,
+                    db_parent=db_parent,
+                )
 
         tasks = [asyncio.create_task(analyze_with_limit(crop)) for crop in crops_list]
         if not tasks:
@@ -266,14 +544,25 @@ class VisionAnalyzer:
                         "frame_idx": crop["frame_idx"],
                         "timestamp_sec": crop["timestamp_sec"],
                         "crop_path": crop["crop_path"],
+                        "frame_path": crop["frame_path"],
                         "analysis": {
-                            "parse_error": True,
-                            "message": str(result),
-                            "raw_snippet": "",
+                            "activity": "other",
+                            "activity_description": "parse_error",
+                            "objects_involved": [],
+                            "zone_inference": "unknown",
+                            "interaction_with_others": None,
+                            "anomaly_flag": False,
+                            "anomaly_reason": str(result),
+                            "supervisor_attention_recommended": False,
+                            "confidence": 0.0,
+                            "reasoning": "Unexpected exception while analyzing track.",
+                            "_status": "parse_error",
+                            "_vlm_packet_paths": [],
                         },
                         "raw_response": "",
                         "used_strict_prompt": False,
                         "error": str(result),
+                        "vlm_packet_paths": [],
                     }
                 )
                 continue
@@ -313,9 +602,15 @@ class VisionAnalyzer:
                 track_started_at = time.perf_counter()
                 try:
                     crops = crops_by_track.get(track_id, [])
-                    results = await self.analyze_track(track_id=track_id, crops_list=crops)
+                    results = await self.analyze_track(
+                        conn=conn,
+                        track_id=track_id,
+                        crops_list=crops,
+                        db_parent=db_parent,
+                    )
                     for result in results:
                         completed_crops += 1
+                        status_value = str(result.get("analysis", {}).get("_status", "ok"))
                         if on_crop_progress is not None:
                             elapsed_sec = time.perf_counter() - semantic_started_at
                             avg_sec_per_crop = elapsed_sec / completed_crops if completed_crops > 0 else 0.0
@@ -332,7 +627,7 @@ class VisionAnalyzer:
                                     "avg_sec_per_crop": avg_sec_per_crop,
                                     "eta_sec": avg_sec_per_crop * remaining_crops,
                                     "row_id": int(result["row_id"]),
-                                    "status": "ok" if not result.get("error") else "failed",
+                                    "status": status_value,
                                 }
                             )
                         if dry_run:

@@ -342,6 +342,7 @@ class Orchestrator:
                     confidence=confidence,
                     color_tag=color_tag,
                     crop_path=str(crop_path),
+                    frame_path=str(frame_path),
                     activity_json="{}",
                 )
 

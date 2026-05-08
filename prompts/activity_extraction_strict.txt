@@ -1,31 +1,26 @@
-Output ONLY a single valid JSON object.
-No markdown fences. No prose. No comments. No trailing text.
+Output ONLY one valid JSON object.
+No markdown fences, no prose, no comments, no extra keys.
 
 Required exact keys:
-activity, relative_location, visible_tools, object_interaction, posture, anomaly, severity
+activity, activity_description, objects_involved, zone_inference, interaction_with_others, anomaly_flag, anomaly_reason, supervisor_attention_recommended, confidence, reasoning
 
 Required schema:
 {
-  "activity": "string",
-  "relative_location": "string",
-  "visible_tools": ["string"],
-  "object_interaction": "string",
-  "posture": "string",
-  "anomaly": false,
-  "severity": null
+  "activity": "walking|standing|handling_object|lifting|interacting|inspecting|idle|other",
+  "activity_description": "string",
+  "objects_involved": ["string"],
+  "zone_inference": "string",
+  "interaction_with_others": "string|null",
+  "anomaly_flag": false,
+  "anomaly_reason": "string|null",
+  "supervisor_attention_recommended": false,
+  "confidence": 0.0,
+  "reasoning": "string"
 }
 
 Constraints:
-- "visible_tools" must be an array of strings.
-- "anomaly" must be boolean.
-- "severity" must be null or one of: "low", "medium", "high".
-- If person visibility is poor or ambiguous, set:
-  "activity": "not clearly visible",
-  "relative_location": "unknown",
-  "visible_tools": [],
-  "object_interaction": "unknown",
-  "posture": "unknown",
-  "anomaly": false,
-  "severity": null.
-- If you detect safety violation (missing PPE, restricted area, unsafe action), set:
-  "anomaly": true and choose "severity".
+- Never output "not clearly visible" as activity.
+- Low image quality is not an abstention reason.
+- Only consider visibility invalid if target bbox has no human figure.
+- confidence must be between 0 and 1.
+- reasoning must be non-empty and grounded in visual evidence.

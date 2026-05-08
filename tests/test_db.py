@@ -66,7 +66,7 @@ def test_update_track_activity(tmp_path) -> None:
     row_id = rows[0][0]
     update_track_activity(conn=conn, row_id=row_id, activity_json='{"activity":"packing"}')
     updated = get_tracks_by_id(conn, 2)
-    assert updated[0][11] == '{"activity":"packing"}'
+    assert updated[0][12] == '{"activity":"packing"}'
     conn.close()
 
 

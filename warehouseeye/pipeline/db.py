@@ -28,10 +28,17 @@ def init_db(db_path: str | Path) -> sqlite3.Connection:
             confidence REAL NOT NULL,
             color_tag TEXT,
             crop_path TEXT,
+            frame_path TEXT,
             activity_json TEXT
         )
         """
     )
+    existing_track_columns = {
+        str(row[1]).strip().lower()
+        for row in cur.execute("PRAGMA table_info(tracks)").fetchall()
+    }
+    if "frame_path" not in existing_track_columns:
+        cur.execute("ALTER TABLE tracks ADD COLUMN frame_path TEXT")
     cur.execute(
         """
         CREATE TABLE IF NOT EXISTS identities (
@@ -122,6 +129,7 @@ def insert_track(
     confidence: float,
     color_tag: str | None,
     crop_path: str | None,
+    frame_path: str | None = None,
     activity_json: str = "{}",
 ) -> None:
     """Insert one tracked detection row."""
@@ -129,8 +137,8 @@ def insert_track(
         """
         INSERT INTO tracks (
             track_id, timestamp_sec, frame_idx, bbox_x1, bbox_y1, bbox_x2, bbox_y2,
-            confidence, color_tag, crop_path, activity_json
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            confidence, color_tag, crop_path, frame_path, activity_json
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             track_id,
@@ -143,6 +151,7 @@ def insert_track(
             confidence,
             color_tag,
             crop_path,
+            frame_path,
             activity_json,
         ),
     )

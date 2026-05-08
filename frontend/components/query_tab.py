@@ -36,6 +36,18 @@ def _resolve_crop_path(crop_path: str | None, workspace_root: Path) -> Path | No
     return None
 
 
+def _resolve_media_path(path_value: str | None, workspace_root: Path) -> Path | None:
+    if not path_value:
+        return None
+    path = Path(path_value)
+    if path.exists():
+        return path
+    candidate = workspace_root / path_value
+    if candidate.exists():
+        return candidate
+    return None
+
+
 def _render_timeline_expander(timeline_rows: list[dict[str, Any]], key_prefix: str) -> None:
     if not timeline_rows:
         return
@@ -47,8 +59,10 @@ def _render_timeline_expander(timeline_rows: list[dict[str, Any]], key_prefix: s
             track_id = entry.get("track_id", "n/a")
             activity = entry.get("activity", {})
             activity_label = activity.get("activity", "unknown") if isinstance(activity, dict) else "unknown"
+            status_label = activity.get("_status", "ok") if isinstance(activity, dict) else "ok"
+            status_suffix = f"  •  Status `{status_label}`" if status_label != "ok" else ""
             st.markdown(
-                f"`{ts_label}`  •  Track `{track_id}`  •  Activity `{activity_label}`",
+                f"`{ts_label}`  •  Track `{track_id}`  •  Activity `{activity_label}`{status_suffix}",
             )
             st.button(
                 f"Jump to {ts_label}",
@@ -56,6 +70,60 @@ def _render_timeline_expander(timeline_rows: list[dict[str, Any]], key_prefix: s
                 help="Timestamp marker for live narration context.",
                 type="tertiary",
             )
+
+
+def _render_reasoning_details(
+    timeline_rows: list[dict[str, Any]],
+    workspace_root: Path,
+) -> None:
+    if not timeline_rows:
+        return
+    rows_with_reasoning = [
+        row
+        for row in timeline_rows
+        if isinstance(row.get("activity"), dict) and row["activity"].get("reasoning")
+    ]
+    if not rows_with_reasoning:
+        return
+
+    deduped: list[dict[str, Any]] = []
+    seen: set[tuple[int, int]] = set()
+    for row in rows_with_reasoning:
+        key = (int(row.get("track_id", -1)), int(row.get("frame_idx", -1)))
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(row)
+    with st.expander("VLM reasoning details", expanded=False):
+        for index, row in enumerate(deduped[:8]):
+            track_id = int(row.get("track_id", -1))
+            activity = row.get("activity", {})
+            status = str(activity.get("_status", "ok")) if isinstance(activity, dict) else "ok"
+            reasoning = str(activity.get("reasoning", "")) if isinstance(activity, dict) else ""
+            st.markdown(f"**Track `{track_id}`** · Status `{status}`")
+            if status == "insufficient_resolution":
+                st.warning("Marked as insufficient_resolution; no VLM call made for this keyframe.")
+            if reasoning:
+                st.info(reasoning)
+            st.json(activity)
+
+            packet_paths = row.get("vlm_packet_paths")
+            if not isinstance(packet_paths, list):
+                packet_paths = activity.get("_vlm_packet_paths", []) if isinstance(activity, dict) else []
+            resolved_paths = [
+                resolved
+                for resolved in (
+                    _resolve_media_path(str(path_value), workspace_root)
+                    for path_value in packet_paths[:3]
+                )
+                if resolved is not None
+            ]
+            if resolved_paths:
+                cols = st.columns(min(3, len(resolved_paths)))
+                for path_index, media_path in enumerate(resolved_paths):
+                    with cols[path_index % len(cols)]:
+                        st.image(str(media_path), width="stretch")
+            st.divider()
 
 
 def _render_crops(candidates: list[dict[str, Any]], workspace_root: Path, key_prefix: str) -> None:
@@ -178,6 +246,10 @@ def render_query_tab(
 
         st.markdown(narrative)
         _render_timeline_expander(timeline, key_prefix=f"timeline-{len(st.session_state.chat_history)}")
+        _render_reasoning_details(
+            timeline_rows=timeline,
+            workspace_root=workspace_root,
+        )
         _render_crops(alternatives, workspace_root, key_prefix=f"alts-{len(st.session_state.chat_history)}")
 
     st.session_state.chat_history.append(

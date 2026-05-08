@@ -63,9 +63,9 @@ def test_build_timeline_merges_visual_and_audio(tmp_path) -> None:
     assert timeline[0]["timestamp"] == 12.0
     assert timeline[0]["audio_context"] == "dispatch zone alert"
     assert timeline[0]["tracks"][0]["track_id"] == 3
-    assert timeline[0]["tracks"][0]["activity"] == "unknown"
+    assert timeline[0]["tracks"][0]["activity"] == "other"
     assert timeline[0]["tracks"][1]["track_id"] == 7
-    assert timeline[0]["tracks"][1]["activity"] == "packing"
+    assert timeline[0]["tracks"][1]["activity"] == "handling_object"
     assert timeline[1]["audio_context"] == "forklift"
 
 
