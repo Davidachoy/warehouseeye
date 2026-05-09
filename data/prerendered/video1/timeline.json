@@ -1,1266 +1,2805 @@
 {
-  "video_id": "video1",
-  "video_url": "data/video1.mp4",
   "timeline": [
     {
       "track_id": 1,
       "timestamp_sec": 0.0,
       "frame_idx": 0,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        55.058685302734375,
+        213.3643035888672,
+        141.3841094970703,
+        311.2431640625
       ],
+      "confidence": 0.8405248522758484,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00000.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00000_0.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "handling_object",
+        "activity_description": "The person is seated on a hand truck (dolly) and appears to be maneuvering it across the warehouse floor. The hand truck carries a box, indicating active material handling.",
+        "objects_involved": [
+          "hand truck",
+          "box"
+        ],
+        "zone_inference": "warehouse floor / material handling area",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "anomaly_reason": null,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.9,
+        "reasoning": "The full frame and expanded crop show a person seated on a hand truck with a box loaded on it, moving across the warehouse floor. The posture and motion blur suggest active movement, consistent with handling material. No unsafe or unusual behavior is evident from the visual cues.",
+        "_status": "ok",
+        "_vlm_packet_paths": [
+          "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/vlm_packets/track_0001/row_000001_full_frame.jpg",
+          "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/vlm_packets/track_0001/row_000001_expanded_crop.jpg"
+        ],
+        "relative_location": "warehouse floor / material handling area",
+        "visible_tools": [
+          "hand truck",
+          "box"
+        ],
+        "object_interaction": "The person is seated on a hand truck (dolly) and appears to be maneuvering it across the warehouse floor. The hand truck carries a box, indicating active material handling.",
+        "posture": "handling_object",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 0.5,
       "frame_idx": 1,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        104.0982437133789,
+        195.1561279296875,
+        162.81573486328125,
+        295.64349365234375
       ],
+      "confidence": 0.9158996939659119,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00001.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00001_0.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "handling_object",
+        "activity_description": "The person is actively pushing a hand truck loaded with boxes, indicating material handling. Their posture and forward motion suggest movement across the warehouse floor.",
+        "objects_involved": [
+          "hand truck",
+          "boxes"
+        ],
+        "zone_inference": "warehouse storage and movement aisle",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "anomaly_reason": null,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.9,
+        "reasoning": "The full frame and expanded crop show a person pushing a hand truck loaded with boxes. Their body is leaning forward, consistent with exerting force to move the load. The surrounding environment contains shelving and pallets, confirming a warehouse setting. No unsafe behavior or obstruction is evident.",
+        "_status": "ok",
+        "_vlm_packet_paths": [
+          "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/vlm_packets/track_0001/row_000002_full_frame.jpg",
+          "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/vlm_packets/track_0001/row_000002_expanded_crop.jpg"
+        ],
+        "relative_location": "warehouse storage and movement aisle",
+        "visible_tools": [
+          "hand truck",
+          "boxes"
+        ],
+        "object_interaction": "The person is actively pushing a hand truck loaded with boxes, indicating material handling. Their posture and forward motion suggest movement across the warehouse floor.",
+        "posture": "handling_object",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 1.0,
       "frame_idx": 2,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        142.7689208984375,
+        183.4213409423828,
+        189.58505249023438,
+        281.6500244140625
       ],
+      "confidence": 0.8867036700248718,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00002.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00002_1.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 1.5,
       "frame_idx": 3,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        165.37728881835938,
+        193.9157257080078,
+        219.40489196777344,
+        279.26519775390625
       ],
+      "confidence": 0.9307780265808105,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00003.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00003_1.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 2.0,
       "frame_idx": 4,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        196.78213500976562,
+        185.6063690185547,
+        256.7901306152344,
+        279.6775817871094
       ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 2,
-      "timestamp_sec": 2.5,
-      "frame_idx": 5,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
-      "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 2,
-      "timestamp_sec": 3.0,
-      "frame_idx": 6,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
-      "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
-      ],
+      "confidence": 0.8765036463737488,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00004.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00004_2.000.jpg",
       "activity": {
         "activity": "handling_object",
-        "zone_inference": "loading_zone",
+        "activity_description": "The person is actively moving a hand truck with a box on it, indicating they are handling a load. Their posture and motion suggest they are transporting the object across the warehouse floor.",
+        "objects_involved": [
+          "hand truck",
+          "box"
+        ],
+        "zone_inference": "warehouse floor / material handling area",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "anomaly_reason": null,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.9,
+        "reasoning": "In the full frame and expanded crop, the person is seen pushing a hand truck with a box, consistent with material handling. The earlier frame shows them standing near the same hand truck, indicating a continuous action of moving the load. Their body posture and motion trajectory confirm active handling, not idle or standing.",
+        "_status": "ok",
+        "_vlm_packet_paths": [
+          "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/vlm_packets/track_0001/row_000005_full_frame.jpg",
+          "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/vlm_packets/track_0001/row_000005_expanded_crop.jpg",
+          "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/vlm_packets/track_0001/row_000005_previous_frame.jpg"
+        ],
+        "relative_location": "warehouse floor / material handling area",
+        "visible_tools": [
+          "hand truck",
+          "box"
+        ],
+        "object_interaction": "The person is actively moving a hand truck with a box on it, indicating they are handling a load. Their posture and motion suggest they are transporting the object across the warehouse floor.",
+        "posture": "handling_object",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
-      "timestamp_sec": 3.5,
-      "frame_idx": 7,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "timestamp_sec": 2.5,
+      "frame_idx": 5,
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        236.69381713867188,
+        189.06900024414062,
+        294.59771728515625,
+        282.57818603515625
       ],
+      "confidence": 0.9038817882537842,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00005.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00005_2.500.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 3.0,
+      "frame_idx": 6,
+      "bbox": [
+        271.16033935546875,
+        184.29896545410156,
+        314.8688049316406,
+        280.76397705078125
+      ],
+      "confidence": 0.8807316422462463,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00006.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00006_3.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 4.0,
       "frame_idx": 8,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        316.4303283691406,
+        167.0493927001953,
+        356.40582275390625,
+        243.7442169189453
       ],
+      "confidence": 0.9028019309043884,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00008.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00008_4.000.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 4.5,
       "frame_idx": 9,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        331.145263671875,
+        175.14739990234375,
+        375.61944580078125,
+        240.54449462890625
       ],
+      "confidence": 0.8496248722076416,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00009.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00009_4.500.jpg",
       "activity": {
-        "activity": "standing",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 5.0,
       "frame_idx": 10,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        352.1691589355469,
+        167.87168884277344,
+        404.08612060546875,
+        233.63035583496094
       ],
+      "confidence": 0.7978943586349487,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00010.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00010_5.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 5.5,
       "frame_idx": 11,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        379.7272033691406,
+        162.60052490234375,
+        420.0075988769531,
+        228.27792358398438
       ],
+      "confidence": 0.8497161865234375,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00011.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00011_5.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 2,
-      "timestamp_sec": 6.0,
-      "frame_idx": 12,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
-      "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 2,
-      "timestamp_sec": 6.5,
-      "frame_idx": 13,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
-      "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
-      "timestamp_sec": 7.0,
-      "frame_idx": 14,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "timestamp_sec": 6.0,
+      "frame_idx": 12,
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        396.22369384765625,
+        156.4730224609375,
+        437.67486572265625,
+        223.00015258789062
       ],
+      "confidence": 0.7958766222000122,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00012.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00012_6.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 7.5,
       "frame_idx": 15,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        410.83062744140625,
+        117.47300720214844,
+        455.47369384765625,
+        207.32574462890625
       ],
+      "confidence": 0.8831310868263245,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00015.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00015_7.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 8.0,
       "frame_idx": 16,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        409.424072265625,
+        105.47736358642578,
+        447.3616027832031,
+        187.4110107421875
       ],
+      "confidence": 0.846755862236023,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00016.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00016_8.000.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 1,
-      "timestamp_sec": 8.5,
-      "frame_idx": 17,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
-      "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 1,
-      "timestamp_sec": 9.0,
-      "frame_idx": 18,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
-      "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
-        "anomaly": true,
-        "anomaly_flag": true
-      }
-    },
-    {
-      "track_id": 2,
-      "timestamp_sec": 9.5,
-      "frame_idx": 19,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
-      "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "standing",
-        "zone_inference": "loading_zone",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 2,
-      "timestamp_sec": 10.0,
-      "frame_idx": 20,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
-      "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 1,
-      "timestamp_sec": 10.5,
-      "frame_idx": 21,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
-      "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 1,
-      "timestamp_sec": 11.0,
-      "frame_idx": 22,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
-      "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 1,
-      "timestamp_sec": 11.5,
-      "frame_idx": 23,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
-      "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 12.0,
       "frame_idx": 24,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        401.4923400878906,
+        94.32423400878906,
+        439.14813232421875,
+        177.48016357421875
       ],
+      "confidence": 0.877312421798706,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00024.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00024_12.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 12.5,
       "frame_idx": 25,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        395.0137023925781,
+        99.51559448242188,
+        435.80157470703125,
+        177.41009521484375
       ],
+      "confidence": 0.8622882962226868,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00025.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00025_12.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
-      "track_id": 2,
+      "track_id": 1,
       "timestamp_sec": 13.0,
       "frame_idx": 26,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
       "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
+        401.1217956542969,
+        94.7491226196289,
+        441.5169982910156,
+        177.35447692871094
       ],
+      "confidence": 0.8799260854721069,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00026.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00026_13.000.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "loading_zone",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
-      "track_id": 2,
+      "track_id": 1,
       "timestamp_sec": 13.5,
       "frame_idx": 27,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
       "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
+        404.2452392578125,
+        84.49614715576172,
+        449.63507080078125,
+        173.787353515625
       ],
+      "confidence": 0.8634406328201294,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00027.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00027_13.500.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "loading_zone",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 14.0,
       "frame_idx": 28,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        407.4579162597656,
+        87.50967407226562,
+        448.95953369140625,
+        172.71554565429688
       ],
+      "confidence": 0.8526995182037354,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00028.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00028_14.000.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 14.5,
       "frame_idx": 29,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        408.41937255859375,
+        88.12393951416016,
+        450.29095458984375,
+        172.93621826171875
       ],
+      "confidence": 0.8410102725028992,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00029.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00029_14.500.jpg",
       "activity": {
-        "activity": "standing",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 15.0,
       "frame_idx": 30,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        406.5830078125,
+        92.9511947631836,
+        450.32440185546875,
+        172.9895782470703
       ],
+      "confidence": 0.8813262581825256,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00030.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00030_15.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 15.5,
       "frame_idx": 31,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        406.4468078613281,
+        92.57058715820312,
+        450.4040222167969,
+        173.01275634765625
       ],
+      "confidence": 0.8807520866394043,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00031.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00031_15.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 16.0,
       "frame_idx": 32,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        408.2348937988281,
+        81.74598693847656,
+        451.30474853515625,
+        172.985595703125
       ],
+      "confidence": 0.8622058629989624,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00032.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00032_16.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
-      "track_id": 2,
+      "track_id": 1,
       "timestamp_sec": 16.5,
       "frame_idx": 33,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
       "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
+        407.4581604003906,
+        91.26165008544922,
+        451.37158203125,
+        172.8097686767578
       ],
+      "confidence": 0.8891825079917908,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00033.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00033_16.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
-      "track_id": 2,
+      "track_id": 1,
       "timestamp_sec": 17.0,
       "frame_idx": 34,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
       "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
+        407.7660827636719,
+        89.90824127197266,
+        451.3803405761719,
+        172.7592010498047
       ],
+      "confidence": 0.8822174668312073,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00034.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00034_17.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 17.5,
       "frame_idx": 35,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        406.8104248046875,
+        86.36429595947266,
+        450.1793212890625,
+        172.862060546875
       ],
+      "confidence": 0.8649287819862366,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00035.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00035_17.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 18.0,
       "frame_idx": 36,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        408.1802062988281,
+        93.90966033935547,
+        450.0229187011719,
+        173.17713928222656
       ],
+      "confidence": 0.9050350785255432,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00036.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00036_18.000.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 18.5,
       "frame_idx": 37,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        408.23468017578125,
+        95.31299591064453,
+        449.8743896484375,
+        175.5787811279297
       ],
+      "confidence": 0.890589714050293,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00037.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00037_18.500.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
-        "anomaly": true,
-        "anomaly_flag": true
-      }
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 19.0,
       "frame_idx": 38,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        406.59637451171875,
+        97.474365234375,
+        445.0294494628906,
+        175.50613403320312
       ],
+      "confidence": 0.8584627509117126,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00038.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00038_19.000.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 19.5,
       "frame_idx": 39,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        407.324951171875,
+        97.35965728759766,
+        445.1586608886719,
+        175.6095733642578
       ],
+      "confidence": 0.8567408919334412,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00039.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00039_19.500.jpg",
       "activity": {
-        "activity": "standing",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
-      "track_id": 2,
+      "track_id": 1,
       "timestamp_sec": 20.0,
       "frame_idx": 40,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
       "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
+        406.5057678222656,
+        97.5106430053711,
+        445.6250305175781,
+        175.70103454589844
       ],
+      "confidence": 0.8730788826942444,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00040.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00040_20.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
-      "track_id": 2,
+      "track_id": 1,
       "timestamp_sec": 20.5,
       "frame_idx": 41,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
       "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
+        408.49676513671875,
+        92.90794372558594,
+        449.818115234375,
+        175.6517333984375
       ],
+      "confidence": 0.8888629674911499,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00041.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00041_20.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 21.0,
       "frame_idx": 42,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        406.9078369140625,
+        94.17932891845703,
+        449.50543212890625,
+        172.85977172851562
       ],
+      "confidence": 0.8903975486755371,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00042.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00042_21.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 21.5,
       "frame_idx": 43,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        405.7763977050781,
+        84.93843841552734,
+        450.9097595214844,
+        175.70240783691406
       ],
+      "confidence": 0.8255665302276611,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00043.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00043_21.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 22.0,
       "frame_idx": 44,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        406.02349853515625,
+        96.19654846191406,
+        446.8839111328125,
+        176.78057861328125
       ],
+      "confidence": 0.87526935338974,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00044.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00044_22.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
-        "anomaly": true,
-        "anomaly_flag": true
-      }
-    },
-    {
-      "track_id": 1,
-      "timestamp_sec": 22.5,
-      "frame_idx": 45,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
-      "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 23.0,
       "frame_idx": 46,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        405.8819274902344,
+        96.59259796142578,
+        451.2710876464844,
+        182.57688903808594
       ],
+      "confidence": 0.9095960855484009,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00046.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00046_23.000.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
-      "track_id": 2,
+      "track_id": 1,
       "timestamp_sec": 23.5,
       "frame_idx": 47,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
       "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
+        417.3636474609375,
+        104.65037536621094,
+        456.7863464355469,
+        182.632080078125
       ],
+      "confidence": 0.9049134254455566,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00047.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00047_23.500.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "loading_zone",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
-      "track_id": 2,
+      "track_id": 1,
       "timestamp_sec": 24.0,
       "frame_idx": 48,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
       "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
+        418.1620788574219,
+        110.70005798339844,
+        464.82904052734375,
+        184.353759765625
       ],
+      "confidence": 0.8916144967079163,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00048.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00048_24.000.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "loading_zone",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 24.5,
       "frame_idx": 49,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        438.4635009765625,
+        121.16020202636719,
+        480.80572509765625,
+        192.05496215820312
       ],
+      "confidence": 0.8980106711387634,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00049.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00049_24.500.jpg",
       "activity": {
-        "activity": "standing",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 25.0,
       "frame_idx": 50,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        457.05609130859375,
+        130.0125732421875,
+        498.37725830078125,
+        203.32843017578125
       ],
+      "confidence": 0.8534488081932068,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00050.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00050_25.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 25.5,
       "frame_idx": 51,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        469.3597412109375,
+        141.35105895996094,
+        512.4811401367188,
+        216.60183715820312
       ],
+      "confidence": 0.9229434132575989,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00051.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00051_25.500.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
       "timestamp_sec": 26.0,
       "frame_idx": 52,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        467.23553466796875,
+        140.58038330078125,
+        504.3017272949219,
+        216.56381225585938
       ],
+      "confidence": 0.9213005304336548,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00052.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00052_26.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
-      "timestamp_sec": 26.5,
-      "frame_idx": 53,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "timestamp_sec": 30.0,
+      "frame_idx": 60,
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        418.3841552734375,
+        120.50250244140625,
+        462.79364013671875,
+        204.21044921875
       ],
+      "confidence": 0.9030362367630005,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00060.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00060_30.000.jpg",
       "activity": {
-        "activity": "walking",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 2,
-      "timestamp_sec": 27.0,
-      "frame_idx": 54,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
-      "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
-    },
-    {
-      "track_id": 2,
-      "timestamp_sec": 27.5,
-      "frame_idx": 55,
-      "color_tag": "blue_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
-      "bbox": [
-        500.0,
-        120.0,
-        700.0,
-        500.0
-      ],
-      "activity": {
-        "activity": "walking",
-        "zone_inference": "loading_zone",
-        "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
-      "timestamp_sec": 28.0,
-      "frame_idx": 56,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "timestamp_sec": 30.5,
+      "frame_idx": 61,
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        410.48748779296875,
+        119.65090942382812,
+        449.64215087890625,
+        198.1332550048828
       ],
+      "confidence": 0.7995461821556091,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00061.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00061_30.500.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
-      "timestamp_sec": 28.5,
-      "frame_idx": 57,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "timestamp_sec": 32.0,
+      "frame_idx": 64,
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        400.6449890136719,
+        100.54656219482422,
+        439.91876220703125,
+        178.7290496826172
       ],
+      "confidence": 0.8689025044441223,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00064.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00064_32.000.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
-      "timestamp_sec": 29.0,
-      "frame_idx": 58,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "timestamp_sec": 32.5,
+      "frame_idx": 65,
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        400.204345703125,
+        98.76095581054688,
+        439.99468994140625,
+        177.97314453125
       ],
+      "confidence": 0.8819858431816101,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00065.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00065_32.500.jpg",
       "activity": {
-        "activity": "handling_object",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     },
     {
       "track_id": 1,
-      "timestamp_sec": 29.5,
-      "frame_idx": 59,
-      "color_tag": "yellow_top",
-      "crop_path": null,
-      "frame_path": null,
-      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "timestamp_sec": 33.0,
+      "frame_idx": 66,
       "bbox": [
-        220.0,
-        120.0,
-        420.0,
-        500.0
+        399.9333190917969,
+        93.02322387695312,
+        439.15283203125,
+        177.87069702148438
       ],
+      "confidence": 0.8750807642936707,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00066.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00066_33.000.jpg",
       "activity": {
-        "activity": "standing",
-        "zone_inference": "packing_line",
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
         "anomaly": false,
-        "anomaly_flag": false
-      }
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 33.5,
+      "frame_idx": 67,
+      "bbox": [
+        399.92279052734375,
+        93.10303497314453,
+        439.01092529296875,
+        177.84051513671875
+      ],
+      "confidence": 0.8713144063949585,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00067.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00067_33.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 34.0,
+      "frame_idx": 68,
+      "bbox": [
+        400.032470703125,
+        93.26473236083984,
+        438.96990966796875,
+        177.90380859375
+      ],
+      "confidence": 0.8708140850067139,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00068.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00068_34.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 34.5,
+      "frame_idx": 69,
+      "bbox": [
+        399.92840576171875,
+        93.41348266601562,
+        439.2571716308594,
+        177.91493225097656
+      ],
+      "confidence": 0.8713759183883667,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00069.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00069_34.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 35.0,
+      "frame_idx": 70,
+      "bbox": [
+        400.1380615234375,
+        97.31700134277344,
+        439.8887939453125,
+        177.85169982910156
+      ],
+      "confidence": 0.8874087929725647,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00070.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00070_35.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 35.5,
+      "frame_idx": 71,
+      "bbox": [
+        400.09912109375,
+        95.88285827636719,
+        441.08734130859375,
+        177.650390625
+      ],
+      "confidence": 0.8872082233428955,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00071.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00071_35.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 36.5,
+      "frame_idx": 73,
+      "bbox": [
+        403.6474609375,
+        104.42903900146484,
+        446.9252014160156,
+        183.97445678710938
+      ],
+      "confidence": 0.8466469645500183,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00073.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00073_36.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 37.0,
+      "frame_idx": 74,
+      "bbox": [
+        406.6949462890625,
+        109.50418853759766,
+        449.219970703125,
+        189.21360778808594
+      ],
+      "confidence": 0.8862454295158386,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00074.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00074_37.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 37.5,
+      "frame_idx": 75,
+      "bbox": [
+        400.3030090332031,
+        104.32353210449219,
+        446.4435119628906,
+        189.88536071777344
+      ],
+      "confidence": 0.9152891039848328,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00075.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00075_37.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 38.0,
+      "frame_idx": 76,
+      "bbox": [
+        396.01641845703125,
+        105.13314819335938,
+        442.29144287109375,
+        194.59617614746094
+      ],
+      "confidence": 0.9147250056266785,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00076.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00076_38.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 38.5,
+      "frame_idx": 77,
+      "bbox": [
+        393.3349304199219,
+        105.46250915527344,
+        441.51171875,
+        191.7377166748047
+      ],
+      "confidence": 0.9153875708580017,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00077.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00077_38.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 39.0,
+      "frame_idx": 78,
+      "bbox": [
+        395.1844482421875,
+        104.90045166015625,
+        439.8376159667969,
+        189.94622802734375
+      ],
+      "confidence": 0.899830162525177,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00078.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00078_39.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 40.0,
+      "frame_idx": 80,
+      "bbox": [
+        397.73590087890625,
+        97.90824890136719,
+        435.36566162109375,
+        182.58473205566406
+      ],
+      "confidence": 0.8337184190750122,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00080.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00080_40.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 41.0,
+      "frame_idx": 82,
+      "bbox": [
+        397.1946716308594,
+        99.49789428710938,
+        433.204345703125,
+        181.02769470214844
+      ],
+      "confidence": 0.8851029276847839,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00082.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00082_41.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 42.0,
+      "frame_idx": 84,
+      "bbox": [
+        399.2034912109375,
+        105.35249328613281,
+        448.04632568359375,
+        188.4683837890625
+      ],
+      "confidence": 0.8991102576255798,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00084.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00084_42.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 42.5,
+      "frame_idx": 85,
+      "bbox": [
+        399.1955261230469,
+        108.22600555419922,
+        447.2186584472656,
+        188.35145568847656
+      ],
+      "confidence": 0.8829472661018372,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00085.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00085_42.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 43.0,
+      "frame_idx": 86,
+      "bbox": [
+        398.1796875,
+        104.01718139648438,
+        445.70684814453125,
+        188.35830688476562
+      ],
+      "confidence": 0.8615773916244507,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00086.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00086_43.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 43.5,
+      "frame_idx": 87,
+      "bbox": [
+        398.66644287109375,
+        104.9538803100586,
+        439.2850341796875,
+        187.99380493164062
+      ],
+      "confidence": 0.8889713883399963,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00087.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00087_43.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 45.0,
+      "frame_idx": 90,
+      "bbox": [
+        399.76123046875,
+        96.0103988647461,
+        437.8717346191406,
+        180.630859375
+      ],
+      "confidence": 0.8866530656814575,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00090.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00090_45.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 45.5,
+      "frame_idx": 91,
+      "bbox": [
+        399.932373046875,
+        98.20204162597656,
+        438.0538635253906,
+        179.22683715820312
+      ],
+      "confidence": 0.8739274740219116,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00091.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00091_45.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 46.0,
+      "frame_idx": 92,
+      "bbox": [
+        392.77191162109375,
+        96.7474365234375,
+        434.570068359375,
+        179.17994689941406
+      ],
+      "confidence": 0.8915945887565613,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00092.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00092_46.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 47.5,
+      "frame_idx": 95,
+      "bbox": [
+        396.67840576171875,
+        96.39385223388672,
+        437.1604919433594,
+        178.3253936767578
+      ],
+      "confidence": 0.8774731159210205,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00095.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00095_47.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 52.5,
+      "frame_idx": 105,
+      "bbox": [
+        397.3675231933594,
+        103.9217300415039,
+        433.51239013671875,
+        179.52316284179688
+      ],
+      "confidence": 0.8911194205284119,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00105.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00105_52.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 53.0,
+      "frame_idx": 106,
+      "bbox": [
+        397.0948791503906,
+        103.18787384033203,
+        433.431396484375,
+        179.64224243164062
+      ],
+      "confidence": 0.8833528757095337,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00106.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00106_53.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 53.5,
+      "frame_idx": 107,
+      "bbox": [
+        396.117919921875,
+        102.94498443603516,
+        433.939208984375,
+        179.4805908203125
+      ],
+      "confidence": 0.8794654607772827,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00107.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00107_53.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 54.0,
+      "frame_idx": 108,
+      "bbox": [
+        396.36181640625,
+        102.95568084716797,
+        433.9873962402344,
+        179.4922332763672
+      ],
+      "confidence": 0.8799698948860168,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00108.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00108_54.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 54.5,
+      "frame_idx": 109,
+      "bbox": [
+        395.980224609375,
+        103.45819091796875,
+        434.30877685546875,
+        179.4470977783203
+      ],
+      "confidence": 0.8649030327796936,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00109.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00109_54.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 55.0,
+      "frame_idx": 110,
+      "bbox": [
+        395.25323486328125,
+        103.4779052734375,
+        434.23193359375,
+        179.46092224121094
+      ],
+      "confidence": 0.8634167313575745,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00110.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00110_55.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 55.5,
+      "frame_idx": 111,
+      "bbox": [
+        395.6490783691406,
+        104.2263412475586,
+        434.12762451171875,
+        179.56956481933594
+      ],
+      "confidence": 0.8730597496032715,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00111.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00111_55.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 56.0,
+      "frame_idx": 112,
+      "bbox": [
+        395.36798095703125,
+        104.34164428710938,
+        433.78179931640625,
+        179.52584838867188
+      ],
+      "confidence": 0.8669713735580444,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00112.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00112_56.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 56.5,
+      "frame_idx": 113,
+      "bbox": [
+        395.8529968261719,
+        104.3508071899414,
+        433.7958068847656,
+        179.50953674316406
+      ],
+      "confidence": 0.8689619302749634,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00113.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00113_56.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 57.0,
+      "frame_idx": 114,
+      "bbox": [
+        396.1651306152344,
+        104.12921142578125,
+        433.83465576171875,
+        179.4334716796875
+      ],
+      "confidence": 0.8692174553871155,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00114.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00114_57.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 57.5,
+      "frame_idx": 115,
+      "bbox": [
+        395.76287841796875,
+        104.03128051757812,
+        433.99835205078125,
+        179.47592163085938
+      ],
+      "confidence": 0.8664983510971069,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00115.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00115_57.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 58.0,
+      "frame_idx": 116,
+      "bbox": [
+        396.32012939453125,
+        103.98969268798828,
+        433.95574951171875,
+        179.4863739013672
+      ],
+      "confidence": 0.8681488633155823,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00116.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00116_58.000.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 58.5,
+      "frame_idx": 117,
+      "bbox": [
+        396.3085632324219,
+        104.84830474853516,
+        433.7291259765625,
+        179.45838928222656
+      ],
+      "confidence": 0.8754235506057739,
+      "color_tag": "unknown",
+      "crop_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/crops/track_0001/frame_00117.jpg",
+      "frame_path": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/prerendered/video1/frames/frame_00117_58.500.jpg",
+      "activity": {
+        "activity": "other",
+        "activity_description": "No activity description provided.",
+        "objects_involved": [],
+        "zone_inference": "unknown",
+        "interaction_with_others": null,
+        "anomaly_flag": false,
+        "supervisor_attention_recommended": false,
+        "confidence": 0.5,
+        "reasoning": "No explicit reasoning provided.",
+        "_status": "ok",
+        "relative_location": "unknown",
+        "visible_tools": [],
+        "object_interaction": "No activity description provided.",
+        "posture": "other",
+        "anomaly": false,
+        "severity": null
+      },
+      "narrative_summary": "Track 1: unknown detected."
     }
-  ]
+  ],
+  "identities": [
+    {
+      "track_id": 1,
+      "color_tag": "unknown",
+      "first_seen_sec": 0.0,
+      "last_seen_sec": 58.5,
+      "total_frames": 81,
+      "narrative_summary": "Track 1: unknown detected."
+    }
+  ],
+  "video_id": "video1",
+  "video_url": "/Users/davidachoy/Desktop/Coding apps/warehouseeye/data/video1.mp4",
+  "task_id": "prerender-video1-1778288083"
 }
