@@ -10,7 +10,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import cv2
+try:
+    import cv2
+except Exception:  # pragma: no cover - optional dependency on Streamlit Cloud
+    cv2 = None  # type: ignore[assignment]
 
 try:
     import ffmpeg
@@ -174,6 +177,12 @@ def _draw_segment(frame: Any, segment: TrackSegment) -> None:
 
 def ensure_annotated_video(video_path: Path, video_id: str, timeline_rows: list[dict[str, Any]]) -> Path | None:
     """Create/reuse an annotated video with ID boxes and return its path."""
+    # Streamlit Cloud runtime can miss system libs required by OpenCV (e.g. libGL).
+    # Fall back to original video in that case instead of crashing at import/runtime.
+    if cv2 is None:
+        logger.warning("annotated_video_unavailable: OpenCV import failed; using original video")
+        return None
+
     if not video_path.exists() or not timeline_rows:
         return None
 
