@@ -61,3 +61,6 @@ data/*.avi
 
 # Logs
 *.log
+
+# Local mirror of Hugging Face Space (used for `hf upload`; source of truth is repo root + this folder is rsynced/copied before deploy)
+.hf-space/
