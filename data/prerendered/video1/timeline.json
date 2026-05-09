@@ -1,0 +1,1266 @@
+{
+  "video_id": "video1",
+  "video_url": "data/video1.mp4",
+  "timeline": [
+    {
+      "track_id": 1,
+      "timestamp_sec": 0.0,
+      "frame_idx": 0,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 0.5,
+      "frame_idx": 1,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 1.0,
+      "frame_idx": 2,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 1.5,
+      "frame_idx": 3,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 2.0,
+      "frame_idx": 4,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 2.5,
+      "frame_idx": 5,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 3.0,
+      "frame_idx": 6,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 3.5,
+      "frame_idx": 7,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 4.0,
+      "frame_idx": 8,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 4.5,
+      "frame_idx": 9,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "standing",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 5.0,
+      "frame_idx": 10,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 5.5,
+      "frame_idx": 11,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 6.0,
+      "frame_idx": 12,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 6.5,
+      "frame_idx": 13,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 7.0,
+      "frame_idx": 14,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 7.5,
+      "frame_idx": 15,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 8.0,
+      "frame_idx": 16,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 8.5,
+      "frame_idx": 17,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 9.0,
+      "frame_idx": 18,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": true,
+        "anomaly_flag": true
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 9.5,
+      "frame_idx": 19,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "standing",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 10.0,
+      "frame_idx": 20,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 10.5,
+      "frame_idx": 21,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 11.0,
+      "frame_idx": 22,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 11.5,
+      "frame_idx": 23,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 12.0,
+      "frame_idx": 24,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 12.5,
+      "frame_idx": 25,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 13.0,
+      "frame_idx": 26,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 13.5,
+      "frame_idx": 27,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 14.0,
+      "frame_idx": 28,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 14.5,
+      "frame_idx": 29,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "standing",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 15.0,
+      "frame_idx": 30,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 15.5,
+      "frame_idx": 31,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 16.0,
+      "frame_idx": 32,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 16.5,
+      "frame_idx": 33,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 17.0,
+      "frame_idx": 34,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 17.5,
+      "frame_idx": 35,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 18.0,
+      "frame_idx": 36,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 18.5,
+      "frame_idx": 37,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": true,
+        "anomaly_flag": true
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 19.0,
+      "frame_idx": 38,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 19.5,
+      "frame_idx": 39,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "standing",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 20.0,
+      "frame_idx": 40,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 20.5,
+      "frame_idx": 41,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 21.0,
+      "frame_idx": 42,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 21.5,
+      "frame_idx": 43,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 22.0,
+      "frame_idx": 44,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": true,
+        "anomaly_flag": true
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 22.5,
+      "frame_idx": 45,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 23.0,
+      "frame_idx": 46,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 23.5,
+      "frame_idx": 47,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 24.0,
+      "frame_idx": 48,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 24.5,
+      "frame_idx": 49,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "standing",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 25.0,
+      "frame_idx": 50,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 25.5,
+      "frame_idx": 51,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 26.0,
+      "frame_idx": 52,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 26.5,
+      "frame_idx": 53,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 27.0,
+      "frame_idx": 54,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 2,
+      "timestamp_sec": 27.5,
+      "frame_idx": 55,
+      "color_tag": "blue_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in blue top assists with box handling near staging area.",
+      "bbox": [
+        500.0,
+        120.0,
+        700.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "walking",
+        "zone_inference": "loading_zone",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 28.0,
+      "frame_idx": 56,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 28.5,
+      "frame_idx": 57,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 29.0,
+      "frame_idx": 58,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "handling_object",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    },
+    {
+      "track_id": 1,
+      "timestamp_sec": 29.5,
+      "frame_idx": 59,
+      "color_tag": "yellow_top",
+      "crop_path": null,
+      "frame_path": null,
+      "narrative_summary": "Worker in yellow top performs picking and transit tasks.",
+      "bbox": [
+        220.0,
+        120.0,
+        420.0,
+        500.0
+      ],
+      "activity": {
+        "activity": "standing",
+        "zone_inference": "packing_line",
+        "anomaly": false,
+        "anomaly_flag": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "benchmark": {
+    "frames_analyzed": 60,
+    "tokens_per_second_avg": 245.7,
+    "latency_per_crop_ms": 2150.4,
+    "wall_time_sec": 31.2,
+    "total_cost_usd": 0.0128,
+    "vs_gpt4v_estimated_savings_pct": 35
+  }
+}
