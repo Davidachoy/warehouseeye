@@ -201,15 +201,6 @@ def render_hero(github_url: str, hf_space_url: str) -> None:
     action_col_1, action_col_2 = st.columns(2)
     action_col_1.link_button("View on GitHub", github_url, use_container_width=True)
     action_col_2.link_button("⭐ Like this Space", hf_space_url, use_container_width=True)
-    st.markdown(
-        """
-        <div class="like-cta">
-            Likes are how the AMD x Hugging Face hackathon prize is decided — if WarehouseEye is useful to you, a like helps a lot.
-            Asking for likes is standard practice on HF, and there is no obligation.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
 
 
 def render_how_it_works() -> None:
@@ -227,9 +218,15 @@ def render_how_it_works() -> None:
 
 
 def render_space_footer(github_url: str, paper_url: str, twitter_url: str) -> None:
-    links: list[str] = [f"[GitHub repo]({github_url})", f"[Author X/Twitter]({twitter_url})"]
+    links: list[str] = [
+        f'<a href="{github_url}" target="_blank" rel="noopener noreferrer">GitHub repo</a>',
+        f'<a href="{twitter_url}" target="_blank" rel="noopener noreferrer">Author X/Twitter</a>',
+    ]
     if paper_url:
-        links.insert(1, f"[Technical paper]({paper_url})")
+        links.insert(
+            1,
+            f'<a href="{paper_url}" target="_blank" rel="noopener noreferrer">Technical paper</a>',
+        )
 
     st.markdown(
         f"""

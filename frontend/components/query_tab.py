@@ -167,7 +167,7 @@ def _render_reasoning_details(
                 cols = st.columns(min(3, len(resolved_paths)))
                 for path_index, media_path in enumerate(resolved_paths):
                     with cols[path_index % len(cols)]:
-                        st.image(str(media_path), width="stretch")
+                        st.image(str(media_path))
             st.divider()
 
 
@@ -182,7 +182,7 @@ def _render_crops(candidates: list[dict[str, Any]], workspace_root: Path, key_pr
         caption = f"Track {candidate.get('track_id', '?')}"
         with cols[index % len(cols)]:
             if crop is not None:
-                st.image(str(crop), caption=caption, width="stretch")
+                st.image(str(crop), caption=caption)
             else:
                 st.caption(f"{caption}: crop unavailable")
             st.button(
@@ -213,7 +213,7 @@ def _handle_ambiguous_response(
             st.markdown(f"**{label}**")
             st.caption(f"Color tag: `{color_tag}`")
             if crop is not None:
-                st.image(str(crop), width="stretch")
+                st.image(str(crop))
             if st.button(
                 f"Refine to {label}",
                 key=f"{key_prefix}-refine-{index}",
@@ -238,7 +238,7 @@ def _render_suggestion_chips() -> None:
     quick_questions = SUGGESTED_QUESTIONS[:2]
     quick_cols = st.columns(2)
     for idx, prompt in enumerate(quick_questions):
-        if quick_cols[idx].button(prompt, key=f"suggest-quick-{idx}", width="stretch"):
+        if quick_cols[idx].button(prompt, key=f"suggest-quick-{idx}"):
             st.session_state.pending_prompt = prompt
 
     with st.expander("More suggestions", expanded=False):
@@ -248,7 +248,7 @@ def _render_suggestion_chips() -> None:
             return
         extra_cols = st.columns(2)
         for idx, prompt in enumerate(extra_questions):
-            if extra_cols[idx % 2].button(prompt, key=f"suggest-extra-{idx}", width="stretch"):
+            if extra_cols[idx % 2].button(prompt, key=f"suggest-extra-{idx}"):
                 st.session_state.pending_prompt = prompt
 
 
@@ -256,25 +256,25 @@ def _render_messages_only(history: list[dict[str, Any]]) -> None:
     if not history:
         st.caption("Start the conversation by asking about people, zones, or safety.")
         return
-    rows: list[str] = []
     for message in history:
         role = str(message.get("role", "assistant")).lower()
         safe_text = html.escape(str(message.get("content", ""))).replace("\n", "<br>")
         if role == "user":
-            rows.append(
+            st.markdown(
                 f'<div class="we-chat-row user">'
                 f'<div class="we-chat-bubble user">{safe_text}</div>'
                 f'<div class="we-chat-avatar user">🙂</div>'
-                f"</div>"
+                f"</div>",
+                unsafe_allow_html=True,
             )
         else:
-            rows.append(
+            st.markdown(
                 f'<div class="we-chat-row assistant">'
                 f'<div class="we-chat-avatar assistant">🤖</div>'
                 f'<div class="we-chat-bubble assistant">{safe_text}</div>'
-                f"</div>"
+                f"</div>",
+                unsafe_allow_html=True,
             )
-    st.markdown(f'<div class="conversation-thread">{"".join(rows)}</div>', unsafe_allow_html=True)
 
 
 def _conversation_container_height(history: list[dict[str, Any]]) -> int:
@@ -312,25 +312,6 @@ def _render_response_details(history: list[dict[str, Any]], workspace_root: Path
             )
 
 
-def _render_latest_photo_result(history: list[dict[str, Any]], workspace_root: Path) -> None:
-    photo_messages = [
-        message
-        for message in history
-        if message.get("role") == "assistant"
-        and message.get("intent") == "keyframe_lookup"
-        and message.get("alternatives")
-    ]
-    if not photo_messages:
-        return
-    latest = photo_messages[-1]
-    st.markdown("#### Photo result")
-    _render_crops(
-        latest.get("alternatives", []),
-        workspace_root,
-        key_prefix=f"photo-result-{latest['id']}",
-    )
-
-
 def render_query_tab(
     *,
     video_id: str,
@@ -361,7 +342,6 @@ def render_query_tab(
     user_prompt = st.chat_input("Ask a question about this shift...")
     if st.session_state.get("pending_prompt"):
         user_prompt = st.session_state.pop("pending_prompt")
-    _render_latest_photo_result(st.session_state.chat_history, workspace_root)
     _render_response_details(st.session_state.chat_history, workspace_root)
 
     if not user_prompt:
@@ -374,7 +354,6 @@ def render_query_tab(
     narrative = "No matching track was found for that query."
     timeline: list[dict[str, Any]] = []
     alternatives: list[dict[str, Any]] = []
-    intent: str | None = None
     assistant_message_id = _next_message_id("assistant")
     st.session_state.query_in_flight = True
     try:
@@ -388,7 +367,6 @@ def render_query_tab(
         narrative = response.get("narrative") or "No matching track was found for that query."
         timeline = response.get("timeline", [])
         alternatives = response.get("alternatives", [])
-        intent = response.get("intent")
 
         if not timeline and not alternatives and "no" in narrative.lower():
             narrative = (
@@ -404,7 +382,6 @@ def render_query_tab(
             "content": narrative,
             "timeline": timeline,
             "alternatives": alternatives,
-            "intent": intent,
             "id": assistant_message_id,
         }
     )

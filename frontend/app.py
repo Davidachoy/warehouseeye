@@ -18,8 +18,8 @@ from frontend.components.query_tab import render_query_tab
 from frontend.services.api_client import ApiClient, BackendUnavailableError
 from frontend.services.video_registry import VideoRecord, discover_videos
 
-GITHUB_URL = "https://github.com/[user]/warehouseeye"
-PAPER_URL = "https://github.com/[user]/warehouseeye#readme"
+GITHUB_URL = "https://github.com/Davidachoy/warehouseeye"
+PAPER_URL = "https://github.com/Davidachoy/warehouseeye#readme"
 DEFAULT_API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
 DEFAULT_TIMEOUT_SEC = float(os.getenv("API_TIMEOUT_SEC", "2.0"))
 
@@ -138,7 +138,7 @@ def _render_sidebar(video: VideoRecord | None, client: ApiClient) -> None:
         st.sidebar.warning("No demo videos found in data directory.")
         return
 
-    if st.sidebar.button("Re-analyze", width="stretch", type="primary"):
+    if st.sidebar.button("Re-analyze", type="primary"):
         started = time.perf_counter()
         with st.spinner("Submitting analysis job..."):
             try:

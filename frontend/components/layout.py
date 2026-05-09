@@ -190,7 +190,9 @@ def render_footer() -> None:
     st.markdown(
         """
         <div class="app-footer">
-            Built on FieldMind. AMD Developer Hackathon 2026. MIT License. github.com/[user]/warehouseeye
+            Built on FieldMind. AMD Developer Hackathon 2026. MIT License.
+            <a href="https://github.com/Davidachoy/warehouseeye" target="_blank" rel="noopener noreferrer">
+            github.com/Davidachoy/warehouseeye</a>
         </div>
         """,
         unsafe_allow_html=True,

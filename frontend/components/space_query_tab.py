@@ -292,7 +292,7 @@ def _render_suggestion_chips() -> None:
     quick = CANNED_QUERIES[:2]
     quick_cols = st.columns(2)
     for idx, query in enumerate(quick):
-        if quick_cols[idx].button(query.prompt, key=f"space-suggest-quick-{idx}", width="stretch"):
+        if quick_cols[idx].button(query.prompt, key=f"space-suggest-quick-{idx}"):
             st.session_state.space_pending_prompt = query.prompt
 
     with st.expander("More suggestions", expanded=False):
@@ -302,7 +302,7 @@ def _render_suggestion_chips() -> None:
             return
         cols = st.columns(2)
         for idx, query in enumerate(extra):
-            if cols[idx % 2].button(query.prompt, key=f"space-suggest-extra-{idx}", width="stretch"):
+            if cols[idx % 2].button(query.prompt, key=f"space-suggest-extra-{idx}"):
                 st.session_state.space_pending_prompt = query.prompt
 
 

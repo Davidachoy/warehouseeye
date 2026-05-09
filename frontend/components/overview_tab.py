@@ -108,12 +108,12 @@ def _plot_timeline(df: pd.DataFrame) -> None:
     )
     fig.update_traces(marker_line_width=0)
     fig.update_yaxes(autorange="reversed")
-    st.plotly_chart(fig, width="stretch", theme=None)
+    st.plotly_chart(fig, theme=None)
 
 
 def render_operation_overview(video: VideoRecord, timeline_rows: list[dict[str, Any]]) -> None:
     if video.video_path.exists():
-        show_overlay = st.toggle("Mostrar IDs sobre el video", value=True, key=f"overlay-{video.video_id}")
+        show_overlay = st.toggle("Mostrar IDs sobre el video", value=False, key=f"overlay-{video.video_id}")
         render_path = video.video_path
         if show_overlay:
             with st.spinner("Generando overlay de IDs..."):

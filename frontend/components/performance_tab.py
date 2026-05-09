@@ -39,7 +39,7 @@ def render_performance_dashboard(
     row1[4].metric("Cost per minute video", _fmt_currency(cost_per_min))
 
     st.markdown("#### WarehouseEye on AMD MI300X vs alternatives")
-    st.dataframe(_build_comparison_table(), width="stretch", hide_index=True)
+    st.dataframe(_build_comparison_table(), hide_index=True, use_container_width=True)
 
     st.markdown("#### Throughput over processing time")
     if throughput_rows:
@@ -53,6 +53,6 @@ def render_performance_dashboard(
             yaxis_title="Tokens/sec",
             margin={"l": 10, "r": 10, "t": 20, "b": 10},
         )
-        st.plotly_chart(fig, width="stretch", theme=None)
+        st.plotly_chart(fig, use_container_width=True, theme=None)
     else:
         st.info("Throughput data will appear after analyze/query actions.")

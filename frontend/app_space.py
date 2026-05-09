@@ -24,7 +24,7 @@ from frontend.services.space_data import (
 )
 
 GITHUB_URL = "https://github.com/Davidachoy/warehouseeye"
-HF_SPACE_URL = "https://huggingface.co/spaces/<your-hf-org>/warehouseeye"
+HF_SPACE_URL = "https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/warehouseeye"
 TWITTER_URL = "https://x.com/achoy__"
 PAPER_URL = ""
 
