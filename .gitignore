@@ -64,3 +64,7 @@ data/*.avi
 
 # Local mirror of Hugging Face Space (used for `hf upload`; source of truth is repo root + this folder is rsynced/copied before deploy)
 .hf-space/
+
+# Local raw/processed demo sources (keep only data/prerendered in git)
+data/video1/
+data/video2/
