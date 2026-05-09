@@ -66,18 +66,10 @@ WarehouseEye is tuned to showcase production-minded multimodal workloads on AMD 
 
 The performance dashboard in this Space reports **real measured benchmark outputs** captured from MI300X runs and stored in the pre-rendered artifacts.
 
-## Screenshots
-
-Add your images under `docs/` and keep these links:
-
-![WarehouseEye hero section](docs/space-hero.png)
-![Ask the Video tab](docs/space-query.png)
-![Performance dashboard](docs/space-performance.png)
-
 ## Links
 
 - GitHub: [https://github.com/Davidachoy/warehouseeye](https://github.com/Davidachoy/warehouseeye)
-- Hugging Face Space: [https://huggingface.co/spaces/<your-hf-org>/warehouseeye](https://huggingface.co/spaces/<your-hf-org>/warehouseeye)
+- Hugging Face Space: [https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/warehouseeye](https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/warehouseeye)
 - Author X/Twitter: [https://x.com/achoy__](https://x.com/achoy__)
 
 ## Like this Space
