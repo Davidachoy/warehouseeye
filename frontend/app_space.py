@@ -24,7 +24,6 @@ from frontend.services.space_data import (
 )
 
 GITHUB_URL = "https://github.com/Davidachoy/warehouseeye"
-HF_SPACE_URL = "https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/warehouseeye"
 TWITTER_URL = "https://x.com/achoy__"
 PAPER_URL = ""
 
@@ -75,7 +74,7 @@ def _benchmark_payload(raw: dict[str, Any], timeline_rows: list[dict[str, Any]])
 
 def main() -> None:
     apply_space_theme()
-    render_hero(github_url=GITHUB_URL, hf_space_url=HF_SPACE_URL)
+    render_hero(github_url=GITHUB_URL)
     render_how_it_works()
 
     videos = get_space_videos()

@@ -72,11 +72,6 @@ The performance dashboard in this Space reports **real measured benchmark output
 - Hugging Face Space: [https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/warehouseeye](https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/warehouseeye)
 - Author X/Twitter: [https://x.com/achoy__](https://x.com/achoy__)
 
-## Like this Space
-
-If WarehouseEye is useful or interesting, please consider clicking **Like**.  
-Likes directly help in the AMD x Hugging Face hackathon public ranking.
-
 ## Disclaimer
 
 Demo running on CPU with pre-rendered results. Real-time inference requires AMD MI300X.

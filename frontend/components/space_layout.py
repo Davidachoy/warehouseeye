@@ -183,7 +183,7 @@ def apply_space_theme() -> None:
     )
 
 
-def render_hero(github_url: str, hf_space_url: str) -> None:
+def render_hero(github_url: str) -> None:
     st.markdown(
         """
         <div class="hero">
@@ -198,9 +198,7 @@ def render_hero(github_url: str, hf_space_url: str) -> None:
         """,
         unsafe_allow_html=True,
     )
-    action_col_1, action_col_2 = st.columns(2)
-    action_col_1.link_button("View on GitHub", github_url, use_container_width=True)
-    action_col_2.link_button("⭐ Like this Space", hf_space_url, use_container_width=True)
+    st.link_button("View on GitHub", github_url, use_container_width=True)
 
 
 def render_how_it_works() -> None:
