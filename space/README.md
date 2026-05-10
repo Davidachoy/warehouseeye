@@ -1,7 +1,7 @@
 ---
 title: WarehouseEye
 emoji: 📦
-colorFrom: orange
+colorFrom: yellow
 colorTo: blue
 sdk: streamlit
 sdk_version: "1.41.0"
